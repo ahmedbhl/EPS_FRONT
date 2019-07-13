@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { CoreModule } from '../core/core.module';
-import { MaterialModule } from '../shared/material-module/material-module.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { CoreModule } from './core/core.module';
+import { SharedModuleModule } from './shared/shared-module/shared-module.module';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -17,7 +18,8 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    MaterialModule,
+    SharedModuleModule.forRoot(),
+    FlexLayoutModule
   ],
   exports: [],
   providers: [],
