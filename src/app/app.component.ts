@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +14,10 @@ export class AppComponent {
   options: FormGroup;
 
   constructor(private readonly matIconRegistry: MatIconRegistry,
-    private readonly domSanitizer: DomSanitizer, fb: FormBuilder) {
-    this.options = fb.group({
-      bottom: 0,
-      fixed: false,
-      top: 0
-    });
+    private readonly domSanitizer: DomSanitizer,
+    private readonly router: Router,
+    private readonly permService: NgxPermissionsService) {
+    //  this.router.navigateByUrl('/');
 
     // Define the path of external icons
     this.matIconRegistry.addSvgIcon('facebook', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/facebook.svg'));
@@ -25,6 +25,13 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon('linkedin', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/linkedin.svg'));
     this.matIconRegistry.addSvgIcon('twitter', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/twitter.svg'));
     this.matIconRegistry.addSvgIcon('eps', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/eps50.svg'));
+
+  //  this.permService.addPermission('PROFESSOR');
+    ['SUPER_ADMINt', 'PROFESSORt', 'STUDENTt'].forEach((val) => this.permService.addPermission(val, () => {
+      return true
+  }));
+  //  this.router.navigate(['home']);
+  
   }
 
 }
