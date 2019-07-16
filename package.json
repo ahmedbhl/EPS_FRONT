@@ -60,6 +60,7 @@
     "prismjs": "1.15.0",
     "rxjs": "6.3.3",
     "rxjs-compat": "6.3.3",
+    "screenfull": "^4.2.0",
     "web-animations-js": "2.3.1",
     "zone.js": "^0.8.28"
   },

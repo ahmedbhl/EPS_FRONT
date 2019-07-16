@@ -5,13 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 
 @NgModule({
   declarations: [
-    AppComponent,FooterComponent
-  ],
+    AppComponent, FooterComponent, HeaderComponent],
   imports: [
     BrowserModule,
     CoreModule,
