@@ -1,0 +1,113 @@
+    .navbar {
+        padding: 0px;
+        height: 52px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.07) 0px 2px 4px;
+        color: rgba(0, 0, 0, .9)
+    }
+    
+    .branding {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        overflow: hidden;
+        cursor: pointer;
+    }
+    
+    .search-groupe {
+        background-color: rgb(247, 247, 247);
+        color: rgb(127, 127, 127);
+        height: 36px;
+        border-radius: 6px;
+        width: 240px;
+        box-sizing: border-box;
+        border: 1px solid #fff;
+        padding: 0 10px;
+        outline: none;
+    }
+    
+    .search-input {
+        background-color: transparent;
+        border: 1px solid transparent;
+        outline: none;
+        max-width: 200px;
+    }
+    
+    .search-icon {
+        vertical-align: sub;
+        cursor: pointer;
+    }
+    
+    .account-icon {
+        height: 52px;
+        width: 40px;
+        font-size: 40px;
+        cursor: pointer;
+        color: gray;
+        /*#d3d0d0*/
+        display: inline-flex;
+        align-items: center;
+        margin: 0px 12px 0 0;
+    }
+    
+    .notifications-icon {
+        vertical-align: middle;
+        cursor: pointer
+    }
+    
+    .notifications {
+        position: relative;
+        cursor: pointer;
+        margin: 0px 12px;
+        text-align: center;
+        vertical-align: middle;
+        width: 36px;
+        height: 36px;
+        background-color: rgb(247, 247, 247);
+        border-radius: 18px;
+    }
+    
+    .account-navbar-item {
+        margin: 0px 12px 0 0;
+        width: 40px;
+    }
+    
+    .nav-link {
+        padding: .5rem 1rem;
+        display: inline-flex;
+        align-items: center;
+        height: 52px;
+        cursor: pointer;
+    }
+    
+    .nav-bar-icon {
+        width: 24px;
+        height: 24px;
+        vertical-align: sub;
+        color: #73778b;
+    }
+    
+    .nav-bar-label {
+        color: #73778b;
+        font-size: 12px;
+        font-weight: 500;
+        margin: 0 2px;
+    }
+    
+    .nav-bar-icon:hover,
+    .nav-bar-label:hover {
+        color: black;
+    }
+    
+    .nav-link:hover {
+        background: ghostwhite;
+    }
+    
+     ::ng-deep .mat-select-panel {
+        max-height: 60vh !important;
+        position: relative;
+        top: 6vh;
+        right: 27vh;
+    }
