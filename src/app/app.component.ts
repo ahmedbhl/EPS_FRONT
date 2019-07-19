@@ -27,7 +27,7 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon('eps', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/eps50.svg'));
 
   //  this.permService.addPermission('PROFESSOR');
-    ['SUPER_ADMINt', 'PROFESSORt', 'STUDENTt'].forEach((val) => this.permService.addPermission(val, () => {
+    ['SUPER_ADMIN', 'PROFESSOR', 'STUDENT'].forEach((val) => this.permService.addPermission(val, () => {
       return true
   }));
   //  this.router.navigate(['home']);
