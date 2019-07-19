@@ -9,6 +9,8 @@
     <title>EPS - Educational Personal Space </title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700|Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style type="text/css">
         .loading::before,
         .loading::after {
@@ -46,7 +48,7 @@
         
         .loading::after {
             font-family: "Helvetica Neue", Helvetica, sans-serif;
-            content: 'LOADING';
+            content: 'Loading EPS..';
             text-align: center;
             white-space: pre;
             font-weight: normal;
@@ -55,6 +57,7 @@
             color: #000;
             opacity: 0.8;
             animation: animation 1s alternate infinite;
+            margin-top: 10px;
         }
         
         @keyframes animation {
@@ -63,14 +66,14 @@
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 
 <body>
     <app-root>
         <div class="logo">
             <img width="128" src="assets/images/logos/fuse.svg">
+            <mat-spinner></mat-spinner>
         </div>
         <div class="loading"></div>
     </app-root>
