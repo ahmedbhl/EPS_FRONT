@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material-module/material-module.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PickerModule } from '@ctrl/ngx-emoji-mart'
 
 
 @NgModule({
@@ -12,9 +13,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CommonModule,
     MaterialModule, 
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    PickerModule
   ],
-  exports: [CommonModule, MaterialModule, HttpClientModule,FlexLayoutModule]
+  exports: [CommonModule, MaterialModule, HttpClientModule,FlexLayoutModule,PickerModule]
 })
 export class SharedModuleModule {
   static forRoot(): ModuleWithProviders {

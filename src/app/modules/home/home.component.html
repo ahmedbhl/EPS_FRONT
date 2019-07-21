@@ -108,7 +108,13 @@
                 <mat-card-footer class="mat-card-footer">
                     <div class="footer-card-mat-card-avatar">
                         <img class="message-avatar rounded footer-card-comment-icon" src="assets/images/avatars/profile.jpg" alt="Zayneb Hamila">
-                        <input class="mat-card-comment-input" matInput type="text">
+                        <div class="mat-card-comment">
+                            <textarea [value]="state.text" cols="60" class="mat-card-comment-input" matInput type="text" placeholder="your comment..."></textarea>
+                            <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }" (emojiClick)="addEmoji($event)" [hidden]="show"></emoji-mart>
+                            <mat-icon class="mat-card-comment-emoj" (click)="show=!show">sentiment_satisfied_alt</mat-icon>
+                            <mat-icon class="mat-card-comment-emoj">photo_camera</mat-icon>
+                        </div>
+
                     </div>
                 </mat-card-footer>
             </mat-card>

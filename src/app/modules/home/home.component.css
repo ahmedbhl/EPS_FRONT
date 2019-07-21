@@ -243,15 +243,46 @@
 .footer-card-mat-card-avatar {
     width: 100%;
     margin: 10px 0;
+    display: flex;
 }
 
 .mat-card-comment-input {
-    width: 77%;
+    width: 80%;
+    color: #5c6178;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin: 0 10px;
-    /* border: none; */
-    height: 35px;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    line-height: 1.5;
+    border-radius: 3px;
+    font: 13px Tahoma, cursive;
+    transition: box-shadow 0.5s ease;
+    resize: none;
+    overflow: hidden;
 }
 
 .footer-card-comment-icon {
     height: 35px;
+}
+
+.home-content-card {
+    margin: 0 0 2rem !important;
+}
+
+.mat-card-comment {
+    display: flex;
+    background: white;
+    border: 1px solid gray;
+    border-radius: 22px;
+    width: 100%;
+    margin: 0 10px;
+    padding: 2px;
+    height: 35px;
+}
+
+.mat-card-comment-emoj {
+    vertical-align: middle;
+    margin: 3px;
 }
