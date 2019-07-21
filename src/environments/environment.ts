@@ -5,10 +5,13 @@
 export const environment = {
   production: false,
   /** Environment platform name */
-  name: 'default',
-
+  name: 'dev',
   /** Activate Logs */
-  log: 'true'
+  log: 'true',
+
+  users_api_url: 'http://192.168.56.1:8080/api/v1/users',
+  users_api_backend_type: 'java',
+
 };
 
 /*

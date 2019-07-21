@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import * as screenfull from 'screenfull';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -11,20 +12,17 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSidenav = new EventEmitter<void>();
   @Output() toggleNotificationSidenav = new EventEmitter<void>();
 
-  constructor() {
-  }
-
-  fullScreenToggle(): void {
-   /* if (screenfull.enabled) {
-      screenfull.toggle();
-    }*/
+  constructor(private readonly router: Router, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
   }
 
-  open(event) {
+  open(event) { }
 
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
