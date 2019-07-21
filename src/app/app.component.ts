@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { AuthenticationService } from './core/authentication/authentication.service';
+import { User } from './shared/models/user.class';
+import { Helper } from './core/helper.service';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +13,14 @@ import { NgxPermissionsService } from 'ngx-permissions';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  options: FormGroup;
+  currentUser: User;
 
   constructor(private readonly matIconRegistry: MatIconRegistry,
     private readonly domSanitizer: DomSanitizer,
     private readonly router: Router,
-    private readonly permService: NgxPermissionsService) {
-    //  this.router.navigateByUrl('/');
+    private authenticationService: AuthenticationService,
+    private readonly permService: NgxPermissionsService,
+    private readonly helper: Helper) {
 
     // Define the path of external icons
     this.matIconRegistry.addSvgIcon('facebook', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/facebook.svg'));
@@ -26,12 +29,15 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon('twitter', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/twitter.svg'));
     this.matIconRegistry.addSvgIcon('eps', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/eps50.svg'));
 
-  //  this.permService.addPermission('PROFESSOR');
-    ['SUPER_ADMIN', 'PROFESSOR', 'STUDENT'].forEach((val) => this.permService.addPermission(val, () => {
-      return true
-  }));
-  //  this.router.navigate(['home']);
-  
+    this.authenticationService.currentUser.subscribe(data => {
+      if (!data) {
+        this.helper.trace('[Error] Impossible to load Current User!');
+        return;
+      }
+      this.currentUser = data
+      Object.keys(this.currentUser.authorities).forEach((val) => this.permService.addPermission(val, () => {
+        return true
+      }));
+    });
   }
-
 }

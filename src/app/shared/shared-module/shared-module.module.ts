@@ -5,6 +5,7 @@ import { MaterialModule } from '../material-module/material-module.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PickerModule } from '@ctrl/ngx-emoji-mart'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,9 +15,11 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart'
     MaterialModule, 
     HttpClientModule,
     FlexLayoutModule,
-    PickerModule
+    PickerModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
-  exports: [CommonModule, MaterialModule, HttpClientModule,FlexLayoutModule,PickerModule]
+  exports: [CommonModule, MaterialModule, HttpClientModule,FlexLayoutModule,PickerModule,ReactiveFormsModule,FormsModule]
 })
 export class SharedModuleModule {
   static forRoot(): ModuleWithProviders {
