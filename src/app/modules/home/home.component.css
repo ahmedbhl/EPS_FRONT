@@ -1,0 +1,76 @@
+        .branding {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .new-landing-page-container {
+            font-family: Disclaimer Regular, Helvetica Neue, Helvetica, sans-serif;
+            font-size: 1rem;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .new-landing-page-container .landing-page-navbar {
+            position: fixed;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, .5);
+            height: 60px;
+            margin-bottom: 36px;
+        }
+        
+        .new-landing-page-container .landing-page-navbar .landing-page-navbar-container {
+            height: 100%;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: space-between;
+            justify-content: space-between;
+        }
+        
+        .align-items-center {
+            -webkit-align-items: center!important;
+            align-items: center!important;
+        }
+        
+        .d-flex {
+            display: -webkit-flex!important;
+            display: flex!important;
+        }
+        
+        .new-landing-page-container {
+            font-family: Disclaimer Regular, Helvetica Neue, Helvetica, sans-serif;
+            font-size: 1rem;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+        
+        .landing-page-navbar-link {
+            font-family: Disclaimer Medium, Helvetica Neue, Helvetica, sans-serif;
+            font-size: 14px;
+            display: block;
+            border-radius: 0;
+            padding-left: 24px;
+            padding-right: 24px;
+            color: #7e7e7e;
+            background-color: #fff;
+            border: 0;
+        }
+        
+        .sign-up {
+            height: 100%;
+            color: #1a237e!important;
+            background-color: #ffca28;
+        }
+        
+        .view-port {
+            padding-top: 70px;
+        }
+        
+        .landing-page-illustration {
+            margin-right: 90px;
+        }

@@ -7,7 +7,7 @@ import { HomeActorsComponent } from './home-actors.component';
     declarations: [HomeActorsComponent],
     imports: [HomeActorsRoutingModule, SharedModuleModule],
     exports: [HomeActorsComponent],
-    // providers: [HomeService]
+    // providers: [HomeActorsService]
 })
 
 export class HomeActorsModule {

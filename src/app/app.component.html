@@ -1,5 +1,12 @@
-<app-header class="header"></app-header>
-<div class="container">
+<!-- If the user connected then must be redirected to the homeAcotrs or administartionHome page -->
+<div *ngIf="false">
+    <app-header class="header"></app-header>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+    <app-footer class="footer"></app-footer>
+</div>
+<!--TODO : change ng if the user connected or not-->
+<div class="home" *ngIf="true">
     <router-outlet></router-outlet>
 </div>
-<app-footer class="footer"></app-footer>

@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { HomeActorsModule } from './modules/home-actors/home-actors.module';
+import { HomeModule } from './modules/home/home.module';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
@@ -20,6 +21,7 @@ import { SharedModuleModule } from './shared/shared-module/shared-module.module'
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    HomeModule,
     HomeActorsModule,
     ReactiveFormsModule,
     FormsModule,
