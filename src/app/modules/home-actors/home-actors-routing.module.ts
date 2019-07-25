@@ -27,6 +27,6 @@ export class HomeActorsRoutingModule { }
 export function userAddRedirectTo() {
   console.log('Access Denied - insufficient rights for this function');
   // Helper.broadcast('Access Denied - insufficient rights for this function');
-  return '404';
+  return '';
 }
 

@@ -20,5 +20,9 @@ export class User {
     /**
      * User assigned roles
      */
-    authorities: string[] = [''];
+    authorities: string[] = [];
+    /**
+    * User assigned roles
+    */
+    roles: any[] = [];
 }

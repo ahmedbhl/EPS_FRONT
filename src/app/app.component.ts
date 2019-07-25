@@ -4,8 +4,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthenticationService } from './core/authentication/authentication.service';
-import { User } from './shared/models/user.class';
 import { Helper } from './core/helper.service';
+import { User } from './shared/models/user.class';
 
 @Component({
   selector: 'app-root',
@@ -35,9 +35,12 @@ export class AppComponent {
         return;
       }
       this.currentUser = data
-      Object.keys(this.currentUser.authorities).forEach((val) => this.permService.addPermission(val, () => {
-        return true
-      }));
+      if (this.currentUser !== null) {
+        // Object.keys(this.currentUser.roles)
+        this.currentUser.roles.map(item => item.name).forEach((val) => this.permService.addPermission(val, () => {
+          return true
+        }));
+      }
     });
   }
 }

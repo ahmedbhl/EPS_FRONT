@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
+import { Helper } from 'src/app/core/helper.service';
 
 @Component({ templateUrl: './login.component.html' })
 export class LoginComponent implements OnInit {
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private helper: Helper
     ) { }
 
     ngOnInit() {
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.authenticationService.logout();
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/homeActors';
     }
 
     // convenience getter for easy access to form fields
@@ -48,6 +50,7 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
+                    this.helper.trace('[Done] Load the Current User!');
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
