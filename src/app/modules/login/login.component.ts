@@ -5,7 +5,8 @@ import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
 
-@Component({ templateUrl: './login.component.html' })
+@Component({ templateUrl: './login.component.html',
+styleUrls: ['./login.component.css'] })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
@@ -51,7 +52,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     this.helper.trace('[Done] Load the Current User!');
-                    this.router.navigate([this.returnUrl]);
+                   // this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.error = error;

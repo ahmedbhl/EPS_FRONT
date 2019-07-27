@@ -30,17 +30,28 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon('eps', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/eps50.svg'));
 
     this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data
       if (!data) {
         this.helper.trace('[Error] Impossible to load Current User!');
-        return;
       }
-      this.currentUser = data
-      if (this.currentUser !== null) {
+      if (data && this.currentUser !== null) {
         // Object.keys(this.currentUser.roles)
         this.currentUser.roles.map(item => item.name).forEach((val) => this.permService.addPermission(val, () => {
           return true
         }));
       }
+      this.redirectUserAfterAuthentification();
     });
+  }
+
+
+  private redirectUserAfterAuthentification() {
+    if (this.currentUser && this.currentUser.roles.map(item => item.name).indexOf('SUPER_ADMIN') > -1) {
+      this.router.navigate(['homeActors']);
+       this.helper.trace('is super admin refresh')
+    } else {
+    //  this.router.navigate(['']);
+       this.helper.trace('is other User')
+    }
   }
 }
