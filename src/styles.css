@@ -2,6 +2,12 @@
 
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~@ctrl/ngx-emoji-mart/picker";
+@import "assets/css/font-awesome.min.css";
+.logo span.fa {
+    color: #3498db;
+    font-size: 6em;
+}
+
 html,
 body {
     height: 100%;
