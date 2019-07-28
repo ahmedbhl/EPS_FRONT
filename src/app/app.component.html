@@ -1,8 +1,8 @@
 <!-- If the user connected then must be redirected to the homeAcotrs or administartionHome page -->
 <div>
-    <app-header class="header" [hidden]="!currentUser"></app-header>
+    <app-header class="header" [hidden]="!currentUser" [isProfessorOrStudent]="isProfessorOrStudent"></app-header>
     <div [class.container]="currentUser" [class.home]="!currentUser">
         <router-outlet></router-outlet>
     </div>
-    <app-footer class="footer"></app-footer>
+    <app-footer [hidden]="!currentUser" class="footer"></app-footer>
 </div>

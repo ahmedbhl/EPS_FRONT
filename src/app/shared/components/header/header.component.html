@@ -1,6 +1,6 @@
 <mat-toolbar class="navbar navbar-light bg-white mb-4" color="primary">
     <div class="container">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center" *ngIf="isProfessorOrStudent">
             <div class="branding navbar-brand" routerLink="/homeActors">
                 <mat-icon class="title-icon">school</mat-icon> &nbsp;
                 <span>EPS</span>

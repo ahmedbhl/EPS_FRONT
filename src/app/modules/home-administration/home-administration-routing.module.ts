@@ -2,24 +2,24 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 // import { Helper } from 'app/core/helper.service';
 import { NgxPermissionsGuard } from 'ngx-permissions';
-import { HomeActorsComponent } from './home-actors.component';
+import { HomeAdministrationComponent } from './home-administration.component';
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
-        path: '', component: HomeActorsComponent, canActivate: [NgxPermissionsGuard], data: {
+        path: '', component: HomeAdministrationComponent, canActivate: [NgxPermissionsGuard], data: {
           permissions: {
-            only: ['PROFESSOR', 'STUDENT'],
+            only: ['ADMINISTRATION'],
             redirectTo: userAddRedirectTo
           },
-          breadcrumb: 'HomeActorsComponent app'
+          breadcrumb: 'HomeAdministrationComponent app'
         }
       },
     ])],
   exports: [RouterModule]
 })
-export class HomeActorsRoutingModule { }
+export class HomeAdministrationRoutingModule { }
 
 /**
  * User redirection if access to user adding screen is not allowed

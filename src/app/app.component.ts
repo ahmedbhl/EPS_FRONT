@@ -13,7 +13,9 @@ import { User } from './shared/models/user.class';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  currentUser: User;
+
+  public currentUser: User;
+  isProfessorOrStudent: boolean = false;
 
   constructor(private readonly matIconRegistry: MatIconRegistry,
     private readonly domSanitizer: DomSanitizer,
@@ -46,12 +48,19 @@ export class AppComponent {
 
 
   private redirectUserAfterAuthentification() {
-    if (this.currentUser && this.currentUser.roles.map(item => item.name).indexOf('SUPER_ADMIN') > -1) {
+    const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+    if (roles.indexOf('ADMINISTRATION') > -1) {
+      this.isProfessorOrStudent = false;
+      this.router.navigate(['homeAdministration']);
+      this.helper.trace('ADMINISTRATION Conected')
+    } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+      this.isProfessorOrStudent = false;
+      this.router.navigate(['homeAdministration']);
+      this.helper.trace('SUPER ADMIN Conected')
+    } else if (roles.indexOf('PROFESSOR') > -1 || roles.indexOf('STUDENT') > -1) {
+      this.isProfessorOrStudent = true;
       this.router.navigate(['homeActors']);
-       this.helper.trace('is super admin refresh')
-    } else {
-    //  this.router.navigate(['']);
-       this.helper.trace('is other User')
+      this.helper.trace('User Connected')
     }
   }
 }
