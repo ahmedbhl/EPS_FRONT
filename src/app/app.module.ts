@@ -16,6 +16,7 @@ import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { LoginModule } from './modules/login/login.module';
 import { BasicAuthInterceptor } from './shared/helpers';
+import { HomeAdministrationComponent } from './modules/home-administration/home-administration.component';
 
 @NgModule({
   declarations: [

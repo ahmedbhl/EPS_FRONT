@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 
@@ -11,6 +11,8 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggleSidenav = new EventEmitter<void>();
   @Output() toggleNotificationSidenav = new EventEmitter<void>();
+  @Input()
+  isProfessorOrStudent: boolean;
 
   constructor(private readonly router: Router, private authenticationService: AuthenticationService) {
   }
