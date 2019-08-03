@@ -17,6 +17,7 @@ import { SharedModuleModule } from './shared/shared-module/shared-module.module'
 import { LoginModule } from './modules/login/login.module';
 import { BasicAuthInterceptor } from './shared/helpers';
 import { HomeAdministrationComponent } from './modules/home-administration/home-administration.component';
+import { HomeSuperAdminComponent } from './modules/home-super-admin/home-super-admin.component';
 
 @NgModule({
   declarations: [

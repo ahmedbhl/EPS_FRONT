@@ -55,7 +55,7 @@ export class AppComponent {
       this.helper.trace('ADMINISTRATION Conected')
     } else if (roles.indexOf('SUPER_ADMIN') > -1) {
       this.isProfessorOrStudent = false;
-      this.router.navigate(['homeAdministration']);
+      this.router.navigate(['homeSuperAdmin']);
       this.helper.trace('SUPER ADMIN Conected')
     } else if (roles.indexOf('PROFESSOR') > -1 || roles.indexOf('STUDENT') > -1) {
       this.isProfessorOrStudent = true;
