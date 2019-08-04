@@ -18,10 +18,13 @@ import { LoginModule } from './modules/login/login.module';
 import { BasicAuthInterceptor } from './shared/helpers';
 import { HomeAdministrationComponent } from './modules/home-administration/home-administration.component';
 import { HomeSuperAdminComponent } from './modules/home-super-admin/home-super-admin.component';
+import { SideNavComponent } from './shared/side-nav/side-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent, FooterComponent, HeaderComponent],
+    AppComponent, FooterComponent, HeaderComponent, SideNavComponent],
   imports: [
     RouterModule,
     BrowserModule,
@@ -35,6 +38,12 @@ import { HomeSuperAdminComponent } from './modules/home-super-admin/home-super-a
     SharedModuleModule.forRoot(),
     FlexLayoutModule,
     NgxPermissionsModule.forRoot(),
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
   ],
   exports: [],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
