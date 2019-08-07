@@ -21,6 +21,8 @@ import { HomeSuperAdminComponent } from './modules/home-super-admin/home-super-a
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { EducationalInstitutionComponent } from './modules/educational-institution/educational-institution.component';
+import { EducationalInstitutionModule } from './modules/educational-institution/educational-institution.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
     LoginModule,
     HomeModule,
     HomeActorsModule,
+    EducationalInstitutionModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),

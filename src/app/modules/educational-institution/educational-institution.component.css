@@ -1,0 +1,46 @@
+.custom-container {
+    padding: 10px;
+}
+
+.header {
+    width: 100%;
+    padding: 10px;
+    height: 80px;
+}
+
+.btn-create {
+    float: right;
+    padding: 0px 5px;
+    cursor: pointer;
+    margin: 11px 0;
+}
+
+.data-table {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 30%;
+    float: left;
+    padding: 0 5px;
+}
+
+.mat-form-field-wrapper {
+    padding: 0;
+    margin: 0;
+}
+
+.filter {
+    width: 93%;
+}
+
+td,
+th {
+    width: 25%;
+}
