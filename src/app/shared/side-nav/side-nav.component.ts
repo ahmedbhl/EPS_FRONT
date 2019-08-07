@@ -17,10 +17,11 @@ export class SideNavComponent {
 
   currentUser: User;
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  isHandset: boolean = false;
+  /*$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
-    );
+    );*/
 
   constructor(private breakpointObserver: BreakpointObserver,
     private authenticationService: AuthenticationService,
@@ -37,7 +38,9 @@ export class SideNavComponent {
       }
     });
   }
-
+  dock() {
+    this.isHandset = !this.isHandset;
+  }
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
