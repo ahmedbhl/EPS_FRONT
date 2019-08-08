@@ -23,6 +23,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { EducationalInstitutionComponent } from './modules/educational-institution/educational-institution.component';
 import { EducationalInstitutionModule } from './modules/educational-institution/educational-institution.module';
+import { Error500Component } from './modules/errors/error500/error500.component';
+import { Error500Module } from './modules/errors/error500/error500.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { EducationalInstitutionModule } from './modules/educational-institution/
     HomeModule,
     HomeActorsModule,
     EducationalInstitutionModule,
+    Error500Module,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),
