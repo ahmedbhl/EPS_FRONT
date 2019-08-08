@@ -7,7 +7,8 @@ export const routes: Routes = [
     { path: 'homeActors', loadChildren: './modules/home-actors/home-actors.module#HomeActorsModule' },
     { path: 'homeAdministration', loadChildren: './modules/home-administration/home-administration.module#HomeAdministrationModule' },
     { path: 'homeSuperAdmin', loadChildren: './modules/home-super-admin/home-super-admin.module#HomeSuperAdminModule' },
-    { path: 'educationalinstitution', loadChildren: './modules/educational-institution/educational-institution.module#EducationalInstitutionModule' }
+    { path: 'educationalinstitution', loadChildren: './modules/educational-institution/educational-institution.module#EducationalInstitutionModule' },
+    { path: 'error500', loadChildren: './modules/errors/error500/error500.module#Error500Module' },
 
 
 
