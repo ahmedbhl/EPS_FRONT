@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "SFEFRONT"
+    "default": "SFEFRONT",
+    "eps": "eps-project-319b4"
   }
 }
