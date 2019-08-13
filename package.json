@@ -8,12 +8,13 @@
     "start-hmr-sourcemaps": "ng serve --configuration hmr --source-map=true --hmr-warning=false",
     "build": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev",
     "build-stats": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev --stats-json",
-    "build-prod": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --prod",
+    "build-prod": "ng build --prod",
     "build-prod-stats": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --prod --stats-json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "bundle-report": "webpack-bundle-analyzer dist/stats.json"
+    "bundle-report": "webpack-bundle-analyzer dist/stats.json",
+    "deploy": "firebase deploy --token $FIREBASE_TOKEN --non-interactive"
   },
   "private": true,
   "dependencies": {
@@ -76,6 +77,7 @@
     "@types/lodash": "4.14.119",
     "@types/node": "8.9.5",
     "codelyzer": "4.5.0",
+    "firebase-tools": "^7.2.2",
     "jasmine-core": "2.99.1",
     "jasmine-spec-reporter": "4.2.1",
     "karma": "4.0.1",
@@ -85,6 +87,7 @@
     "karma-jasmine-html-reporter": "0.2.2",
     "node-sass": "^4.12.0",
     "protractor": "5.4.2",
+    "puppeteer": "^1.19.0",
     "ts-node": "7.0.1",
     "tslib": "1.9.3",
     "tslint": "5.11.0",

@@ -1,0 +1,11 @@
+{
+    "hosting": {
+      "public": "dist/SFEFRONT",
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  }
