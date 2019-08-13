@@ -5,10 +5,16 @@
 export const environment = {
   production: false,
   /** Environment platform name */
-  name: 'default',
-
+  name: 'dev',
   /** Activate Logs */
-  log: 'true'
+  log: 'true',
+
+  users_api_url: 'http://localhost:8080/api/v1/users',
+  users_api_backend_type: 'java',
+
+  educational_institution_url: 'http://localhost:8080/api/v1/establishments',
+  educational_institution_api_backend_type: 'java',
+
 };
 
 /*

@@ -1,0 +1,69 @@
+<mat-toolbar class="navbar navbar-light bg-white mb-4" color="primary">
+    <div class="container">
+        <div class="d-flex align-items-center" *ngIf="isProfessorOrStudent">
+            <div class="branding navbar-brand" routerLink="/homeActors">
+                <mat-icon class="title-icon">school</mat-icon> &nbsp;
+                <span>EPS</span>
+            </div>
+            <div class="nav-link" routerLink="/homeActors" routerLinkActive>
+                <mat-icon class="nav-bar-icon">language</mat-icon> &nbsp;
+                <span class="nav-bar-label">Home</span>
+            </div>
+
+            <div class="nav-link">
+                <mat-icon class="nav-bar-icon">class</mat-icon> &nbsp;
+                <span class="nav-bar-label">Classes</span>
+            </div>
+
+            <div class="nav-link">
+                <mat-icon class="nav-bar-icon">library_books</mat-icon> &nbsp;
+                <span class="nav-bar-label">Library</span>
+            </div>
+
+            <div class="nav-link">
+                <mat-icon class="nav-bar-icon">textsms</mat-icon> &nbsp;
+                <span class="nav-bar-label">Message</span>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <div class="search-groupe">
+                <input type="text" class="search-input" placeholder="Search" autofocus="true" matInput>
+                <mat-icon matSuffix class="search-icon">search</mat-icon>
+            </div>
+            <div class="notifications nav-item">
+                <mat-icon class="notifications-icon">notifications_none </mat-icon>
+            </div>
+            <div class="account-navbar-item" (click)="accountSelect.open()">
+                <mat-icon class="account-icon">account_circle</mat-icon>
+                <mat-select #accountSelect style="visibility: hidden; font-size: smaller;">
+                    <mat-option (click)="open('profile')">
+                        <mat-icon>person</mat-icon>
+                        <span> Profil </span>
+                    </mat-option>
+                    <mat-option (click)="open( 'contacts') ">
+                        <mat-icon color="#7F7F7F">contact_mail</mat-icon>
+                        <span> Contacts </span>
+                    </mat-option>
+                    <mat-option (click)="open( 'contacts') ">
+                        <mat-icon color="#7F7F7F">group</mat-icon>
+                        <span> Groupes </span>
+                    </mat-option>
+                    <mat-divider></mat-divider>
+                    <mat-option (click)="open( 'contacts') ">
+                        <mat-icon color="#7F7F7F">settings</mat-icon>
+                        <span> Settings </span>
+                    </mat-option>
+                    <mat-option (click)="open( 'contacts') ">
+                        <mat-icon color="#7F7F7F">help</mat-icon>
+                        <span> Help Center </span>
+                    </mat-option>
+                    <mat-option (click)="logout()">
+                        <mat-icon color="#7F7F7F">power_settings_new</mat-icon>
+                        <span> Logout </span>
+                    </mat-option>
+                </mat-select>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>
