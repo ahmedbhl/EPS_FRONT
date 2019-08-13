@@ -10,9 +10,14 @@
 
 .btn-create {
     float: right;
-    padding: 0px 5px;
+    background-color: #007bff;
+    color: white;
     cursor: pointer;
     margin: 11px 0;
+}
+
+.btn-create-text {
+    margin-left: 10p;
 }
 
 .data-table {
@@ -40,7 +45,6 @@ table {
     width: 93%;
 }
 
-td,
-th {
-    width: 25%;
+td, th {
+    width: 15%;
 }

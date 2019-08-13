@@ -34,6 +34,7 @@ export class AuthenticationService {
                     // to keep user logged in between page refreshes
                     user.credentials = window.btoa(username + ':' + password);
                     localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('Authorization', `Basic ${window.btoa(username + ':' + password)}`);
                     this.currentUserSubject.next(user);
                 }
 

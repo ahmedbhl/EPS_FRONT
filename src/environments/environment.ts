@@ -9,8 +9,11 @@ export const environment = {
   /** Activate Logs */
   log: 'true',
 
-  users_api_url: 'http://192.168.56.1:8080/api/v1/users',
+  users_api_url: 'http://localhost:8080/api/v1/users',
   users_api_backend_type: 'java',
+
+  educational_institution_url: 'http://localhost:8080/api/v1/establishments',
+  educational_institution_api_backend_type: 'java',
 
 };
 
