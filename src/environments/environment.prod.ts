@@ -7,6 +7,9 @@ export const environment = {
   educational_institution_url: 'http://192.168.56.1:8080/api/v1/establishments',
   educational_institution_api_backend_type: 'java',
 
+  level_url: 'http://192.168.56.1:8080/api/v1/levels',
+  level_url_api_backend_type: 'java',
+
   /** Environment platform name */
   name: 'Prod',
 
