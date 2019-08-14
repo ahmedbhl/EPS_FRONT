@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Helper } from 'src/app/core/helper.service';
+import { EducationalInstitutionModalComponent } from './educational-institution-modal/educational-institution-modal.component';
 import { EducationalInstitution } from './model/educational-institution';
 import { EducationalInstitutionService } from './services/educational-institution.service';
 
@@ -11,7 +12,6 @@ import { EducationalInstitutionService } from './services/educational-institutio
 })
 export class EducationalInstitutionComponent implements OnInit {
 
-  // Create 100 educationalInstitutions
   educationalInstitutions: EducationalInstitution[] = [];
 
   displayedColumns: string[] = ['id', 'photos', 'establishmentName', 'description', 'location', 'yearOfFoundation'];
@@ -22,7 +22,8 @@ export class EducationalInstitutionComponent implements OnInit {
 
 
   constructor(private readonly helper: Helper,
-    private readonly _educationalInstitutionService: EducationalInstitutionService) {
+    private readonly _educationalInstitutionService: EducationalInstitutionService,
+    public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -50,7 +51,18 @@ export class EducationalInstitutionComponent implements OnInit {
       }
       ,
       error => this.helper.handleError,
-      () => console.log('Get all educational Institutions complete ' + this.educationalInstitutions.length));
+      () => this.helper.trace('Get all educational Institutions complete ' + this.educationalInstitutions.length));
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(EducationalInstitutionModalComponent, {
+      width: '250px',
+      data: { name: 'Guest', animal: 'Guest' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.helper.trace('The dialog was closed' + result);
+    });
   }
 }
 
