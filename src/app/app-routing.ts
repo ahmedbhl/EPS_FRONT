@@ -8,6 +8,7 @@ export const routes: Routes = [
     { path: 'homeAdministration', loadChildren: './modules/home-administration/home-administration.module#HomeAdministrationModule' },
     { path: 'homeSuperAdmin', loadChildren: './modules/home-super-admin/home-super-admin.module#HomeSuperAdminModule' },
     { path: 'educationalinstitution', loadChildren: './modules/educational-institution/educational-institution.module#EducationalInstitutionModule' },
+    { path: 'level', loadChildren: './modules/level/level.module#LevelModule' },
     { path: 'error500', loadChildren: './modules/errors/error500/error500.module#Error500Module' },
 
 
