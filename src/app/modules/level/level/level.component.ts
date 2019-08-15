@@ -1,3 +1,4 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Helper } from 'src/app/core/helper.service';
@@ -13,12 +14,15 @@ export class LevelComponent implements OnInit {
 
   levels: Level[] = [];
 
-  displayedColumns: string[] = ['id', 'levelName', 'description'];
+  displayedColumns: string[] = ['select', 'id', 'levelName', 'description', 'more',];
   dataSource: MatTableDataSource<Level>;
+  selection = new SelectionModel<Level>(true, []);
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  selectAction: string = 'delete';
 
   constructor(private readonly helper: Helper,
     private readonly _LevelService: LevelService,
@@ -51,6 +55,28 @@ export class LevelComponent implements OnInit {
       ,
       error => this.helper.handleError,
       () => this.helper.trace('Get all Levels complete ' + this.levels.length));
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: Level): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
   /* openDialog(): void {
