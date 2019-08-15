@@ -14,7 +14,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json",
-    "deploy": "firebase deploy --token $FIREBASE_TOKEN --non-interactive"
+    "deploy": "firebase deploy --token=$FIREBASE_TOKEN --non-interactive"
   },
   "private": true,
   "dependencies": {
