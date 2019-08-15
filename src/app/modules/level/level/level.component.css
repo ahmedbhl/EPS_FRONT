@@ -10,7 +10,7 @@
 
 .btn-create {
     float: right;
-    background-color: #007bff;
+    background-color: #09509cf2 /*007bff*/;
     color: white;
     cursor: pointer;
     margin: 11px 0;
@@ -47,4 +47,32 @@ table {
 
 td, th {
     width: 15%;
+}
+
+.tab-footer {
+    width: 100%;
+}
+.footer-left {
+    width: 50%; 
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 56px;
+    padding: 0 24px;
+}
+.footer-select {
+    width: 233px;
+    margin: 0 11px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 7px;
+    padding: 3px 5px;
+    height: 32px;
+}
+.footer-checkbox {
+    vertical-align: middle;
+}
+.footer-btn {
+    height: 30px;
+    text-align: center;
 }
