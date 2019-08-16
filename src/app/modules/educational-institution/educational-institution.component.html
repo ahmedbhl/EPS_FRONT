@@ -4,7 +4,7 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" class="filter">
             <mat-icon>search</mat-icon>
         </mat-form-field>
-        <button mat-raised-button class="btn-create primary">
+        <button mat-raised-button class="btn-create primary" (click)="openDialog()">
             <mat-icon>add</mat-icon>
             <span class="btn-create-text">New Educational Institution</span>
         </button>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import 'jasmine';
-import { HomeSuperAdminComponent } from './home-super-admin.component';
 
-describe('HomeSuperAdminComponent', () => {
-  let component: HomeSuperAdminComponent;
-  let fixture: ComponentFixture<HomeSuperAdminComponent>;
+import { LevelModalComponent } from './level-modal.component';
+
+describe('LevelModalComponent', () => {
+  let component: LevelModalComponent;
+  let fixture: ComponentFixture<LevelModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomeSuperAdminComponent ]
+      declarations: [ LevelModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomeSuperAdminComponent);
+    fixture = TestBed.createComponent(LevelModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
