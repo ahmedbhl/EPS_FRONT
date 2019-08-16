@@ -4,6 +4,7 @@ import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/m
 import { Helper } from 'src/app/core/helper.service';
 import { Level } from '../model/level';
 import { LevelService } from '../services/level.service';
+import { LevelModalComponent } from '../level-modal/level-modal.component';
 
 @Component({
   selector: 'app-level',
@@ -79,7 +80,7 @@ export class LevelComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  /* openDialog(): void {
+  openDialog(): void {
     const dialogRef = this.dialog.open(LevelModalComponent, {
       width: '250px',
       data: { name: 'Guest', animal: 'Guest' }
@@ -88,6 +89,6 @@ export class LevelComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.helper.trace('The dialog was closed' + result);
     });
-  }*/
+  }
 
 }
