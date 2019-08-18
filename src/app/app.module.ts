@@ -22,6 +22,8 @@ import { BasicAuthInterceptor } from './shared/helpers';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
+import { FieldComponent } from './modules/field/field/field.component';
+import { FieldModule } from './modules/field/field.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { SideNavComponent } from './shared/side-nav/side-nav.component';
     EducationalInstitutionModule,
     Error500Module,
     LevelModule,
+    FieldModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),

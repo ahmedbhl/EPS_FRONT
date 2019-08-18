@@ -18,6 +18,9 @@ export const environment = {
   level_url: 'http://localhost:8080/api/v1/levels',
   level_url_api_backend_type: 'java',
 
+  field_url: 'http://localhost:8080/api/v1/fields',
+  field_url_api_backend_type: 'java',
+
 };
 
 /*
