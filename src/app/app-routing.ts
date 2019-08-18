@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+    // tslint:disable: max-line-length
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', loadChildren: './modules/home/home.module#HomeModule' },
     { path: 'login', loadChildren: './modules/login/login.module#LoginModule' },
@@ -9,6 +10,7 @@ export const routes: Routes = [
     { path: 'homeSuperAdmin', loadChildren: './modules/home-super-admin/home-super-admin.module#HomeSuperAdminModule' },
     { path: 'educationalinstitution', loadChildren: './modules/educational-institution/educational-institution.module#EducationalInstitutionModule' },
     { path: 'level', loadChildren: './modules/level/level.module#LevelModule' },
+    { path: 'field', loadChildren: './modules/field/field.module#FieldModule' },
     { path: 'error500', loadChildren: './modules/errors/error500/error500.module#Error500Module' },
 
 

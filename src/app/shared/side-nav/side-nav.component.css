@@ -142,3 +142,8 @@
 .opened {
     max-width: 60px;
 }
+
+.btn-dock {
+    outline: none;
+    text-align: start;
+}

@@ -10,6 +10,9 @@ export const environment = {
   level_url: 'http://192.168.56.1:8080/api/v1/levels',
   level_url_api_backend_type: 'java',
 
+  field_url: 'http://192.168.56.1:8080/api/v1/fields',
+  field_url_api_backend_type: 'java',
+
   /** Environment platform name */
   name: 'Prod',
 
