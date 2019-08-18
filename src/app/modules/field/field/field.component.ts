@@ -2,22 +2,22 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Helper } from 'src/app/core/helper.service';
-import { LevelModalComponent } from '../level-modal/level-modal.component';
-import { Level } from '../model/level';
-import { LevelService } from '../services/level.service';
+import { FieldModalComponent } from '../field-modal/field-modal.component';
+import { Field } from '../model/field';
+import { FieldService } from '../services/field.service';
 
 @Component({
-  selector: 'app-level',
-  templateUrl: './level.component.html',
-  styleUrls: ['./level.component.css']
+  selector: 'app-field',
+  templateUrl: './field.component.html',
+  styleUrls: ['./field.component.css']
 })
-export class LevelComponent implements OnInit {
+export class FieldComponent implements OnInit {
 
-  levels: Level[] = [];
+  fields: Field[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'levelName', 'description', 'establishment', 'more'];
-  dataSource: MatTableDataSource<Level>;
-  selection = new SelectionModel<Level>(true, []);
+  displayedColumns: string[] = ['select', 'id', 'fieldName', 'description', 'level', 'more'];
+  dataSource: MatTableDataSource<Field>;
+  selection = new SelectionModel<Field>(true, []);
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,12 +26,12 @@ export class LevelComponent implements OnInit {
   selectAction: String = 'delete';
 
   constructor(private readonly helper: Helper,
-    private readonly _LevelService: LevelService,
+    private readonly _FieldService: FieldService,
     public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.getAllLevel();
+    this.getAllField();
   }
 
   applyFilter(filterValue: string) {
@@ -42,20 +42,20 @@ export class LevelComponent implements OnInit {
   }
 
   /**
-  * Get all Levels
+  * Get all Fields
   */
-  getAllLevel() {
-    this._LevelService.getAllLevels().subscribe(
-      (data: Level[]) => {
-        this.levels = data;
+  getAllField() {
+    this._FieldService.getAllFields().subscribe(
+      (data: Field[]) => {
+        this.fields = data;
         // Assign the data to the data source for the table to render
-        this.dataSource = new MatTableDataSource(this.levels);
+        this.dataSource = new MatTableDataSource(this.fields);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
-      () => this.helper.trace('Get all Levels complete ' + this.levels.length));
+      () => this.helper.trace('Get all Fields complete ' + this.fields.length));
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -73,7 +73,7 @@ export class LevelComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Level): string {
+  checkboxLabel(row?: Field): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -81,7 +81,7 @@ export class LevelComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(LevelModalComponent, {
+    const dialogRef = this.dialog.open(FieldModalComponent, {
       width: '250px',
       data: { name: 'Guest', animal: 'Guest' }
     });

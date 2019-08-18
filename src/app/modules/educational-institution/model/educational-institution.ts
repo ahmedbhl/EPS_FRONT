@@ -1,4 +1,4 @@
-import { Administration } from "src/app/shared/models/administration";
+import { Administration } from 'src/app/shared/models/administration';
 
 export class EducationalInstitution {
 
