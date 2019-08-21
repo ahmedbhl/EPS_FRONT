@@ -12,6 +12,7 @@ export const routes: Routes = [
     { path: 'level', loadChildren: './modules/level/level.module#LevelModule' },
     { path: 'field', loadChildren: './modules/field/field.module#FieldModule' },
     { path: 'classe', loadChildren: './modules/classe/classe.module#ClasseModule' },
+    { path: 'course', loadChildren: './modules/course/course.module#CourseModule' },
     { path: 'error500', loadChildren: './modules/errors/error500/error500.module#Error500Module' },
 
 

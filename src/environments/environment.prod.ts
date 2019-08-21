@@ -18,6 +18,9 @@ export const environment = {
   classe_url: 'https://95fdde58.ngrok.io/api/v1/classes',
   classe_url_api_backend_type: 'java',
 
+  course_url: 'https://95fdde58.ngrok.io/api/v1/courses',
+  course_url_api_backend_type: 'java',
+
   /** Environment platform name */
   name: 'Prod',
 
