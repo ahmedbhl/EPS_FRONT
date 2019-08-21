@@ -10,8 +10,10 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { ClasseModule } from './modules/classe/classe.module';
 import { EducationalInstitutionModule } from './modules/educational-institution/educational-institution.module';
 import { Error500Module } from './modules/errors/error500/error500.module';
+import { FieldModule } from './modules/field/field.module';
 import { HomeActorsModule } from './modules/home-actors/home-actors.module';
 import { HomeModule } from './modules/home/home.module';
 import { LevelModule } from './modules/level/level.module';
@@ -22,8 +24,6 @@ import { BasicAuthInterceptor } from './shared/helpers';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
-import { FieldComponent } from './modules/field/field/field.component';
-import { FieldModule } from './modules/field/field.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +40,7 @@ import { FieldModule } from './modules/field/field.module';
     Error500Module,
     LevelModule,
     FieldModule,
+    ClasseModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),
@@ -54,7 +55,7 @@ import { FieldModule } from './modules/field/field.module';
   ],
   exports: [],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },],
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

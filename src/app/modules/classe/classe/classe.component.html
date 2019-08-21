@@ -37,9 +37,9 @@
         </ng-container>
 
         <!-- Progress Column -->
-        <ng-container matColumnDef="levelName">
+        <ng-container matColumnDef="classeName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let row"> {{row.levelName}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.classeName}} </td>
         </ng-container>
 
         <!-- Name Column -->
@@ -49,9 +49,9 @@
         </ng-container>
 
         <!-- educationalInstitution Column -->
-        <ng-container matColumnDef="establishment">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Institution </th>
-          <td mat-cell *matCellDef="let row"> {{row.establishment.establishmentName}} </td>
+        <ng-container matColumnDef="field">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Field </th>
+          <td mat-cell *matCellDef="let row"> {{row.field.fieldName}} </td>
         </ng-container>
 
         <!-- more Column -->

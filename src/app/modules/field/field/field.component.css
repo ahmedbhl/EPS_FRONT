@@ -45,8 +45,12 @@ table {
     width: 93%;
 }
 
-td, th {
+/*td, th {
     width: 15%;
+}*/
+td.mat-column-more, th.mat-column-more  {
+    width: 20px;
+    padding-right: 8px;
 }
 
 .tab-footer {
