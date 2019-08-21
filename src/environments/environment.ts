@@ -21,6 +21,9 @@ export const environment = {
   field_url: 'http://localhost:8080/api/v1/fields',
   field_url_api_backend_type: 'java',
 
+  classe_url: 'http://localhost:8080/api/v1/classes',
+  classe_url_api_backend_type: 'java',
+
 };
 
 /*
