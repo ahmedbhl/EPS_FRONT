@@ -1,5 +1,5 @@
 <!-- If the user connected then must be redirected to the homeAcotrs or administartionHome page -->
 <div>
     <app-side-nav> </app-side-nav>
-    <app-footer [hidden]="!currentUser" class="footer"></app-footer>
+    <app-footer *ngIf="currentUser" class="footer"></app-footer>
 </div>

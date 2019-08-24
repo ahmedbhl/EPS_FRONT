@@ -1,0 +1,85 @@
+<script>
+    addEventListener("load", function() {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+</script>
+
+<!-- main -->
+<div class="w3layouts-main">
+    <div class="bg-layer">
+        <mat-icon routerLink="/home" class="pointer">keyboard_arrow_left</mat-icon>
+
+        <h1>Educational Personal Space Sign In</h1>
+        <div class="header-main">
+            <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
+                <div class="main-icon">
+                    <span class="fa fa-graduation-cap" aria-hidden="true"></span>
+                </div>
+                <div *ngIf="error" class="alert alert-danger signup-error">{{error}}</div>
+                <div class="header-left-bottom">
+                    <mat-button-toggle-group name="fontStyle" formControlName="role" color="accent" aria-label="Font Style" class="mat-button-toggle-groupe" [ngClass]="{ 'is-invalid': submitted && form.role.errors }">
+                        <mat-button-toggle value="Professor" class="mat-button-toggle-small">Professor</mat-button-toggle>
+                        <mat-button-toggle value="Administration" class="mat-button-toggle-large">Administration
+                        </mat-button-toggle>
+                        <mat-button-toggle value="Student" class="mat-button-toggle-small">Student</mat-button-toggle>
+                    </mat-button-toggle-group>
+                    
+                    <div class="icon1">
+                        <span class="fa fa-id-card"></span>
+                        <input type="text" placeholder="First Name" required="" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && form.firstName.errors }" />
+                    </div>
+                    <div *ngIf="submitted && form.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="form.firstName.errors.required">fisrtName is required</div>
+                    </div>
+
+                    <div class="icon1">
+                        <span class="fa fa-address-card"></span>
+                        <input type="text" placeholder="Last Name" required="" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && form.lastName.errors }" />
+                    </div>
+                    <div *ngIf="submitted && form.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="form.lastName.errors.required">lastName is required</div>
+                    </div>
+
+                    <div class="icon1">
+                        <span class="fa fa-user"></span>
+                        <input type="email" placeholder="Email Address" required="" formControlName="username" [ngClass]="{ 'is-invalid': submitted && form.username.errors }" />
+                    </div>
+                    <div *ngIf="submitted && form.username.errors" class="invalid-feedback">
+                        <div *ngIf="form.username.errors.required">Username is required</div>
+                    </div>
+                    <div class="icon1">
+                        <span class="fa fa-lock"></span>
+                        <input type="password" placeholder="Password" formControlName="password" required="" [ngClass]="{ 'is-invalid': submitted && form.password.errors }" />
+                    </div>
+                    <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
+                        <div *ngIf="form.password.errors.required">Password is required</div>
+                    </div>
+                    <div class="login-check">
+                        <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i> Keep me
+                            logged in</label>
+                    </div>
+                    <div class="bottom">
+                        <button class="btn">SIGN UP</button>
+                    </div>
+                    <div class="links">
+                        <p><a href="#">Forgot Password?</a></p>
+                        <div class="clear"></div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+        <!-- copyright -->
+        <div class="copyright">
+            <p>© 2019 Eps . All rights reserved
+            </p>
+        </div>
+        <!-- //copyright -->
+    </div>
+</div>
+<!-- //main -->

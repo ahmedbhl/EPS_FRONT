@@ -25,6 +25,8 @@ import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
 import { CourseModule } from './modules/course/course.module';
+import { SignupComponent } from './modules/signup/signup.component';
+import { SignupModule } from './modules/signup/signup.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { CourseModule } from './modules/course/course.module';
     FieldModule,
     ClasseModule,
     CourseModule,
+    SignupModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),
