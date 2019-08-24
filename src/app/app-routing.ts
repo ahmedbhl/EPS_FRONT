@@ -14,6 +14,8 @@ export const routes: Routes = [
     { path: 'classe', loadChildren: './modules/classe/classe.module#ClasseModule' },
     { path: 'course', loadChildren: './modules/course/course.module#CourseModule' },
     { path: 'signup', loadChildren: './modules/signup/signup.module#SignupModule' },
+    { path: 'reset', loadChildren: './modules/forgot-password/forgot-password.module#ForgotPasswordModule' },
+
     { path: 'error500', loadChildren: './modules/errors/error500/error500.module#Error500Module' },
 
 ];
