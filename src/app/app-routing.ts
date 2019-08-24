@@ -13,8 +13,7 @@ export const routes: Routes = [
     { path: 'field', loadChildren: './modules/field/field.module#FieldModule' },
     { path: 'classe', loadChildren: './modules/classe/classe.module#ClasseModule' },
     { path: 'course', loadChildren: './modules/course/course.module#CourseModule' },
+    { path: 'signup', loadChildren: './modules/signup/signup.module#SignupModule' },
     { path: 'error500', loadChildren: './modules/errors/error500/error500.module#Error500Module' },
-
-
 
 ];
