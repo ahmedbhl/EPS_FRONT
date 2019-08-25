@@ -27,6 +27,7 @@ import { BasicAuthInterceptor } from './shared/helpers';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
+import { UserModule } from './modules/user/user.module';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SideNavComponent } from './shared/side-nav/side-nav.component';
     CourseModule,
     SignupModule,
     ForgotPasswordModule,
+    UserModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),
