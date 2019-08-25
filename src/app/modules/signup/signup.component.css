@@ -1,84 +1,5 @@
 @import "../../../assets/css/font-awesome.min.css";
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-dl,
-dt,
-dd,
-ol,
-nav ul,
-nav li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
     margin: 0;
     padding: 0;
     border: 0;
@@ -87,36 +8,21 @@ video {
     vertical-align: baseline;
 }
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
     display: block;
 }
 
-ol,
-ul {
+ol, ul {
     list-style: none;
     margin: 0px;
     padding: 0px;
 }
 
-blockquote,
-q {
+blockquote, q {
     quotes: none;
 }
 
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
+blockquote:before, blockquote:after, q:before, q:after {
     content: '';
     content: none;
 }
@@ -125,7 +31,6 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
-
 
 /*-- start editing from here --*/
 
@@ -137,13 +42,11 @@ a {
     text-align: right;
 }
 
-
 /* text align right */
 
 .txt-lt {
     text-align: left;
 }
-
 
 /* text align left */
 
@@ -151,13 +54,11 @@ a {
     text-align: center;
 }
 
-
 /* text align center */
 
 .float-rt {
     float: right;
 }
-
 
 /* float right */
 
@@ -165,13 +66,11 @@ a {
     float: left;
 }
 
-
 /* float left */
 
 .clear {
     clear: both;
 }
-
 
 /* clear float */
 
@@ -179,13 +78,11 @@ a {
     position: relative;
 }
 
-
 /* Position Relative */
 
 .pos-absolute {
     position: absolute;
 }
-
 
 /* Position Absolute */
 
@@ -193,13 +90,11 @@ a {
     vertical-align: baseline;
 }
 
-
 /* vertical align baseline */
 
 .vertical-top {
     vertical-align: top;
 }
-
 
 /* vertical align top */
 
@@ -207,13 +102,11 @@ nav.vertical ul li {
     display: block;
 }
 
-
 /* vertical menu */
 
 nav.horizontal ul li {
     display: inline-block;
 }
-
 
 /* horizontal menu */
 
@@ -221,13 +114,11 @@ img {
     max-width: 100%;
 }
 
-
 /*-- end reset --*/
 
 body {
     font-family: 'Hind', sans-serif;
 }
-
 
 /*-- main --*/
 
@@ -240,7 +131,6 @@ h1 {
     text-align: center;
     padding: 1em 0 0.4em 0;
 }
-
 
 /*-- slide --*/
 
@@ -280,9 +170,7 @@ h1 {
     min-height: 100vh;
 }
 
-
 /*-- //slide --*/
-
 
 /*--header start here--*/
 
@@ -382,6 +270,7 @@ a {
     background: transparent;
     letter-spacing: 1px;
 }
+
 .header-left-bottom input[type="text"] {
     outline: none;
     font-size: 15px;
@@ -410,7 +299,6 @@ a {
     border: none;
     width: 100%;
 }
-
 
 /*-- agileits --*/
 
@@ -549,9 +437,7 @@ input[type="checkbox" i] {
     display: none;
 }
 
-
 /*-- w3layouts --*/
-
 
 /*-- header end here --*/
 
@@ -573,7 +459,6 @@ h3 a {
     color: #04c9f9;
     text-decoration: underline;
 }
-
 
 /*-- copyright --*/
 
@@ -598,12 +483,9 @@ h3 a {
     transition: 0.5s all;
 }
 
-
 /*-- //copyright --*/
 
-
 /*-- //main --*/
-
 
 /*-- responsive-design --*/
 
@@ -635,8 +517,7 @@ h3 a {
         max-width: 310px;
         margin: 0 1em;
     }
-    .header-left-bottom input[type="email"],
-    .header-left-bottom input[type="password"] {
+    .header-left-bottom input[type="email"], .header-left-bottom input[type="password"] {
         width: 88%;
     }
     .social ul li {
@@ -666,9 +547,46 @@ h3 a {
     margin-bottom: 5%;
     background-color: white;
 }
+
 .mat-button-toggle-large {
     width: 40%
 }
+
 .mat-button-toggle-small {
     width: 30%
+}
+
+.bottom-activation {
+    padding: 5px;
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    border: none;
+    box-shadow: none;
+    background-color: chartreuse;
+    font-size: x-large;
+    color: white;
+    cursor: pointer;
+}
+
+.activation {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.activation-msg {
+    color: white;
+    font-size: x-large;
+    font-family: monospace;
+    margin-bottom: 10px;
+}
+
+.activation-main-icon {
+    margin-bottom: 0;
+}
+
+.signup-success {
+    margin-bottom: 11px;
+    padding: 10px;
+    font-family: monospace;
 }
