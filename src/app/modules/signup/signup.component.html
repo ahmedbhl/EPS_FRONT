@@ -11,21 +11,25 @@
 <!-- main -->
 <div class="w3layouts-main">
     <div class="bg-layer">
-        <mat-icon routerLink="/login" class="pointer">keyboard_arrow_left</mat-icon>
+        <mat-icon routerLink="/login" class="pointer" *ngIf="!activatedKeyStat">keyboard_arrow_left</mat-icon>
 
-        <h1>Educational Personal Space Sign Up</h1>
+        <h1 *ngIf="!activatedKeyStat">Educational Personal Space Sign Up</h1>
+        <h1 *ngIf="activatedKeyStat">Educational Personal Space Activation</h1>
+
         <div class="header-main">
             <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
-                <div class="main-icon">
-                    <span class="fa fa-graduation-cap" aria-hidden="true"></span>
+                <div class="main-icon" [class.activation-main-icon]="activatedKeyStat">
+                    <span class="fa fa-graduation-cap" aria-hidden="true"></span><br>
+                    <span [class.activation-msg]="activatedKeyStat" *ngIf="activatedKeyStat">Congratulations, your account has been activated!</span>
                 </div>
                 <div *ngIf="error" class="alert alert-danger signup-error">{{error}}</div>
-                <div class="header-left-bottom">
+                <div *ngIf="isSignup" class="alert alert-success signup-success">You Are Successfully Registered</div>
+                <div class="header-left-bottom" *ngIf="!activatedKeyStat">
                     <mat-button-toggle-group name="fontStyle" formControlName="role" color="accent" aria-label="Font Style" class="mat-button-toggle-groupe" [ngClass]="{ 'is-invalid': submitted && form.role.errors }">
-                        <mat-button-toggle value="Professor" class="mat-button-toggle-small">Professor</mat-button-toggle>
-                        <mat-button-toggle value="Administration" class="mat-button-toggle-large">Administration
+                        <mat-button-toggle value="professor" class="mat-button-toggle-small">Professor</mat-button-toggle>
+                        <mat-button-toggle value="administration" class="mat-button-toggle-large">Administration
                         </mat-button-toggle>
-                        <mat-button-toggle value="Student" class="mat-button-toggle-small">Student</mat-button-toggle>
+                        <mat-button-toggle value="student" class="mat-button-toggle-small">Student</mat-button-toggle>
                     </mat-button-toggle-group>
                     
                     <div class="icon1">
@@ -46,10 +50,10 @@
 
                     <div class="icon1">
                         <span class="fa fa-user"></span>
-                        <input type="email" placeholder="Email Address" required="" formControlName="username" [ngClass]="{ 'is-invalid': submitted && form.username.errors }" />
+                        <input type="email" placeholder="Email Address" required="" formControlName="email" [ngClass]="{ 'is-invalid': submitted && form.email.errors }" />
                     </div>
-                    <div *ngIf="submitted && form.username.errors" class="invalid-feedback">
-                        <div *ngIf="form.username.errors.required">Username is required</div>
+                    <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
+                        <div *ngIf="form.email.errors.required">email is required</div>
                     </div>
                     <div class="icon1">
                         <span class="fa fa-lock"></span>
@@ -63,13 +67,15 @@
                             logged in</label>
                     </div>
                     <div class="bottom">
-                        <button class="btn">SIGN UP</button>
+                        <button class="btn" [disabled]="!signupForm.valid">SIGN UP</button>
                     </div>
                     <div class="links">
                         <p><a href="#" routerLink="/reset">Forgot Password?</a></p>
                         <div class="clear"></div>
                     </div>
-
+                </div>
+                <div class="activation" *ngIf="activatedKeyStat">
+                        <button class="bottom-activation"  routerLink="/login">Done</button>
                 </div>
             </form>
         </div>
