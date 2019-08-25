@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/user.class';
 import { environment } from 'src/environments/environment';
 import { Helper } from '../helper.service';
+import { HttpHeader } from 'src/app/shared/helpers/http-header';
 
 @Injectable()
 export class UserService {
@@ -41,7 +42,7 @@ export class UserService {
     */
     public getAllUsers(): Observable<User[]> {
         console.log('get the list of all Users ' + this.userUrl);
-        return this.http.get<User[]>(`${this.userUrl}`, { headers: this.headers });
+        return this.http.get<User[]>(`${this.userUrl}`, { headers: HttpHeader.getHeaders() });
     }
 
     /**
