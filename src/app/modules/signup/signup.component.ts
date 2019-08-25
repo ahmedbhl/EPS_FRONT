@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
   submitted = false;
   error = '';
   activatedKeyStat = false;
-  isSignup =false;
+  isSignup = false;
 
   user: User;
 
