@@ -21,13 +21,14 @@ import { HomeModule } from './modules/home/home.module';
 import { LevelModule } from './modules/level/level.module';
 import { LoginModule } from './modules/login/login.module';
 import { SignupModule } from './modules/signup/signup.module';
+import { UserModule } from './modules/user/user.module';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { BasicAuthInterceptor } from './shared/helpers';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
-import { UserModule } from './modules/user/user.module';
+import { LibraryModule } from './modules/library/library.module';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { UserModule } from './modules/user/user.module';
     SignupModule,
     ForgotPasswordModule,
     UserModule,
+    LibraryModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),
