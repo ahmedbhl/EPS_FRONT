@@ -108,11 +108,13 @@
     position: relative;
     top: 70px;
     margin-bottom: 80px;
+    height: calc(100vh - 130px);
+
 }
 
 .home {
     background: transparent;
-    height: 100%;
+    height: calc(100vh - 50px);
     overflow-y: auto;
 }
 
