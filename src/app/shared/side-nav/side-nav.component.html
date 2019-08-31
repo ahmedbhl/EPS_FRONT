@@ -38,10 +38,8 @@
                 <mat-icon>class</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Class</span></a>
             <a mat-list-item href="#" routerLink="/course">
                 <mat-icon>cast_for_education </mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Course</span></a>
-            <a mat-list-item href="#">
-                <mat-icon>record_voice_over</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Professor</span></a>
-            <a mat-list-item href="#">
-                <mat-icon>group</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage students</span></a>
+            <a mat-list-item href="#" routerLink="/user">
+                <mat-icon>group</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Users</span></a>
             <a mat-list-item (click)="logout()">
                 <mat-icon>power_settings_new</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Logout</span></a>
         </mat-nav-list>

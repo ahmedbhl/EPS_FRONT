@@ -27,6 +27,9 @@ export const environment = {
   course_url: 'http://localhost:8080/api/v1/courses',
   course_url_api_backend_type: 'java',
 
+  library_url: 'http://localhost:8080/api/v1/library',
+  library_url_api_backend_type: 'java',
+
 };
 
 /*
