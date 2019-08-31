@@ -86,3 +86,11 @@ td.mat-column-more, th.mat-column-more  {
     height: 30px;
     text-align: center;
 }
+
+.green {
+    color: forestgreen;
+}
+
+.red {
+    color: indianred;
+}

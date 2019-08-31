@@ -1,0 +1,137 @@
+.library-container {
+    height: 100vh;
+}
+
+.library-details {
+    padding: 0 13px;
+}
+
+.header {
+    width: 100%;
+    padding: 10px;
+    height: 80px;
+}
+
+.btn-create {
+    float: right;
+    background-color: #0070e0;
+    color: white;
+    cursor: pointer;
+    margin: 100px 0 20px 0;
+    margin: 40px 0;
+    width: 240px;
+}
+
+.btn-create-text {
+    margin-left: 10p;
+    height: 30px;
+    text-align: center;
+}
+
+.data-table {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+    float: left;
+    padding: 0 5px;
+}
+
+.mat-form-field-wrapper {
+    padding: 0;
+    margin: 0;
+}
+
+.filter {
+    width: 93%;
+}
+
+/*td, th {
+    width: 15%;
+}*/
+
+td.mat-column-more, th.mat-column-more {
+    width: 20px;
+    padding-right: 8px;
+}
+
+.tab-footer {
+    width: 100%;
+}
+
+.footer-left {
+    width: 50%;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 56px;
+    padding: 0 24px;
+}
+
+.footer-select {
+    width: 233px;
+    margin: 0 11px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 7px;
+    padding: 3px 5px;
+    height: 32px;
+}
+
+.footer-checkbox {
+    vertical-align: middle;
+}
+
+.file-icon {
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.file-name {
+    vertical-align: super;
+    font-size: large;
+    cursor: pointer;
+}
+
+.library-menu {
+    zoom: 1;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    box-sizing: border-box;
+    text-align: left;
+    font-family: AtlasGrotesk, sans-serif;
+    font-size: 14px;
+    border: none;
+    background-color: transparent;
+    text-decoration: none;
+    border-radius: 4px;
+    outline: none;
+    margin: 0;
+    padding: 0 8px 0 0;
+    max-width: 100%;
+    -ms-flex-align: center;
+    align-items: center;
+    color: #0061ff;
+    font-size: large;
+    vertical-align: super;
+}
+
+.library-menu-icon {
+    color: #0061ff;
+    font-size: xx-large;
+    margin: 0 15px;
+}
