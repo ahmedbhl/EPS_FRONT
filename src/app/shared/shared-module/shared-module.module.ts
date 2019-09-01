@@ -12,14 +12,14 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   declarations: [],
   imports: [
     CommonModule,
-    MaterialModule, 
+    MaterialModule,
     HttpClientModule,
     FlexLayoutModule,
     PickerModule,
     ReactiveFormsModule,
     FormsModule
   ],
-  exports: [CommonModule, MaterialModule, HttpClientModule,FlexLayoutModule,PickerModule,ReactiveFormsModule,FormsModule]
+  exports: [CommonModule, MaterialModule, HttpClientModule, FlexLayoutModule, PickerModule, ReactiveFormsModule, FormsModule]
 })
 export class SharedModuleModule {
   static forRoot(): ModuleWithProviders {

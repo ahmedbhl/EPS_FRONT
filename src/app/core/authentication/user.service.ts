@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HttpHeader } from 'src/app/shared/helpers/http-header';
 import { User } from 'src/app/shared/models/user.class';
 import { environment } from 'src/environments/environment';
 import { Helper } from '../helper.service';
-import { HttpHeader } from 'src/app/shared/helpers/http-header';
 
 @Injectable()
 export class UserService {
@@ -43,6 +43,14 @@ export class UserService {
     public getAllUsers(): Observable<User[]> {
         console.log('get the list of all Users ' + this.userUrl);
         return this.http.get<User[]>(`${this.userUrl}`, { headers: HttpHeader.getHeaders() });
+    }
+
+    /**
+      * Get all the educationnal institutions
+      */
+    public getAllAdministrations(): Observable<User[]> {
+        console.log('get the list of all Administrations ' + this.userUrl);
+        return this.http.get<User[]>(`${this.userUrl}/administrations`, { headers: HttpHeader.getHeaders() });
     }
 
     /**
@@ -86,6 +94,15 @@ export class UserService {
     public delete(user: User): Observable<User> {
         this.helper.trace(`deleting : ${user.id}`);
         return this.http.delete<User>(`${this.userUrl}/${user.id}`, { headers: this.headers });
+    }
+
+    /**
+     * 
+     * @param id
+     */
+    changeStatus(id: number): Observable<boolean> {
+        this.helper.trace(`Update the User status`);
+        return this.http.put<boolean>(`${this.userUrl}/status/${id}`, { headers: this.headers });
     }
 
     /**
