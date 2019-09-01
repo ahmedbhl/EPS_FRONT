@@ -1,21 +1,24 @@
 <div class="custom-container">
   <div class="header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter" class="filter">
-      <mat-icon>search</mat-icon>
-    </mat-form-field>
+    <span class="header-left">Users Management</span>
     <button mat-raised-button class="btn-create primary" (click)="openDialog()">
       <mat-icon>add</mat-icon>
       <span class="btn-create-text">Add New User</span>
     </button>
   </div>
-  <mat-divider></mat-divider>
+  <mat-divider class="header-divider"></mat-divider>
+
   <div class="data-table">
-
-
     <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort>
 
+      <div class="filter-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          <mat-icon class="filter-icon">search</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <table mat-table [dataSource]="dataSource" matSort>
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
@@ -69,7 +72,11 @@
         <!-- educationalInstitution Column -->
         <ng-container matColumnDef="enabled">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-          <td mat-cell *matCellDef="let row"><mat-icon [class.green]="row.enabled"  [class.red]="!row.enabled" >fiber_manual_record</mat-icon></td>
+          <td mat-cell *matCellDef="let row; let i=index;">
+            <input type="checkbox" [id]="i" [checked]="row.enabled" (click)="changeUserStat(row.id)" /><label
+              [for]="i">Toggle</label>
+            <!--  <mat-icon [class.green]="row.enabled"  [class.red]="!row.enabled" >fiber_manual_record</mat-icon>-->
+          </td>
         </ng-container>
 
         <!-- more Column -->

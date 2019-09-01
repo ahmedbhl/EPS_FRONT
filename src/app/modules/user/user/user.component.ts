@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from 'src/app/shared/models/user.class';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Helper } from 'src/app/core/helper.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { UserService } from 'src/app/core/authentication/user.service';
+import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
 import { UserModalComponent } from '../user-modal/user-modal.component';
 
 @Component({
@@ -78,6 +78,18 @@ export class UserComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+
+  /**
+   * Used for change the User status
+   */
+  changeUserStat(id: number) {
+    if (id) {
+      this._userService.changeStatus(id).subscribe(actiovationResult => {
+        this.helper.trace('Update the User status done');
+      });
+    }
   }
 
   openDialog(): void {

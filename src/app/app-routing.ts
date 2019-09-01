@@ -9,6 +9,8 @@ export const routes: Routes = [
     { path: 'homeAdministration', loadChildren: './modules/home-administration/home-administration.module#HomeAdministrationModule' },
     { path: 'homeSuperAdmin', loadChildren: './modules/home-super-admin/home-super-admin.module#HomeSuperAdminModule' },
     { path: 'educationalinstitution', loadChildren: './modules/educational-institution/educational-institution.module#EducationalInstitutionModule' },
+    { path: 'create', loadChildren: './modules/educational-institution/create-educational-institution/create-educational-institution.module#CreateEducationalInstitutionModule' },
+
     { path: 'level', loadChildren: './modules/level/level.module#LevelModule' },
     { path: 'field', loadChildren: './modules/field/field.module#FieldModule' },
     { path: 'classe', loadChildren: './modules/classe/classe.module#ClasseModule' },
