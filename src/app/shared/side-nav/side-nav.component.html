@@ -14,13 +14,13 @@
         <div [class.profile-card]="!isHandset" [class.profile-card-dock]="isHandset">
             <div class="profile-card-header d-flex ">
                 <a href="/profile/edmodo-teacher-e15a0c370e-edmo/?utm_source=profile_card" class="href-profil">
-                    <img [class.img-profil]="!isHandset" [class.img-profil-dock]="isHandset" src="assets/images/avatars/profile.jpg" alt="Zayneb Hamila">
+                    <img [class.img-profil]="!isHandset" [class.img-profil-dock]="isHandset" [src]="profilePictureLink" alt="Zayneb Hamila">
                 </a>
                 <mat-divider class="divider" *ngIf="!isHandset"></mat-divider>
             </div>
             <div class="profile-card-header" *ngIf="!isHandset">
-                <span class="profile-header-text">zaynab Hamila</span>
-                <a href="#">voir le profil</a>
+                <span class="profile-header-text">{{currentUser.firstName}} {{currentUser.lastName}}</span>
+                <a href="#">See profile </a>
             </div>
         </div>
         <mat-divider *ngIf="isHandset"></mat-divider>

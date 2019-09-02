@@ -110,3 +110,19 @@ td.mat-column-more, th.mat-column-more  {
     height: 30px;
     text-align: center;
 }
+
+.empty-data-source {
+    width: 526px;
+    height: 90px;
+    font-size: 1.7em;
+    text-align: center;
+    border: 2px solid #007bff;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    font-family: sans-serif;
+    color: grey;
+    border-radius: 20px;
+}

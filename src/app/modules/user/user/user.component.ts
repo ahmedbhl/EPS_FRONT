@@ -15,7 +15,8 @@ export class UserComponent implements OnInit {
 
   users: User[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'profilePicture', 'email', 'firstName', 'lastName', 'phoneNumber', 'enabled', 'more'];
+  // tslint:disable-next-line: max-line-length
+  displayedColumns: string[] = ['select', 'id', 'profilePicture', 'email', 'firstName', 'lastName', 'phoneNumber', 'roles', 'enabled', 'more'];
   dataSource: MatTableDataSource<User>;
   selection = new SelectionModel<User>(true, []);
 
