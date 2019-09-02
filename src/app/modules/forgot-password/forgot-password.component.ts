@@ -59,6 +59,9 @@ export class ForgotPasswordComponent implements OnInit {
         this.isExistedUserMail = false;
         this.resetForm.reset();
       }, 50000);
+    }, error => {
+      this.error = 'Invalid Email Address';
+      this.loading = false;
     });
   }
 
@@ -79,6 +82,9 @@ export class ForgotPasswordComponent implements OnInit {
           this.isValidKey = data;
           this.resetForm.controls['email'].setValue(this.email);
         }
+      }, error => {
+        this.error = 'Invalid Key';
+        this.loading = false;
       });
     }
   }
@@ -104,6 +110,9 @@ export class ForgotPasswordComponent implements OnInit {
     if (this.isValidKey && this.resetForm.value.repassword === this.resetForm.value.password && key && (this.email === this.resetForm.value.email)) {
       this.userService.resetPassword(this.email, key, this.resetForm.value.password).subscribe(data => {
         this.isResetedPassword = data;
+      }, error => {
+        this.error = 'Error Occurred';
+        this.loading = false;
       });
     }
   }

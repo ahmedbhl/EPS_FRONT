@@ -1,10 +1,8 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { User } from '../models/user.class';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
@@ -16,6 +14,7 @@ export class SideNavComponent {
   isProfessorOrStudent = false;
 
   currentUser: User;
+  profilePictureLink: string;
 
   isHandset: boolean = false;
   /*$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -29,13 +28,14 @@ export class SideNavComponent {
     console.log('isProfessorOrStudent = > ' + this.isProfessorOrStudent)
 
     this.authenticationService.currentUser.subscribe(data => {
-      this.currentUser = data
+      this.currentUser = data;
       const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
       if (roles.indexOf('PROFESSOR') > -1 || roles.indexOf('STUDENT') > -1) {
         this.isProfessorOrStudent = true;
       } else {
         this.isProfessorOrStudent = false;
       }
+      this.getPictureLink();
     });
   }
   dock() {
@@ -44,6 +44,14 @@ export class SideNavComponent {
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
+  }
+
+  getPictureLink() {
+    if (this.currentUser && this.currentUser.profilePicture) {
+      this.profilePictureLink = 'https://www.dropbox.com/s/y43l8fs6gf01xmx/pic.jpg?raw=1';
+    } else {
+      this.profilePictureLink = 'assets/images/avatars/profile.jpg';
+    }
   }
 
 }
