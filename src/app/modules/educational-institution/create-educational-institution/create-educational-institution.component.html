@@ -28,8 +28,8 @@
       <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
           <mat-label>Administration</mat-label>
-          <mat-select formControlName="administration" *ngFor = "let administration of administrations"required>
-            <mat-option [value]="administration">
+          <mat-select formControlName="administration" required>
+            <mat-option  *ngFor = "let administration of administrations" [value]="administration">
               {{administration.firstName}} {{administration.lastName}}
             </mat-option>
           </mat-select>
