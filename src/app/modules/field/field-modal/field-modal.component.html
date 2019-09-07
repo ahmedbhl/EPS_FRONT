@@ -1,3 +1,59 @@
-<p>
-  level-modal works!
-</p>
+<div id="forms" class="page-layout" fxLayout="column">
+
+  <!-- HEADER -->
+  <span class="header-left">Add New Field</span>
+  <mat-divider class="header-divider"></mat-divider>
+
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+    <!-- REACTIVE FORM EXAMPLE -->
+
+    <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+      [formGroup]="form">
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Level</mat-label>
+          <mat-select formControlName="level" required>
+            <mat-option *ngFor="let level of levels" [value]="level">
+              {{level.levelName}}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix class="secondary-text">collections_bookmark</mat-icon>
+          <mat-error>Level is required!</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+          <mat-label>Field Name</mat-label>
+          <input matInput formControlName="fieldName" required>
+          <mat-icon matSuffix class="secondary-text">class</mat-icon>
+          <mat-error>Field Name is required!</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" required>
+          <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+          <mat-error>Description is required!</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <button mat-raised-button [disabled]="!form.valid" color="primary" class="btn-save">
+          <mat-icon>save</mat-icon> save
+        </button>
+        <button mat-raised-button color="warn" class="btn-delete" (click)="onNoClick()">
+          <mat-icon>cancel</mat-icon> Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- / CONTENT -->
+
+</div>
