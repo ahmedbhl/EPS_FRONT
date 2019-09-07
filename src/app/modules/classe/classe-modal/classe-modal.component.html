@@ -19,7 +19,7 @@
           <mat-label>Field</mat-label>
           <mat-select formControlName="field" required>
             <mat-option *ngFor="let field of fields" [value]="field">
-              {{field.fieldName}}
+              {{field.fieldName}} - {{field.level.establishment.establishmentName}}
             </mat-option>
           </mat-select>
           <mat-icon matSuffix class="secondary-text">collections_bookmark</mat-icon>

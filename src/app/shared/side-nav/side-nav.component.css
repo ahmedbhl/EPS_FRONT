@@ -109,7 +109,6 @@
     top: 70px;
     margin-bottom: 80px;
     height: calc(100vh - 130px);
-
 }
 
 .home {
@@ -148,4 +147,9 @@
 .btn-dock {
     outline: none;
     text-align: start;
+}
+
+.profil-email {
+    color: gray;
+    font-size: smaller;
 }

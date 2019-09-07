@@ -19,8 +19,8 @@
                 <mat-divider class="divider" *ngIf="!isHandset"></mat-divider>
             </div>
             <div class="profile-card-header" *ngIf="!isHandset">
-                <span class="profile-header-text">{{currentUser.firstName}} {{currentUser.lastName}}</span>
-                <a href="#">See profile </a>
+                <span class="profile-header-text"><a href="#">{{currentUser.firstName}} {{currentUser.lastName}}</a></span>
+                <span class="profil-email">{{currentUser.email}}</span>
             </div>
         </div>
         <mat-divider *ngIf="isHandset"></mat-divider>

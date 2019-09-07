@@ -42,7 +42,8 @@
         <!-- Progress Column -->
         <ng-container matColumnDef="profilePicture">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-          <td mat-cell *matCellDef="let row"> {{row.profilePicture}} </td>
+          <td mat-cell *matCellDef="let row">
+            <img src={{row.profilePicture}} /> </td>
         </ng-container>
 
         <!-- Name Column -->
