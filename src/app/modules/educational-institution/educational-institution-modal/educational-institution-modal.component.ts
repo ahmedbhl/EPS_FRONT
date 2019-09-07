@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject } from 'rxjs';
 import { UserService } from 'src/app/core/authentication/user.service';
+import { SnackBarService } from 'src/app/core/snack-bar.service';
 import { User } from 'src/app/shared/models/user.class';
 import { EducationalInstitution } from '../model/educational-institution';
 import { EducationalInstitutionService } from '../services/educational-institution.service';
@@ -29,6 +30,7 @@ export class EducationalInstitutionModalComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private userService: UserService,
     private educationalInstitutionService: EducationalInstitutionService,
+    private snackBar: SnackBarService,
     private datePipe: DatePipe) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -54,7 +56,11 @@ export class EducationalInstitutionModalComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.establishement.administration.dateOfRegistration = this.datePipe.transform(this.establishement.administration.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
     this.educationalInstitutionService.save(this.establishement).subscribe(item => {
-      console.log('adding new education instution');
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The new Level has been added successfully');
+        this.dialogRef.close({ level: item });
+        console.log('adding new education instution');
+      }
     });
 
 
@@ -68,7 +74,7 @@ export class EducationalInstitutionModalComponent implements OnInit {
       description: ['', Validators.required],
       yearOfFoundation: [new Date(), Validators.required],
       location: ['', Validators.required],
-      photos: ['', Validators.required],
+      photos: ['assets/images/avatars/profile.jpg', Validators.required],
       administration: [null, Validators.required],
     });
   }

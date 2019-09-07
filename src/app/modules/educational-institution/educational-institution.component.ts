@@ -40,6 +40,13 @@ export class EducationalInstitutionComponent implements OnInit {
     }
   }
 
+  initDataSource() {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.educationalInstitutions);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   /**
   * Get all Educational Institutions
   */
@@ -49,8 +56,6 @@ export class EducationalInstitutionComponent implements OnInit {
         this.educationalInstitutions = data;
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.educationalInstitutions);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
@@ -86,6 +91,7 @@ export class EducationalInstitutionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getAllEducationalInstitution();
       this.helper.trace('The dialog was closed' + result);
     });
   }
