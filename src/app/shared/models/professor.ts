@@ -1,6 +1,6 @@
 import { Role } from './role';
 
-export class Administration {
+export class Professor {
 
     id: number;
     email: String;

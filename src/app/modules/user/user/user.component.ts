@@ -33,6 +33,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.getAllUser();
+    this.initDataSource();
   }
 
   applyFilter(filterValue: string) {
@@ -40,6 +41,13 @@ export class UserComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  initDataSource() {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.users);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**
@@ -51,8 +59,6 @@ export class UserComponent implements OnInit {
         this.users = data;
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.users);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
@@ -95,11 +101,12 @@ export class UserComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(UserModalComponent, {
-      width: '250px',
+      width: '600px',
       data: { name: 'Guest', animal: 'Guest' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getAllUser();
       this.helper.trace('The dialog was closed' + result);
     });
   }

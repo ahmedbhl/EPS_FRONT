@@ -1,3 +1,222 @@
-<p>
-  user-modal works!
-</p>
+<div id="forms" class="page-layout" fxLayout="column">
+
+  <!-- HEADER -->
+  <span class="header-left">Add New User</span>
+  <mat-divider class="header-divider"></mat-divider>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+    <!-- REACTIVE FORM EXAMPLE -->
+
+    <mat-tab-group dynamicHeight (selectedTabChange)="changeTab($event)">
+
+      <mat-tab label="Administration">
+        <ng-container *ngTemplateOutlet="administrationTabForm"></ng-container>
+      </mat-tab>
+
+      <mat-tab label="Professor">
+        <ng-container *ngTemplateOutlet="professorTabForm"></ng-container>
+      </mat-tab>
+
+      <mat-tab label="Student">
+        <ng-container *ngTemplateOutlet="studentTabForm"></ng-container>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <!-- / CONTENT -->
+</div>
+
+<!--Student Form-->
+<ng-template #administrationTabForm>
+  <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+    [formGroup]="administrationForm">
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required>
+        <mat-icon matSuffix class="secondary-text">class</mat-icon>
+        <mat-error>First Name is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Last Name is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Email is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="address" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Adresse is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNumber" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Phone Number is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="form-footer">
+      <button mat-raised-button [disabled]="!administrationForm.valid" color="primary" class="btn-save">
+        <mat-icon>save</mat-icon> save
+      </button>
+      <button mat-raised-button color="warn" class="btn-delete" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<!--Profesor Form-->
+<ng-template #professorTabForm>
+  <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+    [formGroup]="professorForm">
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required>
+        <mat-icon matSuffix class="secondary-text">class</mat-icon>
+        <mat-error>First Name is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Last Name is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Email is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="address" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Adresse is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNumber" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Phone Number is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="form-footer">
+      <button mat-raised-button [disabled]="!professorForm.valid" color="primary" class="btn-save">
+        <mat-icon>save</mat-icon> save
+      </button>
+      <button mat-raised-button color="warn" class="btn-delete" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+    </div>
+  </form>
+</ng-template>
+
+<!--Student Form-->
+<ng-template #studentTabForm>
+  <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+    [formGroup]="studentForm">
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Educational Institutions</mat-label>
+        <mat-select formControlName="establishment" required>
+          <mat-option *ngFor="let establishment of educationalInstitutions" [value]="establishment">
+            {{establishment.establishmentName}}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix class="secondary-text">collections_bookmark</mat-icon>
+        <mat-error>Educational Institutions is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required>
+        <mat-icon matSuffix class="secondary-text">class</mat-icon>
+        <mat-error>First Name is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Last Name is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Email is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Adresse</mat-label>
+        <input matInput formControlName="address" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Adresse is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>Phone Number</mat-label>
+        <input matInput formControlName="phoneNumber" required>
+        <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+        <mat-error>Phone Number is required!</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="form-footer">
+      <button mat-raised-button [disabled]="!studentForm.valid" color="primary" class="btn-save">
+        <mat-icon>save</mat-icon> save
+      </button>
+      <button mat-raised-button color="warn" class="btn-delete" (click)="onNoClick()">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+    </div>
+  </form>
+</ng-template>
