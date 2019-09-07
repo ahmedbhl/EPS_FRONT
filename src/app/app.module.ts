@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ClasseModule } from './modules/classe/classe.module';
 import { CourseModule } from './modules/course/course.module';
-import { CreateEducationalInstitutionModule } from './modules/educational-institution/create-educational-institution/create-educational-institution.module';
 import { EducationalInstitutionModule } from './modules/educational-institution/educational-institution.module';
 import { Error500Module } from './modules/errors/error500/error500.module';
 import { FieldModule } from './modules/field/field.module';
@@ -43,7 +42,6 @@ import { SideNavComponent } from './shared/side-nav/side-nav.component';
     HomeModule,
     HomeActorsModule,
     EducationalInstitutionModule,
-    CreateEducationalInstitutionModule,
     Error500Module,
     LevelModule,
     FieldModule,

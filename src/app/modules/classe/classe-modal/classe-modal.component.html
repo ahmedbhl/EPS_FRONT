@@ -1,3 +1,69 @@
-<p>
-  classe-modal works!
-</p>
+<div id="forms" class="page-layout" fxLayout="column">
+
+  <!-- HEADER -->
+  <span class="header-left">Add New Classe</span>
+  <mat-divider class="header-divider"></mat-divider>
+
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+    <!-- REACTIVE FORM EXAMPLE -->
+
+    <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+      [formGroup]="form">
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Field</mat-label>
+          <mat-select formControlName="field" required>
+            <mat-option *ngFor="let field of fields" [value]="field">
+              {{field.fieldName}}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix class="secondary-text">collections_bookmark</mat-icon>
+          <mat-error>User is required!</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+          <mat-label>Classe Name</mat-label>
+          <input matInput formControlName="className" required>
+          <mat-icon matSuffix class="secondary-text">class</mat-icon>
+          <mat-error>Classe Name is required!</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" required>
+          <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+          <mat-error>Description is required!</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4 invitation-code" readonly>
+          <mat-label>Invitation Code</mat-label>
+          <input matInput type="password" formControlName="invitationCode" required readonly>
+          <mat-icon matSuffix class="secondary-text">beenhere</mat-icon>
+          <mat-error>InvitationCode is required!</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <button mat-raised-button [disabled]="!form.valid" color="primary" class="btn-save">
+          <mat-icon>save</mat-icon> save
+        </button>
+        <button mat-raised-button color="warn" class="btn-delete">
+          <mat-icon>cancel</mat-icon> Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- / CONTENT -->
+
+</div>

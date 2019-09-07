@@ -1,6 +1,5 @@
 .page-layout {
     width: 100%;
-    padding: 20px;
    /* height: 100vh;*/
 }
 
@@ -19,8 +18,8 @@
 form {
     width: 100%;
     max-width: 800px !important;
-    padding: 20px;
     height: 470px;
+    box-shadow: none;
 }
 
 .form-errors-model {
@@ -72,8 +71,16 @@ form {
     color: white;
     width: 100px;
     margin-right: 10px;
+    font-size: large;
 }
 
 .btn-delete {
     width: 100px;
+    font-size: medium;
+}
+mat-dialog-container{
+    padding: 0 !important;
+}
+mat-card {
+    box-shadow: none !important;
 }
