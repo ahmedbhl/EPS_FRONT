@@ -54,7 +54,7 @@ export class EducationalInstitutionModalComponent implements OnInit {
     // tslint:disable-next-line: max-line-length
     this.establishement.administration.dateOfRegistration = this.datePipe.transform(this.establishement.administration.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
     this.educationalInstitutionService.save(this.establishement).subscribe(item => {
-      console.log("adding new education instution");
+      console.log('adding new education instution');
     });
 
 

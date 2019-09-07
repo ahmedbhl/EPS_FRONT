@@ -48,18 +48,18 @@ export class ClasseService {
      * Save a new Classe
      */
   public save(classe: Classe): Observable<Classe> {
-    this.helper.trace(`adding new Classe : ${classe.id}`);
-    return this.http.post<Classe>(`${this.classeUrl}`, Classe, { headers: this.headers });
+    this.helper.trace(`adding new Classe : ${classe.className}`);
+    return this.http.post<Classe>(`${this.classeUrl}`, classe, { headers: this.headers });
   }
 
   /**
    * update the Classe
    */
   public update(classe: Classe): Observable<Classe> {
-    this.helper.trace(`updating : ${classe.id}`);
+    this.helper.trace(`updating : ${classe.className}`);
     let RequestParams: HttpParams = new HttpParams();
     RequestParams = RequestParams.append('id', classe.id.toString());
-    return this.http.put<Classe>(`${this.classeUrl}/${classe.id}`, Classe, { headers: this.headers });
+    return this.http.put<Classe>(`${this.classeUrl}/${classe.id}`, classe, { headers: this.headers });
   }
 
   /**

@@ -81,7 +81,7 @@ export class EducationalInstitutionComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(EducationalInstitutionModalComponent, {
-      width: '800px',
+      width: '600px',
       data: { name: 'Guest', animal: 'Guest' }
     });
 

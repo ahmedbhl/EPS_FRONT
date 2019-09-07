@@ -1,11 +1,12 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
- 
- import { Helper } from './helper.service';
+import { Helper } from './helper.service';
 import { throwIfAlreadyLoaded } from './module-import-guard';
+import { SnackBarService } from './snack-bar.service';
+
 
 @NgModule({
   imports: [
@@ -13,10 +14,10 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
     BrowserAnimationsModule,
     RouterModule,
     HttpClientModule,
-   ],
+  ],
   declarations: [],
   providers: [
-   // AuthService,
+    SnackBarService,
     Helper
   ]
 })
@@ -26,7 +27,7 @@ export class CoreModule {
    *
    * @param parentModule
    */
-  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 }
