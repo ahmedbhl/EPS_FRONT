@@ -38,7 +38,7 @@ export class UserService {
     }
 
     /**
-    * Get all the educationnal institutions
+    * Get all the Users
     */
     public getAllUsers(): Observable<User[]> {
         console.log('get the list of all Users ' + this.userUrl);
@@ -46,11 +46,19 @@ export class UserService {
     }
 
     /**
-      * Get all the educationnal institutions
+      * Get all the Administrations
       */
     public getAllAdministrations(): Observable<User[]> {
         console.log('get the list of all Administrations ' + this.userUrl);
         return this.http.get<User[]>(`${this.userUrl}/administrations`, { headers: HttpHeader.getHeaders() });
+    }
+
+    /**
+     * Get all the Professors
+     */
+    public getAllProfessors(): Observable<User[]> {
+        console.log('get the list of all Professors ' + this.userUrl);
+        return this.http.get<User[]>(`${this.userUrl}/professors`, { headers: HttpHeader.getHeaders() });
     }
 
     /**
