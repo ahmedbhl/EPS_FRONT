@@ -49,7 +49,7 @@ export class CourseService {
      */
   public save(course: Course): Observable<Course> {
     this.helper.trace(`adding new Course : ${course.id}`);
-    return this.http.post<Course>(`${this.courseUrl}`, Course, { headers: this.headers });
+    return this.http.post<Course>(`${this.courseUrl}`, course, { headers: this.headers });
   }
 
   /**
@@ -59,7 +59,7 @@ export class CourseService {
     this.helper.trace(`updating : ${course.id}`);
     let RequestParams: HttpParams = new HttpParams();
     RequestParams = RequestParams.append('id', course.id.toString());
-    return this.http.put<Course>(`${this.courseUrl}/${course.id}`, Course, { headers: this.headers });
+    return this.http.put<Course>(`${this.courseUrl}/${course.id}`, course, { headers: this.headers });
   }
 
   /**

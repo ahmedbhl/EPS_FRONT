@@ -33,6 +33,7 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.getAllCourse();
+    this.initDataSource();
   }
 
   applyFilter(filterValue: string) {
@@ -40,6 +41,13 @@ export class CourseComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  initDataSource() {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.Courses);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**
@@ -51,8 +59,6 @@ export class CourseComponent implements OnInit {
         this.Courses = data;
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.Courses);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
@@ -83,11 +89,12 @@ export class CourseComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CourseModalComponent, {
-      width: '250px',
+      width: '600px',
       data: { name: 'Guest', animal: 'Guest' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getAllCourse();
       this.helper.trace('The dialog was closed' + result);
     });
   }
