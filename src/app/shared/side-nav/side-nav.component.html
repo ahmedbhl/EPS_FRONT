@@ -25,7 +25,7 @@
         </div>
         <mat-divider *ngIf="isHandset"></mat-divider>
 
-        <mat-nav-list>
+        <mat-nav-list *ngIf="!isSuperAdmin">
             <a mat-list-item href="#" routerLink="/homeSuperAdmin">
                 <mat-icon>dashboard</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Home</span></a>
             <a mat-list-item href="#" routerLink="/educationalinstitution">
@@ -43,6 +43,26 @@
             <a mat-list-item (click)="logout()">
                 <mat-icon>power_settings_new</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Logout</span></a>
         </mat-nav-list>
+
+        <mat-nav-list *ngIf="isSuperAdmin">
+                <a mat-list-item href="#" routerLink="/homeAdministration">
+                    <mat-icon>dashboard</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Home</span></a>
+                <a mat-list-item href="#" routerLink="/educationalinstitution">
+                    <mat-icon>account_balance</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Educational Institution</span></a>
+                <a mat-list-item href="#" routerLink="/level">
+                    <mat-icon>insert_chart_outlined</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Level</span></a>
+                <a mat-list-item href="#"  routerLink="/field">
+                    <mat-icon>collections_bookmark</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Field</span></a>
+                <a mat-list-item href="#"  routerLink="/classe">
+                    <mat-icon>class</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Class</span></a>
+                <a mat-list-item href="#" routerLink="/course">
+                    <mat-icon>cast_for_education </mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Course</span></a>
+                <a mat-list-item href="#" routerLink="/user">
+                    <mat-icon>group</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Users</span></a>
+                <a mat-list-item (click)="logout()">
+                    <mat-icon>power_settings_new</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Logout</span></a>
+        </mat-nav-list>
+            
     </mat-sidenav>
     <mat-sidenav-content>
         <app-header *ngIf="isProfessorOrStudent" [class.header]="isProfessorOrStudent" [hidden]="!currentUser" [isProfessorOrStudent]="isProfessorOrStudent"></app-header>

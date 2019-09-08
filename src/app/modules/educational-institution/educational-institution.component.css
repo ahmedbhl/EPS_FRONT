@@ -48,10 +48,12 @@ table {
 /*td, th {
     width: 15%;
 }*/
-td.mat-column-more, th.mat-column-more  {
+
+td.mat-column-more, th.mat-column-more {
     width: 20px;
     padding-right: 8px;
 }
+
 .mat-form-field {
     height: 60px;
     width: 100%;
@@ -77,7 +79,6 @@ td.mat-column-more, th.mat-column-more  {
     height: 50px;
     padding: 5px 10px;
 }
-
 
 .tab-footer {
     width: 100%;
@@ -125,4 +126,13 @@ td.mat-column-more, th.mat-column-more  {
     font-family: sans-serif;
     color: grey;
     border-radius: 20px;
+}
+
+mat-grid-tile {
+    background: lightblue;
+}
+
+.grid-header {
+    background: red;
+    margin-bottom: 10px
 }

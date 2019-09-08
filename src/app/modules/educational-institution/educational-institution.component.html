@@ -1,4 +1,15 @@
-<div class="custom-container">
+<div class="custom-container" [ngSwitch]="isSuperAdmin">
+
+    <ng-template [ngSwitchCase]="true">
+        <ng-container *ngTemplateOutlet="superAdminUI"></ng-container>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="false">
+        <ng-container *ngTemplateOutlet="administrationUI"></ng-container>
+    </ng-template>
+</div>
+
+<ng-template #superAdminUI>
     <div class="header">
         <span class="header-left">Educational Institutions</span>
         <button mat-raised-button class="btn-create primary" (click)="openDialog()">
@@ -105,9 +116,20 @@
             <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
         </div>
     </div>
-
     <div class="empty-data-source" *ngIf="educationalInstitutions.length == 0">
         <span>Your Data Base Of Educational Institutions Is Empty </span>
     </div>
+</ng-template>
 
-</div>
+<ng-template #administrationUI>
+    <mat-grid-list class="grid-header" cols="1" rowHeight="160px">
+        <mat-grid-tile><img src="assets/images/avatars/profile.jpg"></mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-grid-tile>1</mat-grid-tile>
+        <mat-grid-tile>2</mat-grid-tile>
+        <mat-grid-tile>3</mat-grid-tile>
+        <mat-grid-tile>4</mat-grid-tile>
+    </mat-grid-list>
+    
+</ng-template>

@@ -16,16 +16,13 @@ export class SideNavComponent {
   currentUser: User;
   profilePictureLink: string;
 
-  isHandset: boolean = false;
-  /*$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches)
-    );*/
+  isHandset = false;
+  isSuperAdmin: boolean;
 
   constructor(private breakpointObserver: BreakpointObserver,
     private authenticationService: AuthenticationService,
     private router: Router) {
-    console.log('isProfessorOrStudent = > ' + this.isProfessorOrStudent)
+    console.log('isProfessorOrStudent = > ' + this.isProfessorOrStudent);
 
     this.authenticationService.currentUser.subscribe(data => {
       this.currentUser = data;
@@ -33,6 +30,7 @@ export class SideNavComponent {
       if (roles.indexOf('PROFESSOR') > -1 || roles.indexOf('STUDENT') > -1) {
         this.isProfessorOrStudent = true;
       } else {
+        this.isSuperAdmin = roles.indexOf('SUPER_ADMIN') ? true : false;
         this.isProfessorOrStudent = false;
       }
       this.getPictureLink();

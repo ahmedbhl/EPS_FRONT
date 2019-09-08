@@ -38,10 +38,16 @@ export class EducationalInstitutionService {
   * Get all the educationnal institutions
   */
   public getAllEducationalInstitution(): Observable<EducationalInstitution[]> {
-
-
     console.log('get the list of all educational institutions ' + this.educationalInstitutionUrl);
     return this.http.get<EducationalInstitution[]>(`${this.educationalInstitutionUrl}`, { headers: this.headers });
+  }
+
+  /**
+  * Get the educationnal institutions By id
+  */
+  public getEducationalInstitutionById(id: number): Observable<EducationalInstitution> {
+    console.log(`get the educational institutions with id : ${id}` + this.educationalInstitutionUrl);
+    return this.http.get<EducationalInstitution>(`${this.educationalInstitutionUrl}/${id}`, { headers: this.headers });
   }
 
   /**
