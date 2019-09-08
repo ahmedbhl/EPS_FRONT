@@ -15,7 +15,7 @@ export class SnackBarService {
     }
 
     openSuccessSnackBar(message: string) {
-        this.snackBar.open(message, 'X', {
+        this.snackBar.open(message, '', {
             duration: 5000,
             panelClass: ['alert-success'],
             verticalPosition: 'top'

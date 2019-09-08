@@ -92,7 +92,12 @@
                 <ng-container matColumnDef="more" stickyEnd>
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let row">
-                        <mat-icon>more_vert</mat-icon>
+                        <mat-icon (click)=select.open()>more_vert</mat-icon>
+                        <mat-select #select class="mat-select-container" style="visibility:hidden">
+                            <mat-option (click)="openDialog(row,'update')">Update Educationnal Institution</mat-option>
+                            <mat-divider class="divider-container"></mat-divider>
+                            <mat-option (click)="openDialog(row,'delete')">Delete Educationnal Institution</mat-option>
+                        </mat-select>
                     </td>
                 </ng-container>
                 <mat-icon>more_vert</mat-icon>

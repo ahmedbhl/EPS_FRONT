@@ -67,7 +67,12 @@
         <ng-container matColumnDef="more" stickyEnd>
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let row">
-            <mat-icon>more_vert</mat-icon>
+            <mat-icon (click)=select.open()>more_vert</mat-icon>
+            <mat-select #select class="mat-select-container" style="visibility:hidden">
+              <mat-option (click)="openDialog(row,'update')">Update Course</mat-option>
+              <mat-divider class="divider-container"></mat-divider>
+              <mat-option (click)="openDialog(row,'delete')">Delete Course</mat-option>
+            </mat-select>
           </td>
         </ng-container>
 
@@ -90,6 +95,6 @@
     </div>
   </div>
   <div class="empty-data-source" *ngIf="Courses.length == 0">
-      <span>Your Data Base Of Courses Is Empty </span>
+    <span>Your Data Base Of Courses Is Empty </span>
   </div>
 </div>
