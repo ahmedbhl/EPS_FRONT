@@ -20,7 +20,8 @@ export class ClasseModalComponent implements OnInit {
   // Private
   private _unsubscribeAll: Subject<any>;
   public fields: Field[];
-  private classe: Classe;
+  public classe: Classe;
+  public action: string;
 
   constructor(public dialogRef: MatDialogRef<ClasseModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,12 +32,24 @@ export class ClasseModalComponent implements OnInit {
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
+
+    this.classe = data.classe;
+    this.action = data.action;
   }
 
   ngOnInit() {
     this.initForm();
     this.getAllFields();
+    this.checkAndInitFormBeforeDisplay();
+  }
 
+  checkAndInitFormBeforeDisplay() {
+    if (this.action && this.action === 'create') {
+      // this.form.setValue(this.classe);
+    } else if (this.classe && this.action && this.action === 'update') {
+      this.form.setValue(this.classe);
+      this.form.get('field').setValue(this.classe.field.id);
+    }
   }
 
   onNoClick(): void {
@@ -48,7 +61,13 @@ export class ClasseModalComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.save();
+    if (this.action === 'create') {
+      this.save();
+    } else if (this.action === 'update') {
+      this.update();
+    } else if (this.action === 'delete') {
+      this.delete();
+    }
   }
 
   /**
@@ -70,6 +89,7 @@ export class ClasseModalComponent implements OnInit {
    */
   save() {
     this.classe = Object.assign(new Classe(), this.form.value);
+    this.classe.field = this.fields.find(item => item.id === this.form.value.field)
     // tslint:disable-next-line: max-line-length
     this.classeService.save(this.classe).subscribe((item: Classe) => {
       if (item) {
@@ -79,6 +99,30 @@ export class ClasseModalComponent implements OnInit {
       }
     });
   }
+
+  update() {
+    this.classe = Object.assign(this.classe, this.form.value);
+    this.classe.field = this.fields.find(item => item.id === this.form.value.field)
+    // tslint:disable-next-line: max-line-length
+    this.classeService.update(this.classe).subscribe((item: Classe) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The class has been updated successfully');
+        this.dialogRef.close({ class: item });
+        console.log('update class');
+      }
+    });
+  }
+
+  delete() {
+    this.classeService.delete(this.classe).subscribe((item: Classe) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The class has been deleted successfully');
+        this.dialogRef.close({ class: item });
+        console.log('delete class');
+      }
+    });
+  }
+
   /**
    * Used for getAll the fields
    */
