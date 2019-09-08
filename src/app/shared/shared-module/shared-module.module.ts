@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PickerModule } from '@ctrl/ngx-emoji-mart'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [],
@@ -17,9 +17,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FlexLayoutModule,
     PickerModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
-  exports: [CommonModule, MaterialModule, HttpClientModule, FlexLayoutModule, PickerModule, ReactiveFormsModule, FormsModule]
+  exports: [CommonModule, MaterialModule, HttpClientModule, FlexLayoutModule, PickerModule, ReactiveFormsModule, FormsModule, ChartsModule]
 })
 export class SharedModuleModule {
   static forRoot(): ModuleWithProviders {
