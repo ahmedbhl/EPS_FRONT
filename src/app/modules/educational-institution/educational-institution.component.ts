@@ -28,50 +28,6 @@ export class EducationalInstitutionComponent implements OnInit {
   currentUser: User;
   isSuperAdmin: boolean;
 
-
-  globalChartOptions: any = {
-    responsive: true,
-    legend: {
-      display: false,
-      position: 'bottom'
-    }
-  };
-    // Bar
-    barChartLabels: string[] = ['1', '2', '3', '4', '5', '6', '7'];
-    barChartType = 'bar';
-    barChartLegend = true;
-    barChartData: any[] = [{
-      data: [6, 5, 8, 8, 5, 5, 4],
-      label: 'Series A',
-      borderWidth: 0
-    }, {
-      data: [5, 4, 4, 2, 6, 2, 5],
-      label: 'Series B',
-      borderWidth: 0
-    }];
-    barChartOptions: any = Object.assign({
-      scaleShowVerticalLines: false,
-      scales: {
-        xAxes: [{
-          gridLines: {
-            color: 'rgba(0,0,0,0.02)',
-            zeroLineColor: 'rgba(0,0,0,0.02)'
-          }
-        }],
-        yAxes: [{
-          gridLines: {
-            color: 'rgba(0,0,0,0.02)',
-            zeroLineColor: 'rgba(0,0,0,0.02)'
-          },
-          position: 'left',
-          ticks: {
-            beginAtZero: true,
-            suggestedMax: 9
-          }
-        }]
-      }
-    }, this.globalChartOptions);
-
   constructor(private readonly helper: Helper,
     private readonly _educationalInstitutionService: EducationalInstitutionService,
     public dialog: MatDialog,
