@@ -21,6 +21,7 @@ export class FieldModalComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   public levels: Level[];
   private field: Field;
+  public action: string;
 
   constructor(public dialogRef: MatDialogRef<FieldModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,11 +32,23 @@ export class FieldModalComponent implements OnInit {
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
+
+    this.field = data.field;
+    this.action = data.action;
   }
 
   ngOnInit() {
     this.initForm();
     this.getAllLevels();
+    this.checkAndInitFormBeforeDisplay();
+  }
+
+  checkAndInitFormBeforeDisplay() {
+    if (this.action && this.action === 'create') {
+    } else if (this.field && this.action && this.action === 'update') {
+      this.form.setValue(this.field);
+      this.form.get('level').setValue(this.field.level.id);
+    }
   }
 
   onNoClick(): void {
@@ -47,7 +60,13 @@ export class FieldModalComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.save();
+    if (this.action === 'create') {
+      this.save();
+    } else if (this.action === 'update') {
+      this.update();
+    } else if (this.action === 'delete') {
+      this.delete();
+    }
   }
 
   /**
@@ -70,12 +89,37 @@ export class FieldModalComponent implements OnInit {
     this.field = Object.assign(new Field(), this.form.value);
     this.fieldService.save(this.field).subscribe((item: Field) => {
       if (item) {
-        this.snackBar.openSuccessSnackBar('The newField has been added successfully');
+        this.snackBar.openSuccessSnackBar('The New Field has been added successfully');
         this.dialogRef.close({ field: item });
-        console.log('adding newField');
+        console.log('adding new Field');
       }
     });
   }
+
+  update() {
+    this.field = Object.assign(this.field, this.form.value);
+    this.field.level = this.levels.find(item => item.id === this.form.value.level);
+    // tslint:disable-next-line: max-line-length
+    this.fieldService.update(this.field).subscribe((item: Field) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The Field has been updated successfully');
+        this.dialogRef.close({ course: item });
+        console.log('update Field');
+      }
+    });
+  }
+
+  delete() {
+    this.fieldService.delete(this.field).subscribe((item: Field) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The Field has been deleted successfully');
+        this.dialogRef.close({ course: item });
+        console.log('delete Field');
+      }
+    });
+  }
+
+
   /**
    * Used for getAll the Levels
    */

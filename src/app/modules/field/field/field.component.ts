@@ -86,10 +86,10 @@ export class FieldComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  openDialog(): void {
+  openDialog(field: Field, action: string): void {
     const dialogRef = this.dialog.open(FieldModalComponent, {
       width: '600px',
-      data: { name: 'Guest', animal: 'Guest' }
+      data: { field: field, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {

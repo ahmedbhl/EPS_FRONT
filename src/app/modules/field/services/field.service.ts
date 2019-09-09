@@ -59,7 +59,7 @@ export class FieldService {
     this.helper.trace(`updating : ${field.id}`);
     let RequestParams: HttpParams = new HttpParams();
     RequestParams = RequestParams.append('id', field.id.toString());
-    return this.http.put<Field>(`${this.fieldUrl}/${field.id}`, Field, { headers: this.headers });
+    return this.http.put<Field>(`${this.fieldUrl}/${field.id}`, field, { headers: this.headers });
   }
 
   /**
