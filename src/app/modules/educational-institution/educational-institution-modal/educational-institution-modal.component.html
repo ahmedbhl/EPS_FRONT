@@ -1,23 +1,25 @@
-<div id="forms" class="page-layout" fxLayout="column">
+<div id="forms" class="page-layout" fxLayout="column" [ngSwitch]="true">
 
+  <ng-template [ngSwitchCase]="action === 'create'|| action ==='update'">
     <!-- HEADER -->
-    <span class="header-left">Add New Educational Institutions</span>
+    <span class="header-left" *ngIf="action ==='create'">Add New Educational Institutions</span>
+    <span class="header-left" *ngIf="action ==='update'">Update Educational Institutions</span>
     <mat-divider class="header-divider"></mat-divider>
-  
+
     <!-- / HEADER -->
-  
+
     <!-- CONTENT -->
     <div class="content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
       <!-- REACTIVE FORM EXAMPLE -->
-  
-      <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto"
-        name="form" [formGroup]="form">
-  
+
+      <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+        [formGroup]="form">
+
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="100">
             <mat-label>Administration</mat-label>
             <mat-select formControlName="administration" required>
-              <mat-option  *ngFor = "let administration of administrations" [value]="administration">
+              <mat-option *ngFor="let administration of administrations" [value]="administration.id">
                 {{administration.firstName}} {{administration.lastName}}
               </mat-option>
             </mat-select>
@@ -25,7 +27,7 @@
             <mat-error>User is required!</mat-error>
           </mat-form-field>
         </div>
-  
+
         <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Establishment Name</mat-label>
@@ -34,7 +36,7 @@
             <mat-error>Establishment Name is required!</mat-error>
           </mat-form-field>
         </div>
-  
+
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Description</mat-label>
@@ -43,7 +45,7 @@
             <mat-error>Description is required!</mat-error>
           </mat-form-field>
         </div>
-  
+
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Adresse</mat-label>
@@ -52,7 +54,7 @@
             <mat-error>Adresse is required!</mat-error>
           </mat-form-field>
         </div>
-  
+
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Photo</mat-label>
@@ -61,13 +63,32 @@
             <mat-error>Photo is required!</mat-error>
           </mat-form-field>
         </div>
-  
+
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-          <button mat-raised-button [disabled]="!form.valid" color="primary" class="btn-save"><mat-icon>save</mat-icon> save </button>
-          <button mat-raised-button  class="btn btn-success"> <mat-icon>cancel</mat-icon> Cancel </button>
+          <button mat-raised-button [disabled]="!form.valid" color="primary" class="btn-save">
+            <mat-icon>save</mat-icon> save
+          </button>
+          <button mat-raised-button class="btn btn-success" (click)="onNoClick()">
+            <mat-icon>cancel</mat-icon> Cancel
+          </button>
         </div>
       </form>
     </div>
     <!-- / CONTENT -->
-  
-  </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="action === 'delete'">
+    <div class="modal-header">
+      <strong>
+        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+      </strong>
+    </div>
+    <div class="modal-body">
+      Do you want to delete this Educationnal InstItution ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onNoClick()">Cancel </button>
+      <button type="button" class="btn btn-danger" (click)="delete()" cdkFocusInitial>Confirm</button>
+    </div>
+  </ng-template>
+</div>
