@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpHeader } from 'src/app/shared/helpers/http-header';
+import { Administration } from 'src/app/shared/models/administration';
 import { User } from 'src/app/shared/models/user.class';
 import { environment } from 'src/environments/environment';
 import { Helper } from '../helper.service';
@@ -48,9 +49,9 @@ export class UserService {
     /**
       * Get all the Administrations
       */
-    public getAllAdministrations(): Observable<User[]> {
+    public getAllAdministrations(): Observable<Administration[]> {
         console.log('get the list of all Administrations ' + this.userUrl);
-        return this.http.get<User[]>(`${this.userUrl}/administrations`, { headers: HttpHeader.getHeaders() });
+        return this.http.get<Administration[]>(`${this.userUrl}/administrations`, { headers: HttpHeader.getHeaders() });
     }
 
     /**

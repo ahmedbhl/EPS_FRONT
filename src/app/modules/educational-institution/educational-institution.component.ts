@@ -121,10 +121,10 @@ export class EducationalInstitutionComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  openDialog(): void {
+  openDialog(educationalInstitution: EducationalInstitution, action: string): void {
     const dialogRef = this.dialog.open(EducationalInstitutionModalComponent, {
       width: '600px',
-      data: { name: 'Guest', animal: 'Guest' }
+      data: { educationalInstitution: educationalInstitution, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {
