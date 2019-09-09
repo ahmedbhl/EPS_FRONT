@@ -26,6 +26,7 @@ export class CourseModalComponent implements OnInit {
   public classes: Classe[];
   public professors: User[];
   private course: Course;
+  public action: string;
 
   constructor(public dialogRef: MatDialogRef<CourseModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,12 +39,25 @@ export class CourseModalComponent implements OnInit {
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
+
+    this.course = data.course;
+    this.action = data.action;
   }
 
   ngOnInit() {
     this.initForm();
     this.getAllClasses();
     this.getAllProfessors();
+    this.checkAndInitFormBeforeDisplay();
+  }
+
+  checkAndInitFormBeforeDisplay() {
+    if (this.action && this.action === 'create') {
+    } else if (this.course && this.action && this.action === 'update') {
+      this.form.setValue(this.course);
+      this.form.get('classe').setValue(this.course.classe.id);
+      this.form.get('professor').setValue(this.course.professor.id);
+    }
   }
 
   onNoClick(): void {
@@ -55,7 +69,13 @@ export class CourseModalComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.save();
+    if (this.action === 'create') {
+      this.save();
+    } else if (this.action === 'update') {
+      this.update();
+    } else if (this.action === 'delete') {
+      this.delete();
+    }
   }
 
   /**
@@ -77,7 +97,9 @@ export class CourseModalComponent implements OnInit {
    */
   save() {
     this.course = Object.assign(new Course(), this.form.value);
-    this.course.professor.dateOfRegistration = this.datePipe.transform( this.course.professor.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
+    this.course.classe = this.classes.find(item => item.id === this.form.value.classe);
+    this.course.professor = this.professors.find(item => item.id === this.form.value.professor);
+    this.course.professor.dateOfRegistration = this.datePipe.transform(this.course.professor.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
     this.courseService.save(this.course).subscribe((item: Course) => {
       if (item) {
         this.snackBar.openSuccessSnackBar('The new Course has been added successfully');
@@ -86,6 +108,32 @@ export class CourseModalComponent implements OnInit {
       }
     });
   }
+
+  update() {
+    this.course = Object.assign(this.course, this.form.value);
+    this.course.classe = this.classes.find(item => item.id === this.form.value.classe);
+    this.course.professor = this.professors.find(item => item.id === this.form.value.professor);
+    this.course.professor.dateOfRegistration = this.datePipe.transform(this.course.professor.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
+    // tslint:disable-next-line: max-line-length
+    this.courseService.update(this.course).subscribe((item: Course) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The Course has been updated successfully');
+        this.dialogRef.close({ course: item });
+        console.log('update Course');
+      }
+    });
+  }
+
+  delete() {
+    this.courseService.delete(this.course).subscribe((item: Course) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The Course has been deleted successfully');
+        this.dialogRef.close({ course: item });
+        console.log('delete Course');
+      }
+    });
+  }
+
   /**
    * Used for getAll the Classes
    */

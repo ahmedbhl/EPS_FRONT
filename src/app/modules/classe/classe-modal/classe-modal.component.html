@@ -18,8 +18,8 @@
           <mat-form-field appearance="outline" fxFlex="100">
             <mat-label>Field</mat-label>
             <mat-select formControlName="field" required>
-              <mat-option *ngFor="let fieldd of fields" [value]="fieldd.id">
-                {{fieldd.fieldName}} - {{fieldd.level.establishment.establishmentName}}
+              <mat-option *ngFor="let field of fields" [value]="field.id">
+                {{field.fieldName}} - {{field.level.establishment.establishmentName}}
               </mat-option>
             </mat-select>
             <mat-icon matSuffix class="secondary-text">collections_bookmark</mat-icon>
@@ -58,7 +58,7 @@
           <button mat-raised-button [disabled]="!form.valid" color="primary" class="btn-save" type="submit">
             <mat-icon>save</mat-icon> save
           </button>
-          <button mat-raised-button  class="btn btn-success" (click)="onNoClick()" type="button">
+          <button mat-raised-button class="btn btn-success" (click)="onNoClick()" type="button">
             <mat-icon>cancel</mat-icon> Cancel
           </button>
         </div>
