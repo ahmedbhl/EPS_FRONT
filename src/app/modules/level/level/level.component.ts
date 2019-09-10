@@ -32,6 +32,8 @@ export class LevelComponent implements OnInit {
 
   ngOnInit() {
     this.getAllLevel();
+    this.initDataSource();
+
   }
 
   applyFilter(filterValue: string) {
@@ -39,6 +41,13 @@ export class LevelComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  initDataSource() {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.levels);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**
@@ -50,8 +59,6 @@ export class LevelComponent implements OnInit {
         this.levels = data;
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.levels);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
@@ -82,11 +89,12 @@ export class LevelComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LevelModalComponent, {
-      width: '250px',
+      width: '600px',
       data: { name: 'Guest', animal: 'Guest' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getAllLevel();
       this.helper.trace('The dialog was closed' + result);
     });
   }

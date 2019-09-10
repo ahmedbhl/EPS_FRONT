@@ -15,7 +15,7 @@ export class ClasseComponent implements OnInit {
 
   classes: Classe[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'classeName', 'description', 'field', 'more'];
+  displayedColumns: string[] = ['select', 'id', 'className', 'description', 'field', 'more'];
   dataSource: MatTableDataSource<Classe>;
   selection = new SelectionModel<Classe>(true, []);
 
@@ -32,6 +32,7 @@ export class ClasseComponent implements OnInit {
 
   ngOnInit() {
     this.getAllClasse();
+    this.initDataSource();
   }
 
   applyFilter(filterValue: string) {
@@ -41,6 +42,12 @@ export class ClasseComponent implements OnInit {
     }
   }
 
+  initDataSource() {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.classes);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   /**
   * Get all Classes
   */
@@ -48,10 +55,7 @@ export class ClasseComponent implements OnInit {
     this._classeService.getAllClasses().subscribe(
       (data: Classe[]) => {
         this.classes = data;
-        // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.classes);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
@@ -80,13 +84,14 @@ export class ClasseComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  openDialog(): void {
+  openDialog(classe: Classe, action: string): void {
     const dialogRef = this.dialog.open(ClasseModalComponent, {
-      width: '250px',
-      data: { name: 'Guest', animal: 'Guest' }
+      width: '600px',
+      data: { classe: classe, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getAllClasse();
       this.helper.trace('The dialog was closed' + result);
     });
   }

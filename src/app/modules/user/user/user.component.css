@@ -5,13 +5,24 @@
 .header {
     width: 100%;
     padding: 10px;
-    height: 80px;
+    height: 70px;
+}
+
+.header-left {
+    width: 50%;
+    float: left;
+    font-family: sans-serif;
+    font-size: 1.8em;
+    margin: 11px 0;
+}
+
+.header-divider {
+    margin: 0 10px;
 }
 
 .btn-create {
     float: right;
-    background-color: #0070e0;/*007bff*/
-    ;
+    background-color: #007bff;
     color: white;
     cursor: pointer;
     margin: 11px 0;
@@ -30,18 +41,6 @@ table {
     width: 100%;
 }
 
-.mat-form-field {
-    font-size: 14px;
-    width: 30%;
-    float: left;
-    padding: 0 5px;
-}
-
-.mat-form-field-wrapper {
-    padding: 0;
-    margin: 0;
-}
-
 .filter {
     width: 93%;
 }
@@ -50,9 +49,35 @@ table {
     width: 15%;
 }*/
 
-td.mat-column-more, th.mat-column-more  {
+td.mat-column-more, th.mat-column-more {
     width: 20px;
     padding-right: 8px;
+}
+
+.mat-form-field {
+    height: 60px;
+    width: 100%;
+    font-size: 14px;
+}
+
+::ng-deep .mat-form-field-infix {
+    display: inline-flex !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    height: 50px;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: -7px 0;
+}
+
+.filter-header {
+    height: 50px;
+    padding: 5px 10px;
 }
 
 .tab-footer {
@@ -87,10 +112,64 @@ td.mat-column-more, th.mat-column-more  {
     text-align: center;
 }
 
-.green {
-    color: forestgreen;
+input[type=checkbox] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
 }
 
-.red {
-    color: indianred;
+label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 40px;
+    height: 20px;
+    background: grey;
+    display: block;
+    border-radius: 10px;
+    position: relative;
+}
+
+label:after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+input:checked+label {
+    background: #bada55;
+}
+
+input:checked+label:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+}
+
+label:active:after {
+    width: 130px;
+}
+
+.empty-data-source {
+    width: 526px;
+    height: 90px;
+    font-size: 1.7em;
+    text-align: center;
+    border: 2px solid #007bff;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    font-family: sans-serif;
+    color: grey;
+    border-radius: 20px;
+}
+
+.pointer {
+    cursor: pointer;
 }

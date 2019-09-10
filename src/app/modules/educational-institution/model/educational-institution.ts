@@ -8,7 +8,7 @@ export class EducationalInstitution {
 
     description: String;
 
-    yearOfFoundation: Date;
+    yearOfFoundation: string;
 
     location: String;
 

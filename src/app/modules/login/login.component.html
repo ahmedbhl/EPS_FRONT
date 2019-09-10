@@ -24,14 +24,14 @@
 
                     <div class="icon1">
                         <span class="fa fa-user"></span>
-                        <input type="email" placeholder="Email Address" required="" formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                        <input type="email" matInput placeholder="Email Address" required formControlName="username" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
                     </div>
                     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
                         <div *ngIf="f.username.errors.required">Username is required</div>
                     </div>
                     <div class="icon1">
                         <span class="fa fa-lock"></span>
-                        <input type="password" placeholder="Password" formControlName="password" required="" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                        <input type="password" placeholder="Password" matInput formControlName="password" required [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                     </div>
                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                         <div *ngIf="f.password.errors.required">Password is required</div>
@@ -41,7 +41,7 @@
                             logged in</label>
                     </div>
                     <div class="bottom">
-                        <button class="btn">Log In</button>
+                        <button class="btn" [disabled]="!loginForm.valid">Log In</button>
                     </div>
                     <div class="links">
                         <p><a href="#"  routerLink="/reset" >Forgot Password?</a></p>

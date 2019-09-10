@@ -19,6 +19,7 @@ import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.
 import { HomeActorsModule } from './modules/home-actors/home-actors.module';
 import { HomeModule } from './modules/home/home.module';
 import { LevelModule } from './modules/level/level.module';
+import { LibraryModule } from './modules/library/library.module';
 import { LoginModule } from './modules/login/login.module';
 import { SignupModule } from './modules/signup/signup.module';
 import { UserModule } from './modules/user/user.module';
@@ -28,7 +29,6 @@ import { BasicAuthInterceptor } from './shared/helpers';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
-import { LibraryModule } from './modules/library/library.module';
 
 @NgModule({
   declarations: [

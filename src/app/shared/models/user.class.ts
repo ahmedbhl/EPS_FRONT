@@ -1,4 +1,5 @@
-﻿
+﻿import { EducationalInstitution } from 'src/app/modules/educational-institution/model/educational-institution';
+
 /**
  * Current User Class
  */
@@ -17,6 +18,7 @@ export class User {
     lastName: string;
     phoneNumber: string;
     profilePicture: string;
+    establishment: EducationalInstitution;
     /**
      * User assigned roles
      */

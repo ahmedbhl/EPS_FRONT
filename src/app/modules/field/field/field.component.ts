@@ -32,6 +32,7 @@ export class FieldComponent implements OnInit {
 
   ngOnInit() {
     this.getAllField();
+    this.initDataSource();
   }
 
   applyFilter(filterValue: string) {
@@ -39,6 +40,13 @@ export class FieldComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  initDataSource() {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.fields);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**
@@ -50,8 +58,6 @@ export class FieldComponent implements OnInit {
         this.fields = data;
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.fields);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
@@ -80,13 +86,14 @@ export class FieldComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  openDialog(): void {
+  openDialog(field: Field, action: string): void {
     const dialogRef = this.dialog.open(FieldModalComponent, {
-      width: '250px',
-      data: { name: 'Guest', animal: 'Guest' }
+      width: '600px',
+      data: { field: field, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getAllField();
       this.helper.trace('The dialog was closed' + result);
     });
   }

@@ -14,18 +14,18 @@
         <div [class.profile-card]="!isHandset" [class.profile-card-dock]="isHandset">
             <div class="profile-card-header d-flex ">
                 <a href="/profile/edmodo-teacher-e15a0c370e-edmo/?utm_source=profile_card" class="href-profil">
-                    <img [class.img-profil]="!isHandset" [class.img-profil-dock]="isHandset" src="assets/images/avatars/profile.jpg" alt="Zayneb Hamila">
+                    <img [class.img-profil]="!isHandset" [class.img-profil-dock]="isHandset" [src]="profilePictureLink" alt="Zayneb Hamila">
                 </a>
                 <mat-divider class="divider" *ngIf="!isHandset"></mat-divider>
             </div>
             <div class="profile-card-header" *ngIf="!isHandset">
-                <span class="profile-header-text">zaynab Hamila</span>
-                <a href="#">voir le profil</a>
+                <span class="profile-header-text"><a href="#">{{currentUser.firstName}} {{currentUser.lastName}}</a></span>
+                <span class="profil-email">{{currentUser.email}}</span>
             </div>
         </div>
         <mat-divider *ngIf="isHandset"></mat-divider>
 
-        <mat-nav-list>
+        <mat-nav-list *ngIf="!isSuperAdmin">
             <a mat-list-item href="#" routerLink="/homeSuperAdmin">
                 <mat-icon>dashboard</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Home</span></a>
             <a mat-list-item href="#" routerLink="/educationalinstitution">
@@ -43,6 +43,26 @@
             <a mat-list-item (click)="logout()">
                 <mat-icon>power_settings_new</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Logout</span></a>
         </mat-nav-list>
+
+        <mat-nav-list *ngIf="isSuperAdmin">
+                <a mat-list-item href="#" routerLink="/homeAdministration">
+                    <mat-icon>dashboard</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Home</span></a>
+                <a mat-list-item href="#" routerLink="/educationalinstitution">
+                    <mat-icon>account_balance</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Educational Institution</span></a>
+                <a mat-list-item href="#" routerLink="/level">
+                    <mat-icon>insert_chart_outlined</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Level</span></a>
+                <a mat-list-item href="#"  routerLink="/field">
+                    <mat-icon>collections_bookmark</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Field</span></a>
+                <a mat-list-item href="#"  routerLink="/classe">
+                    <mat-icon>class</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Class</span></a>
+                <a mat-list-item href="#" routerLink="/course">
+                    <mat-icon>cast_for_education </mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Course</span></a>
+                <a mat-list-item href="#" routerLink="/user">
+                    <mat-icon>group</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Users</span></a>
+                <a mat-list-item (click)="logout()">
+                    <mat-icon>power_settings_new</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Logout</span></a>
+        </mat-nav-list>
+            
     </mat-sidenav>
     <mat-sidenav-content>
         <app-header *ngIf="isProfessorOrStudent" [class.header]="isProfessorOrStudent" [hidden]="!currentUser" [isProfessorOrStudent]="isProfessorOrStudent"></app-header>

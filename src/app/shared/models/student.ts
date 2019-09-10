@@ -1,6 +1,7 @@
+import { EducationalInstitution } from 'src/app/modules/educational-institution/model/educational-institution';
 import { Role } from './role';
 
-export class Administration {
+export class Student {
 
     id: number;
     email: String;
@@ -11,6 +12,7 @@ export class Administration {
     dateOfRegistration: String;
     phoneNumber: String;
     profilePicture: String;
+    establishment: EducationalInstitution;
     address: String;
     enabled: boolean;
 

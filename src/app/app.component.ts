@@ -31,14 +31,14 @@ export class AppComponent {
     this.matIconRegistry.addSvgIcon('eps', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/social/eps50.svg'));
 
     this.authenticationService.currentUser.subscribe(data => {
-      this.currentUser = data
+      this.currentUser = data;
       if (!data) {
         this.helper.trace('[Error] Impossible to load Current User!');
       }
       if (data && this.currentUser !== null) {
         // Object.keys(this.currentUser.roles)
         this.currentUser.roles.map(item => item.name).forEach((val) => this.permService.addPermission(val, () => {
-          return true
+          return true;
         }));
       }
       this.redirectUserAfterAuthentification();
