@@ -38,17 +38,23 @@ export class EducationalInstitutionService {
   * Get all the educationnal institutions
   */
   public getAllEducationalInstitution(): Observable<EducationalInstitution[]> {
-
-
     console.log('get the list of all educational institutions ' + this.educationalInstitutionUrl);
     return this.http.get<EducationalInstitution[]>(`${this.educationalInstitutionUrl}`, { headers: this.headers });
+  }
+
+  /**
+  * Get the educationnal institutions By id
+  */
+  public getEducationalInstitutionById(id: number): Observable<EducationalInstitution> {
+    console.log(`get the educational institutions with id : ${id}` + this.educationalInstitutionUrl);
+    return this.http.get<EducationalInstitution>(`${this.educationalInstitutionUrl}/${id}`, { headers: this.headers });
   }
 
   /**
      * Save a new educational Institution
      */
   public save(educationalInstitution: EducationalInstitution): Observable<EducationalInstitution> {
-    this.helper.trace(`adding new educational Institution : ${educationalInstitution.id}`);
+    this.helper.trace(`adding new educational Institution : ${educationalInstitution.establishmentName}`);
     return this.http.post<EducationalInstitution>(`${this.educationalInstitutionUrl}`, educationalInstitution, { headers: this.headers });
   }
 
@@ -56,7 +62,7 @@ export class EducationalInstitutionService {
    * update the educational Institution
    */
   public update(educationalInstitution: EducationalInstitution): Observable<EducationalInstitution> {
-    this.helper.trace(`updating : ${educationalInstitution.id}`);
+    this.helper.trace(`updating educational Institution : ${educationalInstitution.id}`);
     let RequestParams: HttpParams = new HttpParams();
     RequestParams = RequestParams.append('id', educationalInstitution.id.toString());
     return this.http.put<EducationalInstitution>(`${this.educationalInstitutionUrl}/${educationalInstitution.id}`, educationalInstitution, { headers: this.headers });

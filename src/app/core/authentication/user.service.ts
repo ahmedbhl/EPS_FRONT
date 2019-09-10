@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HttpHeader } from 'src/app/shared/helpers/http-header';
+import { Administration } from 'src/app/shared/models/administration';
 import { User } from 'src/app/shared/models/user.class';
 import { environment } from 'src/environments/environment';
 import { Helper } from '../helper.service';
-import { HttpHeader } from 'src/app/shared/helpers/http-header';
 
 @Injectable()
 export class UserService {
@@ -38,11 +39,27 @@ export class UserService {
     }
 
     /**
-    * Get all the educationnal institutions
+    * Get all the Users
     */
     public getAllUsers(): Observable<User[]> {
         console.log('get the list of all Users ' + this.userUrl);
         return this.http.get<User[]>(`${this.userUrl}`, { headers: HttpHeader.getHeaders() });
+    }
+
+    /**
+      * Get all the Administrations
+      */
+    public getAllAdministrations(): Observable<Administration[]> {
+        console.log('get the list of all Administrations ' + this.userUrl);
+        return this.http.get<Administration[]>(`${this.userUrl}/administrations`, { headers: HttpHeader.getHeaders() });
+    }
+
+    /**
+     * Get all the Professors
+     */
+    public getAllProfessors(): Observable<User[]> {
+        console.log('get the list of all Professors ' + this.userUrl);
+        return this.http.get<User[]>(`${this.userUrl}/professors`, { headers: HttpHeader.getHeaders() });
     }
 
     /**
@@ -69,14 +86,15 @@ export class UserService {
         this.helper.trace(`updating : ${user.id}`);
         let RequestParams: HttpParams = new HttpParams();
         RequestParams = RequestParams.append('id', user.id.toString());
-        if (user.roles.indexOf('ADMINISTRATION') > -1) {
-            return this.http.put<User>(`${this.userUrl}/administration/${user.id}`, user, { headers: this.headers, params: RequestParams });
+        const roles = user.roles.map(role => role.name);
+        if (roles.indexOf('ADMINISTRATION') > -1) {
+            return this.http.put<User>(`${this.userUrl}/administration/${user.id}`, user, { headers: HttpHeader.getHeaders() });
         }
-        if (user.roles.indexOf('PROFESSOR') > -1) {
-            return this.http.put<User>(`${this.userUrl}/professor/${user.id}`, user, { headers: this.headers });
+        if (roles.indexOf('PROFESSOR') > -1) {
+            return this.http.put<User>(`${this.userUrl}/professor/${user.id}`, user, { headers: HttpHeader.getHeaders() });
         }
-        if (user.roles.indexOf('STUDENT') > -1) {
-            return this.http.put<User>(`${this.userUrl}/student/${user.id}`, user, { headers: this.headers });
+        if (roles.indexOf('STUDENT') > -1) {
+            return this.http.put<User>(`${this.userUrl}/student/${user.id}`, user, { headers: HttpHeader.getHeaders() });
         }
     }
 
@@ -85,7 +103,16 @@ export class UserService {
     */
     public delete(user: User): Observable<User> {
         this.helper.trace(`deleting : ${user.id}`);
-        return this.http.delete<User>(`${this.userUrl}/${user.id}`, { headers: this.headers });
+        return this.http.delete<User>(`${this.userUrl}/${user.id}`, { headers: HttpHeader.getHeaders() });
+    }
+
+    /**
+     * 
+     * @param id
+     */
+    changeStatus(id: number): Observable<boolean> {
+        this.helper.trace(`Update the User status`);
+        return this.http.put<boolean>(`${this.userUrl}/status/${id}`, { headers: this.headers });
     }
 
     /**
