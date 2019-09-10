@@ -137,3 +137,6 @@ mat-grid-tile {
     margin-bottom: 10px
 }
 
+.pointer {
+    cursor: pointer;
+}

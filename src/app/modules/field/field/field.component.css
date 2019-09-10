@@ -127,3 +127,7 @@ td.mat-column-more, th.mat-column-more {
     color: grey;
     border-radius: 20px;
 }
+
+.pointer {
+    cursor: pointer;
+}

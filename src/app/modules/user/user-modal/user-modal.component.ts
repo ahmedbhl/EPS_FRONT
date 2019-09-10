@@ -21,12 +21,14 @@ export class UserModalComponent implements OnInit {
   professorForm: FormGroup;
   administrationForm: FormGroup;
   studentForm: FormGroup;
+  selectedTabIndex: number;
 
   // Private
   private _unsubscribeAll: Subject<any>;
-  private user: any;
+  private user: User;
   private selectedTab = 0;
   private educationalInstitutions: EducationalInstitution[];
+  public action: string;
 
   constructor(public dialogRef: MatDialogRef<UserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,6 +40,9 @@ export class UserModalComponent implements OnInit {
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
+
+    this.user = data.user;
+    this.action = data.action;
   }
 
   ngOnInit() {
@@ -45,6 +50,24 @@ export class UserModalComponent implements OnInit {
     this.initFormAdministration();
     this.initFormProfessor();
     this.initFormStudent();
+    this.checkAndInitFormBeforeDisplay();
+  }
+
+  checkAndInitFormBeforeDisplay() {
+    if (this.action && this.action === 'create') {
+    } else if (this.user && this.action && this.action === 'update') {
+      if (this.user.roles[0].name === 'PROFESSOR') {
+        this.professorForm.patchValue(this.user);
+        this.selectedTabIndex = 1;
+      } else if (this.user.roles[0].name === 'ADMINISTRATION') {
+        this.administrationForm.patchValue(this.user);
+        this.selectedTabIndex = 0;
+      } if (this.user.roles[0].name === 'STUDENT') {
+        this.studentForm.patchValue(this.user);
+        this.studentForm.get('establishment').setValue(this.user.establishment.id);
+        this.selectedTabIndex = 2;
+      }
+    }
   }
 
   onNoClick(): void {
@@ -56,36 +79,56 @@ export class UserModalComponent implements OnInit {
   }
 
   onSubmit() {
-    const roles = new Role();
-    if (this.selectedTab === 0) {
-      // stop here if form is invalid
-      if (this.administrationForm.invalid) {
-        return;
+    if (this.action === 'create') {
+      const roles = new Role();
+      if (this.selectedTab === 0) {
+        // stop here if form is invalid
+        if (this.administrationForm.invalid) {
+          return;
+        }
+        this.user = Object.assign(new User(), this.administrationForm.value);
+        roles.name = 'administration';
       }
-      this.user = Object.assign(new User(), this.administrationForm.value);
-      roles.name = 'administration';
-    }
-    if (this.selectedTab === 1) {
-      // stop here if form is invalid
-      if (this.professorForm.invalid) {
-        return;
+      if (this.selectedTab === 1) {
+        // stop here if form is invalid
+        if (this.professorForm.invalid) {
+          return;
+        }
+        this.user = Object.assign(new User(), this.professorForm.value);
+        roles.name = 'professor';
       }
-      this.user = Object.assign(new User(), this.professorForm.value);
-      roles.name = 'professor';
-    }
-    if (this.selectedTab === 2) {
-      // stop here if form is invalid
-      if (this.studentForm.invalid) {
-        return;
+      if (this.selectedTab === 2) {
+        // stop here if form is invalid
+        if (this.studentForm.invalid) {
+          return;
+        }
+        this.user = Object.assign(new User(), this.studentForm.value);
+        this.user.establishment = this.educationalInstitutions.find(item => item.id === this.studentForm.value.establishment);
+        this.user.establishment.yearOfFoundation = this.datePipe.transform(this.user.establishment.yearOfFoundation, 'yyyy-MM-dd HH:mm:ss');
+        roles.name = 'student';
       }
-      this.user = Object.assign(new User(), this.studentForm.value);
-      this.user.establishment.yearOfFoundation = this.datePipe.transform(this.user.establishment.yearOfFoundation, 'yyyy-MM-dd HH:mm:ss');
-      roles.name = 'student';
-    }
 
-    this.user.dateOfRegistration = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
-    this.user.roles.push(roles);
-    this.save();
+      this.user.dateOfRegistration = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+      this.user.roles.push(roles);
+
+      this.save();
+    } else if (this.action === 'update') {
+
+      if (this.user.roles[0].name === 'PROFESSOR') {
+        this.user = Object.assign(this.user, this.professorForm.value);
+      } else if (this.user.roles[0].name === 'ADMINISTRATION') {
+        this.user = Object.assign(this.user, this.administrationForm.value);
+      } if (this.user.roles[0].name === 'STUDENT') {
+        this.user = Object.assign(this.user, this.studentForm.value);
+        this.user.establishment = this.educationalInstitutions.find(item => item.id === this.studentForm.value.establishment);
+        this.user.establishment.yearOfFoundation = this.datePipe.transform(this.user.establishment.yearOfFoundation, 'yyyy-MM-dd HH:mm:ss');
+      }
+      this.user.dateOfRegistration = this.datePipe.transform(this.user.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
+      this.update();
+
+    } else if (this.action === 'delete') {
+      this.delete();
+    }
   }
 
   /**
@@ -150,6 +193,27 @@ export class UserModalComponent implements OnInit {
         this.snackBar.openSuccessSnackBar('The new User has been added successfully');
         this.dialogRef.close({ user: item });
         console.log('adding new User');
+      }
+    });
+  }
+
+  update() {
+    // tslint:disable-next-line: max-line-length
+    this.userService.update(this.user).subscribe((item: User) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The User has been updated successfully');
+        this.dialogRef.close({ course: item });
+        console.log('update User');
+      }
+    });
+  }
+
+  delete() {
+    this.userService.delete(this.user).subscribe((item: User) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The User has been deleted successfully');
+        this.dialogRef.close({ course: item });
+        console.log('delete User');
       }
     });
   }

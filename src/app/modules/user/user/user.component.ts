@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { UserService } from 'src/app/core/authentication/user.service';
 import { Helper } from 'src/app/core/helper.service';
+import { SnackBarService } from 'src/app/core/snack-bar.service';
 import { User } from 'src/app/shared/models/user.class';
 import { UserModalComponent } from '../user-modal/user-modal.component';
 
@@ -28,7 +29,8 @@ export class UserComponent implements OnInit {
 
   constructor(private readonly helper: Helper,
     private readonly _userService: UserService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private snackBar: SnackBarService) {
   }
 
   ngOnInit() {
@@ -56,7 +58,7 @@ export class UserComponent implements OnInit {
   getAllUser() {
     this._userService.getAllUsers().subscribe(
       (data: User[]) => {
-        this.users = data;
+        this.users = data.filter((user: User) => user.roles[0].name !== 'SUPER_ADMIN');
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.users);
       }
@@ -99,10 +101,24 @@ export class UserComponent implements OnInit {
     }
   }
 
-  openDialog(): void {
+  /**
+  * Used to check if the user exist before reset password
+  * @param email
+  */
+  checkMailForResetPassword(email: string) {
+    this._userService.checkMailForResetPassword(email).subscribe(data => {
+      if (data) {
+        this.snackBar.openSuccessSnackBar('An email sent to the user to reset the password');
+      }
+    }, error => {
+      this.snackBar.openDangernackBar('An error occurred while resetting password');
+    });
+  }
+
+  openDialog(user: User, action: string): void {
     const dialogRef = this.dialog.open(UserModalComponent, {
       width: '600px',
-      data: { name: 'Guest', animal: 'Guest' }
+      data: { user: user, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {

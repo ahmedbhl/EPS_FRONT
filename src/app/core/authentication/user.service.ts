@@ -86,14 +86,15 @@ export class UserService {
         this.helper.trace(`updating : ${user.id}`);
         let RequestParams: HttpParams = new HttpParams();
         RequestParams = RequestParams.append('id', user.id.toString());
-        if (user.roles.indexOf('ADMINISTRATION') > -1) {
-            return this.http.put<User>(`${this.userUrl}/administration/${user.id}`, user, { headers: this.headers, params: RequestParams });
+        const roles = user.roles.map(role => role.name);
+        if (roles.indexOf('ADMINISTRATION') > -1) {
+            return this.http.put<User>(`${this.userUrl}/administration/${user.id}`, user, { headers: HttpHeader.getHeaders() });
         }
-        if (user.roles.indexOf('PROFESSOR') > -1) {
-            return this.http.put<User>(`${this.userUrl}/professor/${user.id}`, user, { headers: this.headers });
+        if (roles.indexOf('PROFESSOR') > -1) {
+            return this.http.put<User>(`${this.userUrl}/professor/${user.id}`, user, { headers: HttpHeader.getHeaders() });
         }
-        if (user.roles.indexOf('STUDENT') > -1) {
-            return this.http.put<User>(`${this.userUrl}/student/${user.id}`, user, { headers: this.headers });
+        if (roles.indexOf('STUDENT') > -1) {
+            return this.http.put<User>(`${this.userUrl}/student/${user.id}`, user, { headers: HttpHeader.getHeaders() });
         }
     }
 
@@ -102,7 +103,7 @@ export class UserService {
     */
     public delete(user: User): Observable<User> {
         this.helper.trace(`deleting : ${user.id}`);
-        return this.http.delete<User>(`${this.userUrl}/${user.id}`, { headers: this.headers });
+        return this.http.delete<User>(`${this.userUrl}/${user.id}`, { headers: HttpHeader.getHeaders() });
     }
 
     /**

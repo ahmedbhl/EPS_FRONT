@@ -169,3 +169,7 @@ label:active:after {
     color: grey;
     border-radius: 20px;
 }
+
+.pointer {
+    cursor: pointer;
+}
