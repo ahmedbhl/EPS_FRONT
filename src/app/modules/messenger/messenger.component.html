@@ -1,0 +1,65 @@
+<div class="content" fxLayout="row" fxLayoutAlign="center stretch">
+  <div class="left-layer" fxFlex="35" fxLayout="column" fxLayoutAlign="stretch">
+    <div fxFlex="15" class="left-layer-header" fxLayout="column" fxLayoutAlign="center stretch">
+      <mat-toolbar-row fxFlex="40">
+        <span><img src="{{currentUser.profilePicture}}" class="img-profil" />{{currentUser.firstName}}
+          {{currentUser.lastName}}</span>
+        <span class="mat-toolbar-spacer"></span>
+        <mat-icon class="mat-icon-icon" aria-hidden="false" aria-label="Example user verified icon">settings
+        </mat-icon>
+      </mat-toolbar-row>
+
+      <div fxFlex="30">
+        <input matInput placeholder="Search" [formControl]="usersForm" class="left-layer-message-input"
+          [matAutocomplete]="autoCompleteUsers" />
+        <mat-autocomplete #autoCompleteUsers="matAutocomplete">
+          <mat-option *ngFor="let user of filtredUsers" [value]="user.firstName"
+            (click)="openSocketAndGetAllMessage(user)">
+            <img src="{{user.profilePicture}}" class="img-profil" /> {{user.firstName}}</mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+
+    <div fxFlex="20" class="pointer">
+      <mat-toolbar-row fxLayout="column" fxLayoutAlign="stretch" matTooltip="{{userMessage.messagedate}}"
+        *ngFor="let userMessage of userMessages" (click)="openSocketAndGetAllMessage(userMessage.userTo)">
+        <span fxFlex="60"><img src="{{userMessage.userTo.profilePicture}}"
+            class="img-profil-list" />{{userMessage.userTo.firstName}} {{userMessage.userTo.lastName}}
+        </span>
+        <span fxFlex="40" class="left-layer-message ">{{userMessage.message}}</span>
+      </mat-toolbar-row>
+    </div>
+  </div>
+
+  <div class="center-layer" fxFlex="65" fxLayout="column" fxLayoutAlign="stretch">
+    <mat-toolbar-row class="mat-toolbar-row-style" fxFlex="10">
+      <span *ngIf="selectedUserMessage"><img src="{{selectedUserMessage.profilePicture}}"
+          class="img-profil" />{{selectedUserMessage.firstName}}
+        {{selectedUserMessage.lastName}}</span>
+      <span class="mat-toolbar-spacer"></span>
+      <mat-icon class="mat-icon-icon" aria-hidden="false" aria-label="Example user verified icon">more_vert </mat-icon>
+    </mat-toolbar-row>
+
+    <div class="center-layer-content" fxFlex="80" fxFill #scrollMe [scrollTop]="scrollMe.scrollHeight">
+
+      <div *ngFor="let message of messages" fxLayout="column" fxLayoutAlign="space-around">
+        <div fxFlex="70">
+          <img src="{{getImgUrl(message)}}" [class.right]="message.userFrom.id===currentUser.id"
+            [class.left]="message.userFrom.id!==currentUser.id" class="img-profil" />
+          <span [class.from]="message.userFrom.id===currentUser.id" [class.to]="message.userFrom.id!==currentUser.id"
+            matTooltip="{{message.messagedate}}">{{message.message}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="center-layer-footer" fxFlex="10">
+      <form [formGroup]="form" (submit)="sendMessageUsingRest()" placeholder="Message" class="form">
+        <input type="text" formControlName="message" name="message" placeholder="Message" class="message-input"
+          (keyup.enter)="sendMessageUsingRest()">
+        <!--<input type="submit" [disabled]="form.invalid || userForm.invalid" value="socket" mat-raised-button>-->
+        <mat-icon (click)="sendMessageUsingRest()">send </mat-icon>
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -21,6 +21,7 @@ import { HomeModule } from './modules/home/home.module';
 import { LevelModule } from './modules/level/level.module';
 import { LibraryModule } from './modules/library/library.module';
 import { LoginModule } from './modules/login/login.module';
+import { MessengerModule } from './modules/messenger/messenger.module';
 import { SignupModule } from './modules/signup/signup.module';
 import { UserModule } from './modules/user/user.module';
 import { FooterComponent } from './shared/components/footer/footer.component';
@@ -51,6 +52,7 @@ import { SideNavComponent } from './shared/side-nav/side-nav.component';
     ForgotPasswordModule,
     UserModule,
     LibraryModule,
+    MessengerModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),

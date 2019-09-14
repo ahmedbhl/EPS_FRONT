@@ -20,7 +20,7 @@
 }
 
 .mat-drawer-content {
-    overflow: unset;
+   /* overflow: unset;*/
 }
 
 .mat-toolbar.mat-primary {
