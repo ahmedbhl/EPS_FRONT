@@ -24,6 +24,12 @@ export const environment = {
   library_url: 'https://ee7f4fd7.ngrok.io/api/v1/library',
   library_url_api_backend_type: 'java',
 
+  webSocket_url: 'https://ee7f4fd7.ngrok.io/api/v1/socket',
+  webSocket_url_api_backend_type: 'java',
+
+  group_url: 'https://ee7f4fd7.ngrok.io/api/v1/groups',
+  group_url_api_backend_type: 'java',
+
   /** Environment platform name */
   name: 'Prod',
 

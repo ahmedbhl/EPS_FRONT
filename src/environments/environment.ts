@@ -33,6 +33,9 @@ export const environment = {
   webSocket_url: 'http://localhost:8080/api/v1/socket',
   webSocket_url_api_backend_type: 'java',
 
+  group_url: 'http://localhost:8080/api/v1/groups',
+  group_url_api_backend_type: 'java',
+
 };
 
 /*
