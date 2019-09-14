@@ -30,6 +30,9 @@ export const environment = {
   library_url: 'http://localhost:8080/api/v1/library',
   library_url_api_backend_type: 'java',
 
+  webSocket_url: 'http://localhost:8080/api/v1/socket',
+  webSocket_url_api_backend_type: 'java',
+
 };
 
 /*
