@@ -16,6 +16,7 @@ import { EducationalInstitutionModule } from './modules/educational-institution/
 import { Error500Module } from './modules/errors/error500/error500.module';
 import { FieldModule } from './modules/field/field.module';
 import { ForgotPasswordModule } from './modules/forgot-password/forgot-password.module';
+import { GroupModule } from './modules/group/group.module';
 import { HomeActorsModule } from './modules/home-actors/home-actors.module';
 import { HomeModule } from './modules/home/home.module';
 import { LevelModule } from './modules/level/level.module';
@@ -53,6 +54,7 @@ import { SideNavComponent } from './shared/side-nav/side-nav.component';
     UserModule,
     LibraryModule,
     MessengerModule,
+    GroupModule,
     ReactiveFormsModule,
     FormsModule,
     SharedModuleModule.forRoot(),
