@@ -30,6 +30,15 @@ export const environment = {
   group_url: 'https://ee7f4fd7.ngrok.io/api/v1/groups',
   group_url_api_backend_type: 'java',
 
+  post_url: 'https://ee7f4fd7.ngrok.io/api/v1/posts',
+  post_url_api_backend_type: 'java',
+
+  comment_url: 'https://ee7f4fd7.ngrok.io/api/v1/comments',
+  comment_url_api_backend_type: 'java',
+
+  like_url: 'https://ee7f4fd7.ngrok.io/api/v1/likes',
+  like_url_api_backend_type: 'java',
+
   /** Environment platform name */
   name: 'Prod',
 

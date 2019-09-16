@@ -87,10 +87,10 @@ export class LevelComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  openDialog(): void {
+  openDialog(level: Level, action: string): void {
     const dialogRef = this.dialog.open(LevelModalComponent, {
       width: '600px',
-      data: { name: 'Guest', animal: 'Guest' }
+      data: { level: level, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {

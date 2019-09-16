@@ -23,6 +23,7 @@ export class LevelModalComponent implements OnInit {
   private _unsubscribeAll: Subject<any>;
   public educationalInstitutions: EducationalInstitution[];
   private level: Level;
+  public action: string;
 
   constructor(public dialogRef: MatDialogRef<LevelModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,11 +35,23 @@ export class LevelModalComponent implements OnInit {
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
+
+    this.level = data.level;
+    this.action = data.action;
   }
 
   ngOnInit() {
     this.initForm();
     this.getAllEducationalInstitution();
+    this.checkAndInitFormBeforeDisplay();
+  }
+
+  checkAndInitFormBeforeDisplay() {
+    if (this.action && this.action === 'create') {
+    } else if (this.level && this.action && this.action === 'update') {
+      this.form.setValue(this.level);
+      this.form.get('establishment').setValue(this.level.establishment.id);
+    }
   }
 
   onNoClick(): void {
@@ -50,7 +63,13 @@ export class LevelModalComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.save();
+    if (this.action === 'create') {
+      this.save();
+    } else if (this.action === 'update') {
+      this.update();
+    } else if (this.action === 'delete') {
+      this.delete();
+    }
   }
 
   /**
@@ -71,7 +90,8 @@ export class LevelModalComponent implements OnInit {
    */
   save() {
     this.level = Object.assign(new Level(), this.form.value);
-    this.level.establishment.yearOfFoundation = this.datePipe.transform(this.level.establishment.yearOfFoundation , 'yyyy-MM-dd HH:mm:ss');
+    this.level.establishment = this.educationalInstitutions.find(item => item.id === this.form.value.establishment);
+    this.level.establishment.yearOfFoundation = this.datePipe.transform(this.level.establishment.yearOfFoundation, 'yyyy-MM-dd HH:mm:ss');
     this.levelService.save(this.level).subscribe((item: Level) => {
       if (item) {
         this.snackBar.openSuccessSnackBar('The new Level has been added successfully');
@@ -80,6 +100,32 @@ export class LevelModalComponent implements OnInit {
       }
     });
   }
+
+  update() {
+    this.level = Object.assign(this.level, this.form.value);
+    this.level.establishment = this.educationalInstitutions.find(item => item.id === this.form.value.establishment);
+    this.level.establishment.yearOfFoundation = this.datePipe.transform(this.level.establishment.yearOfFoundation, 'yyyy-MM-dd HH:mm:ss');
+    // tslint:disable-next-line: max-line-length
+    this.levelService.update(this.level).subscribe((item: Level) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The Level has been updated successfully');
+        this.dialogRef.close({ course: item });
+        console.log('update Level');
+      }
+    });
+  }
+
+  delete() {
+    this.levelService.delete(this.level).subscribe((item: Level) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar('The Level has been deleted successfully');
+        this.dialogRef.close({ course: item });
+        console.log('delete Level');
+      }
+    });
+  }
+
+
   /**
    * Used for getAll the Educational Institutions
    */

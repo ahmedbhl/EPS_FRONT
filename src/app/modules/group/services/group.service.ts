@@ -38,10 +38,22 @@ export class GroupService {
   * Get all the educationnal institutions
   */
   public getAllGroups(): Observable<Group[]> {
-
-
     console.log('get the list of all Groups ' + this.groupUrl);
     return this.http.get<Group[]>(`${this.groupUrl}`, { headers: this.headers });
+  }
+
+  public getAllGroupsByProfessor(professorId: number): Observable<Group[]> {
+    console.log('get the list of all Groups By User ' + this.groupUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('professorId', professorId.toString());
+    return this.http.get<Group[]>(`${this.groupUrl}/professor`, { headers: this.headers, params: requestParams });
+  }
+
+  public getAllGroupsByStudent(studentId: number): Observable<Group[]> {
+    console.log('get the list of all Groups By User ' + this.groupUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('studentId', studentId.toString());
+    return this.http.get<Group[]>(`${this.groupUrl}/student`, { headers: this.headers, params: requestParams });
   }
 
   /**
