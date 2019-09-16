@@ -12,6 +12,12 @@
     color: rgb(51, 51, 51);
 }
 
+.profile-header-text-email {
+    display: block;
+    font-size: 14px;
+    color: darkgray;
+}
+
 .profile-progress-text {
     display: block;
     color: #2e313e;
@@ -285,4 +291,26 @@
 .mat-card-comment-emoj {
     vertical-align: middle;
     margin: 3px;
+}
+
+.spiner {
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: relative;
+    top: 57%;
+    left: 40%;
+}
+
+.navigation-empty-list-item {
+    margin: 0 20px;
+    height: 30px;
+    width: 170px;
+    cursor: pointer;
+}
+
+::ng-deep .mat-select-panel {
+    position: relative !important;
+    top: 32px !important;
+    right: 0 !important;
 }

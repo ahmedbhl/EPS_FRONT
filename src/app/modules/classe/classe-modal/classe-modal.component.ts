@@ -89,7 +89,7 @@ export class ClasseModalComponent implements OnInit {
    */
   save() {
     this.classe = Object.assign(new Classe(), this.form.value);
-    this.classe.field = this.fields.find(item => item.id === this.form.value.field)
+    this.classe.field = this.fields.find(item => item.id === this.form.value.field);
     // tslint:disable-next-line: max-line-length
     this.classeService.save(this.classe).subscribe((item: Classe) => {
       if (item) {
@@ -102,7 +102,7 @@ export class ClasseModalComponent implements OnInit {
 
   update() {
     this.classe = Object.assign(this.classe, this.form.value);
-    this.classe.field = this.fields.find(item => item.id === this.form.value.field)
+    this.classe.field = this.fields.find(item => item.id === this.form.value.field);
     // tslint:disable-next-line: max-line-length
     this.classeService.update(this.classe).subscribe((item: Classe) => {
       if (item) {
