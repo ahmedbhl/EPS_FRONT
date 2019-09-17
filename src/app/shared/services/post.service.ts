@@ -35,14 +35,32 @@ export class PostService {
   }
 
   /**
-  * Get all the educationnal institutions
+  * Get all the Posts
   */
   public getAllPosts(): Observable<Post[]> {
-
-
     console.log('get the list of all posts ' + this.postUrl);
     return this.http.get<Post[]>(`${this.postUrl}`, { headers: this.headers });
   }
+
+  /**
+   * Get all the Posts by type
+   */
+  public getAllPostsByType(type: String): Observable<Post[]> {
+    console.log('get the list of all posts by type ' + this.postUrl);
+    return this.http.get<Post[]>(`${this.postUrl}/type/${type}`, { headers: this.headers });
+  }
+
+  /**
+  * Get all the Posts by type and User
+  */
+  public getAllPostsByTypeAndUser(type: String, user: any): Observable<Post[]> {
+    console.log('get the list of all posts by type and user ' + this.postUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('type', type.toString());
+    requestParams = requestParams.append('user', user.id.toString());
+    return this.http.get<Post[]>(`${this.postUrl}/user`, { headers: this.headers, params: requestParams });
+  }
+
 
   /**
      * Save a new post

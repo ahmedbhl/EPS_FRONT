@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
+import { Post } from 'src/app/shared/models/post';
 import { User } from 'src/app/shared/models/user.class';
+import { PostService } from 'src/app/shared/services/post.service';
 import { Classe } from '../classe/model/Classe';
 import { ClasseService } from '../classe/services/classe.service';
 import { GroupModalComponent } from '../group/group-modal/group-modal.component';
@@ -22,12 +24,15 @@ export class HomeActorsComponent implements OnInit {
   isProfessor = false;
   groups: Group[] = [];
   classes: Classe[] = [];
+  posts: Post[] = [];
   isHiddenSpinner = false;
+  type = '';
 
 
   constructor(private authenticationService: AuthenticationService,
     private groupService: GroupService,
     private classService: ClasseService,
+    private postService: PostService,
     public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -36,8 +41,8 @@ export class HomeActorsComponent implements OnInit {
 
   addEmoji = (e) => {
     this.show = !this.show;
-    let emoji = e.emoji.native;
-    this.state = { text: this.state.text + emoji }
+    const emoji = e.emoji.native;
+    this.state = { text: this.state.text + emoji };
   }
 
   initCurrentUser() {
@@ -46,13 +51,17 @@ export class HomeActorsComponent implements OnInit {
       const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
       if (roles.indexOf('PROFESSOR') > -1) {
         this.isProfessor = true;
+        this.type = 'PROFESSOR';
         this.getAllGroupsByProfessor();
         this.getAllClassesByProfessor();
       } else if (roles.indexOf('STUDENT') > -1) {
         this.isProfessor = false;
+        this.type = 'STUDENT';
         this.getAllGroupsByStudent();
         this.getAllClassesByStudent();
       }
+      this.getAllPostsbyTypeAndUser();
+
       this.getPictureLink();
       setTimeout(() => {
         this.isHiddenSpinner = true;
@@ -114,6 +123,18 @@ export class HomeActorsComponent implements OnInit {
         this.classes = classes;
       }
     });
+  }
+
+  getAllPostsbyTypeAndUser() {
+    this.postService.getAllPostsByTypeAndUser(this.type, this.currentUser).subscribe(posts => {
+      if (posts.length > 0) {
+        this.posts = posts;
+      }
+    });
+  }
+
+  getLikesLabel(post: Post) {
+    return post.likes.length > 0 ? `${post.likes.length} Likes` : 'Like';
   }
 
   openDialog(action?: string): void {
