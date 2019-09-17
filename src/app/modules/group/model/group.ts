@@ -1,4 +1,5 @@
 import { User } from 'src/app/shared/models/user.class';
+import { Post } from 'src/app/shared/models/post';
 
 export class Group {
     id: number;
@@ -9,7 +10,7 @@ export class Group {
 
     hashCode: String;
 
-    // posts: Post[];
+    posts: Post[];
 
     professors: User;
 

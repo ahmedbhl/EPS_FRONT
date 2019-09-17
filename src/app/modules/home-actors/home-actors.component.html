@@ -16,13 +16,13 @@
 
         <div class="navigation-list-container">
             <div class="navigation-list-header">
-                <span class="navigation-list-title">Classes</span>
+                <span class="navigation-list-title">My Classes</span>
                 <mat-select #select class="mat-select-container" style="visibility:hidden">
                     <mat-option (click)="openDialog('create')">Create a class</mat-option>
                     <mat-divider class="divider-container"></mat-divider>
                     <mat-option (click)="openDialog('joind')">Join a class</mat-option>
                 </mat-select>
-                <mat-icon (click)=select.open()>more_horiz</mat-icon>
+                <mat-icon (click)=select.open() class="pointer">more_horiz</mat-icon>
             </div>
 
             <div class="navigation-list list-group" *ngIf="classes.length > 0">
@@ -47,13 +47,13 @@
 
         <div class="navigation-list-container">
             <div class="navigation-list-header">
-                <span class="navigation-list-title">Groups</span>
+                <span class="navigation-list-title">My Groups</span>
                 <mat-select #selectGroups class="mat-select-container" style="visibility:hidden">
                     <mat-option (click)="openDialog('create')">Create a group</mat-option>
                     <mat-divider class="divider-container"></mat-divider>
                     <mat-option (click)="openDialog('join')">Join a group</mat-option>
                 </mat-select>
-                <mat-icon (click)=selectGroups.open()>more_horiz</mat-icon>
+                <mat-icon (click)=selectGroups.open() class="pointer">more_horiz</mat-icon>
             </div>
 
             <div class="navigation-list list-group" *ngIf="groups.length > 0">
@@ -95,27 +95,37 @@
             </div>
         </div>
 
+
         <div>
-            <mat-card class="example-card">
+            <mat-card class="example-card" *ngFor="let post of posts">
                 <mat-card-header class="mat-card-header">
                     <div mat-card-avatar>
-                        <img class="message-avatar rounded" src="assets/images/avatars/profile.jpg" alt="Zayneb Hamila">
+                        <img class="message-avatar rounded" src="{{post.user.profilePicture}}" alt="Zayneb Hamila">
                     </div>
-                    <mat-card-title>Shiba Inu</mat-card-title>
-                    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+                    <mat-card-title style="font-size: medium;margin: 0 0 3px 0;">
+                        {{post.user.firstName}} {{post.user.lastName}}
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        <span *ngIf="isProfessor">Professor</span>
+                        <span *ngIf="!isProfessor">Student</span>
+                    </mat-card-subtitle>
+                    <div>
+                        <mat-icon>more_horiz</mat-icon>
+                    </div>
                 </mat-card-header>
-                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                    alt="Photo of a Shiba Inu">
                 <mat-card-content>
-                    <p>
-                        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                    </p>
+                    <p style="font-size: 1.5em;"> {{post.description}} </p>
                 </mat-card-content>
+                <div class="spiner" *ngIf="post.postPicture && !isHiddenSpinner">
+                    <mat-spinner diameter="20" color="accent"></mat-spinner>
+                </div>
+                <img mat-card-image src="{{post.postPicture}}" alt="Photo">
                 <mat-divider></mat-divider>
                 <mat-card-actions class="mat-card-action">
-                    <button mat-button class="footer-card-btn">
-                        <mat-icon class="footer-card-icon">thumb_up</mat-icon>
-                        <span class="footer-card-btn-like">Like</span>
+                    <button mat-button class="footer-card-btn" >
+                        <mat-icon [class.blue]="post.likes.length>0" class="footer-card-icon">thumb_up</mat-icon>
+                        <span class="footer-card-btn-like"
+                            [class.blue]="post.likes.length>0">{{getLikesLabel(post)}}</span>
                     </button>
                     <button mat-button class="footer-card-btn">
                         <mat-icon class="footer-card-icon">insert_comment</mat-icon>

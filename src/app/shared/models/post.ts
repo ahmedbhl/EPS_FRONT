@@ -1,4 +1,3 @@
-import { Group } from 'src/app/modules/group/model/group';
 import { Comment } from './comment';
 import { Like } from './like';
 import { User } from './user.class';
@@ -11,13 +10,13 @@ export class Post {
 
     description: String;
 
-    group: Group;
+    postPicture: String;
 
     user: User;
 
     comments: Comment[];
 
-    like: Like[];
+    likes: Like[];
 
     constructor() { }
 

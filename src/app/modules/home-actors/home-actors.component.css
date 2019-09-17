@@ -80,6 +80,7 @@
     font-size: .75rem;
     font-weight: 500;
     text-transform: uppercase;
+    width: 150px;
 }
 
 .navigation-list {
@@ -211,8 +212,9 @@
     float: right;
 }
 
-.mat-card-header-text {
-    margin: 0 16px 10px 16px;
+::ng-deep .mat-card-header-text {
+    width: 80% !important;
+    cursor: pointer;
 }
 
 .footer-card-btn-like {
@@ -309,8 +311,20 @@
     cursor: pointer;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 ::ng-deep .mat-select-panel {
     position: relative !important;
     top: 32px !important;
     right: 0 !important;
+}
+
+.example-card {
+    margin: 20px 0;
+}
+
+.blue {
+    color: dodgerblue;
 }

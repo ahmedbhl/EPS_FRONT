@@ -29,6 +29,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { BasicAuthInterceptor } from './shared/helpers';
 import { ErrorInterceptor } from './shared/helpers/error.interceptor';
+import { PostService } from './shared/services/post.service';
 import { SharedModuleModule } from './shared/shared-module/shared-module.module';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
 
@@ -69,7 +70,7 @@ import { SideNavComponent } from './shared/side-nav/side-nav.component';
   ],
   exports: [],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
