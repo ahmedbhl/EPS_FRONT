@@ -237,21 +237,56 @@
 
 .footer-card-btn {
     line-height: 20px;
+    outline: none;
 }
 
 .mat-card-footer {
     padding: 4px 20px;
-    background-color: #f7f7f7;
+    background-color: #f2f3f5;
 }
 
 .mat-card-action {
     margin: 0;
 }
 
+.footer-card-mat-card-comment {
+    width: 100%;
+    margin: 10px 0;
+}
+
 .footer-card-mat-card-avatar {
     width: 100%;
     margin: 10px 0;
     display: flex;
+}
+
+.mat-card-comment-display {
+    display: flex;
+    margin: 7px 0;
+}
+
+.mat-card-comment-text {
+    background: white;
+    border-radius: 22px;
+    margin: 0 10px;
+    padding: 6px 10px;
+    height: 31px;
+    font-size: 0.8em;
+    /* background-color: #f2f3f5;*/
+}
+
+.comment-text-user {
+    display: block;
+    font-weight: bold;
+    color: #385898;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.comment-text {
+    font-family: sans-serif;
+    font-weight: 100;
+    color: rgb(51, 51, 51);
 }
 
 .mat-card-comment-input {
@@ -294,6 +329,7 @@
 .mat-card-comment-emoj {
     vertical-align: middle;
     margin: 3px;
+    cursor: pointer;
 }
 
 .spiner {
@@ -339,5 +375,5 @@
 
 .card-post-footer {
     text-align: center;
-    margin: 0  0 20px 0;
+    margin: 0 0 20px 0;
 }

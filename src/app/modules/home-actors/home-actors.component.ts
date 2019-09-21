@@ -4,9 +4,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { Comment } from 'src/app/shared/models/comment';
 import { Like } from 'src/app/shared/models/like';
 import { Post } from 'src/app/shared/models/post';
 import { User } from 'src/app/shared/models/user.class';
+import { CommentService } from 'src/app/shared/services/comment.service';
 import { LikeService } from 'src/app/shared/services/like.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { Classe } from '../classe/model/Classe';
@@ -39,6 +41,8 @@ export class HomeActorsComponent implements OnInit {
   selectedImoj: any;
   currentFileUpload: File;
   path: String;
+  isHiddenComment: Boolean[] = [];
+  defaultValue = '';
 
   constructor(private authenticationService: AuthenticationService,
     private _formBuilder: FormBuilder,
@@ -46,6 +50,7 @@ export class HomeActorsComponent implements OnInit {
     private classService: ClasseService,
     private postService: PostService,
     private likeService: LikeService,
+    private commentService: CommentService,
     public dialog: MatDialog,
     private _LibraryService: LibraryService,
     private helper: Helper,
@@ -231,6 +236,22 @@ export class HomeActorsComponent implements OnInit {
     this.isLiked(post) ? this.removeLike(this.currentUser, post) : this.saveLike(post);
   }
 
+  saveComment(event, post: Post, postIndex) {
+    const comment = new Comment();
+    if (event && event.currentTarget.value && post) {
+      comment.commentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+      comment.message = event.currentTarget.value;
+      post.postDate = this.datePipe.transform(post.postDate, 'yyyy-MM-dd HH:mm:ss');
+      comment.post = post;
+      comment.user = this.currentUser;
+      this.commentService.save(comment).subscribe((result: Comment) => {
+        const index = this.posts.indexOf(post);
+        this.posts[index].comments.unshift(...[result]);
+        this.defaultValue = '';
+      });
+    }
+  }
+
   saveLike(post: Post) {
     const like = new Like();
     post.postDate = this.datePipe.transform(post.postDate, 'yyyy-MM-dd HH:mm:ss');
@@ -287,7 +308,12 @@ export class HomeActorsComponent implements OnInit {
     }
   }
 
-
+  showHiddenComment(index) {
+    if (!this.isHiddenComment && this.isHiddenComment[index] === undefined) {
+      this.isHiddenComment[index] = true;
+    }
+    return this.isHiddenComment[index] = !this.isHiddenComment[index];
+  }
   openDialog(action?: string): void {
     const dialogRef = this.dialog.open(GroupModalComponent, {
       width: '600px',
