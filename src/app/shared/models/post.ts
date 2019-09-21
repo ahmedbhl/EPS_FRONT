@@ -12,6 +12,8 @@ export class Post {
 
     postPicture: String;
 
+    postDate: string;
+
     user: User;
 
     comments: Comment[];

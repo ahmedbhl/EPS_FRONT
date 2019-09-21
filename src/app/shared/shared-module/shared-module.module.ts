@@ -6,9 +6,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MaterialModule } from '../material-module/material-module.module';
+import { FileNamePipePipe } from '../pipe/file-name-pipe.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [FileNamePipePipe],
   imports: [
     CommonModule,
     MaterialModule,
@@ -18,7 +19,8 @@ import { MaterialModule } from '../material-module/material-module.module';
     ReactiveFormsModule,
     FormsModule
   ],
-  exports: [CommonModule, MaterialModule, HttpClientModule, FlexLayoutModule, PickerModule, ReactiveFormsModule, FormsModule]
+  exports: [CommonModule, MaterialModule,
+    HttpClientModule, FlexLayoutModule, PickerModule, ReactiveFormsModule, FormsModule, FileNamePipePipe]
 })
 export class SharedModuleModule {
   static forRoot(): ModuleWithProviders {

@@ -18,9 +18,10 @@
             <div class="navigation-list-header">
                 <span class="navigation-list-title">My Classes</span>
                 <mat-select #select class="mat-select-container" style="visibility:hidden">
-                    <mat-option (click)="openDialog('create')">Create a class</mat-option>
-                    <mat-divider class="divider-container"></mat-divider>
+                    <mat-option (click)="openDialog('create')" *ngIf="isProfessor">Create a class</mat-option>
                     <mat-option (click)="openDialog('joind')">Join a class</mat-option>
+                    <mat-divider class="divider-container"></mat-divider>
+                    <mat-option (click)="openDialog('all')">All groups</mat-option>
                 </mat-select>
                 <mat-icon (click)=select.open() class="pointer">more_horiz</mat-icon>
             </div>
@@ -49,9 +50,10 @@
             <div class="navigation-list-header">
                 <span class="navigation-list-title">My Groups</span>
                 <mat-select #selectGroups class="mat-select-container" style="visibility:hidden">
-                    <mat-option (click)="openDialog('create')">Create a group</mat-option>
-                    <mat-divider class="divider-container"></mat-divider>
+                    <mat-option (click)="openDialog('create')" *ngIf="isProfessor">Create a group</mat-option>
                     <mat-option (click)="openDialog('join')">Join a group</mat-option>
+                    <mat-divider class="divider-container"></mat-divider>
+                    <mat-option (click)="openDialog('all')">All groups</mat-option>
                 </mat-select>
                 <mat-icon (click)=selectGroups.open() class="pointer">more_horiz</mat-icon>
             </div>
@@ -68,8 +70,11 @@
                 <mat-spinner diameter="20" color="accent"></mat-spinner>
             </div>
             <div class="navigation-empty-list-item" *ngIf="groups.length ===0 && isHiddenSpinner">
-                <mat-icon>add</mat-icon>
-                <span style="margin: 0px 0.5rem; vertical-align: top;" (click)="openDialog()">Add New Groupe</span>
+                <mat-icon *ngIf="isProfessor">add</mat-icon>
+                <span style="margin: 0px 0.5rem; vertical-align: top;" (click)="openDialog()" *ngIf="isProfessor">Add
+                    New Group</span>
+                <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="!isProfessor" (click)="openDialog()">Join
+                    Group</span>
             </div>
         </div>
     </div>
@@ -78,37 +83,47 @@
     <div fxFlex="48" class="stream-container">
 
         <div class="unified-composer-container mb-3">
-            <div class="input-text">
-                <img class="message-avatar rounded" src="{{profilePictureLink}}" alt="cedro">
-                <textarea cols="60" placeholder="Share an idea or resources" class="postbox-textarea"></textarea>
-
-            </div>
-            <mat-divider></mat-divider>
-            <div class="footer" fxLayout="row" fxFlexFill fxLayoutAlign="space-between stretch">
-                <div fxFlex="50">
-                    <mat-icon>insert_photo</mat-icon>
-                    <mat-icon>attach_file</mat-icon>
+            <form (ngSubmit)="savePoste()" [formGroup]="formPost">
+                <div class="input-text">
+                    <img mat-card-avatar class="message-avatar rounded footer-card-comment-icon"
+                        src="{{profilePictureLink}}" alt="cedro">
+                    <textarea cols="60" placeholder="Share an idea or resources" class="postbox-textarea"
+                        formControlName="description"></textarea>
                 </div>
-                <div fxFlex="50">
-                    <button mat-stroked-button color="primary" class="btn-post">Post</button>
+                <mat-divider></mat-divider>
+                <div class="footer" fxLayout="row" fxFlexFill fxLayoutAlign="space-between stretch">
+                    <div fxFlex="50">
+                        <mat-icon (click)="postImgUpload.click()">insert_photo</mat-icon>
+                        <input type="file" #postImgUpload style="display: none" accept="image/jpg" multiple=""
+                            (change)="upload($event,'post')" data-original-title="upload photos">
+                        <mat-icon (click)="fileUpload.click()">attach_file</mat-icon>
+                        <input type="file" #fileUpload style="display: none" accept="image/jpg" multiple=""
+                            (change)="upload($event,'post')" data-original-title="upload photos">
+                    </div>
+                    <div fxFlex="50">
+                        <button mat-stroked-button color="primary" [disabled]="!formPost.valid"
+                            class="btn-post">Post</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
 
-
         <div>
-            <mat-card class="example-card" *ngFor="let post of posts">
+            <mat-card class="example-card" *ngFor="let post of posts; let i = index;">
                 <mat-card-header class="mat-card-header">
                     <div mat-card-avatar>
-                        <img class="message-avatar rounded" src="{{post.user.profilePicture}}" alt="Zayneb Hamila">
+                        <img mat-card-avatar class="message-avatar rounded" src="{{post.user.profilePicture}}"
+                            alt="Zayneb Hamila">
                     </div>
                     <mat-card-title style="font-size: medium;margin: 0 0 3px 0;">
                         {{post.user.firstName}} {{post.user.lastName}}
                     </mat-card-title>
                     <mat-card-subtitle>
-                        <span *ngIf="isProfessor">Professor</span>
-                        <span *ngIf="!isProfessor">Student</span>
+                        <span class="post-title-style" *ngIf="isProfessor">Professor</span>
+                        <span class="post-title-style" *ngIf="!isProfessor">Student</span>
+                        <span style="font-size: small;"> - {{post.postDate |date:'dd-MM-yyyy hh:mm'}}</span>
                     </mat-card-subtitle>
+
                     <div>
                         <mat-icon>more_horiz</mat-icon>
                     </div>
@@ -119,13 +134,12 @@
                 <div class="spiner" *ngIf="post.postPicture && !isHiddenSpinner">
                     <mat-spinner diameter="20" color="accent"></mat-spinner>
                 </div>
-                <img mat-card-image src="{{post.postPicture}}" alt="Photo">
+                <img mat-card-image src="{{post.postPicture}}" alt="Photo" *ngIf="post.postPicture">
                 <mat-divider></mat-divider>
                 <mat-card-actions class="mat-card-action">
-                    <button mat-button class="footer-card-btn" >
-                        <mat-icon [class.blue]="post.likes.length>0" class="footer-card-icon">thumb_up</mat-icon>
-                        <span class="footer-card-btn-like"
-                            [class.blue]="post.likes.length>0">{{getLikesLabel(post)}}</span>
+                    <button mat-button class="footer-card-btn" (click)="addLike(post)">
+                        <mat-icon [class.blue]="isLiked(post)" class="footer-card-icon">thumb_up</mat-icon>
+                        <span class="footer-card-btn-like" [class.blue]="isLiked(post)">{{getLikesLabel(post)}}</span>
                     </button>
                     <button mat-button class="footer-card-btn">
                         <mat-icon class="footer-card-icon">insert_comment</mat-icon>
@@ -135,19 +149,25 @@
                 <mat-divider></mat-divider>
                 <mat-card-footer class="mat-card-footer">
                     <div class="footer-card-mat-card-avatar">
-                        <img class="message-avatar rounded footer-card-comment-icon"
-                            src="assets/images/avatars/profile.jpg" alt="Zayneb Hamila">
+                        <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
+                            alt="Zayneb Hamila">
                         <div class="mat-card-comment">
-                            <textarea [value]="state.text" cols="60" class="mat-card-comment-input" matInput type="text"
+                            <textarea [value]="state[i] && state[i].text ? state[i].text : ''" cols="60"
+                                class="mat-card-comment-input" matInput type="text"
                                 placeholder="your comment..."></textarea>
                             <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"
-                                (emojiClick)="addEmoji($event)" [hidden]="show"></emoji-mart>
-                            <mat-icon class="mat-card-comment-emoj" (click)="show=!show">sentiment_satisfied_alt
+                                (emojiClick)="addEmoji($event, i)" [hidden]="!(show[i] && show[i]===true)"></emoji-mart>
+                            <mat-icon class="mat-card-comment-emoj" (click)="show[i]=!show[i]">sentiment_satisfied_alt
                             </mat-icon>
-                            <mat-icon class="mat-card-comment-emoj">photo_camera</mat-icon>
+                            <mat-icon class="mat-card-comment-emoj" (click)="imgUpload.click()">photo_camera</mat-icon>
+                            <input type="file" #imgUpload style="display: none" accept="image/jpg" multiple=""
+                                (change)="upload($event,'commnet')" data-original-title="upload photos">
                         </div>
                     </div>
                 </mat-card-footer>
+            </mat-card>
+            <mat-card class="card-post-footer">
+                <mat-card-content>All publications have been loaded </mat-card-content>
             </mat-card>
         </div>
     </div>
