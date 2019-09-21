@@ -82,6 +82,7 @@
 
     <div fxFlex="48" class="stream-container">
 
+        <!-- Add New Post Bloc-->
         <div class="unified-composer-container mb-3">
             <form (ngSubmit)="savePoste()" [formGroup]="formPost">
                 <div class="input-text">
@@ -107,7 +108,9 @@
                 </div>
             </form>
         </div>
+        <!-- End Add New Post Bloc -->
 
+        <!--Display Post Bloc-->
         <div>
             <mat-card class="example-card" *ngFor="let post of posts; let i = index;">
                 <mat-card-header class="mat-card-header">
@@ -143,18 +146,30 @@
                     </button>
                     <button mat-button class="footer-card-btn">
                         <mat-icon class="footer-card-icon">insert_comment</mat-icon>
-                        <span class="footer-card-btn-like">Comment</span>
+                        <span class="footer-card-btn-like" (click)="showHiddenComment(i)">Comment</span>
                     </button>
                 </mat-card-actions>
                 <mat-divider></mat-divider>
                 <mat-card-footer class="mat-card-footer">
-                    <div class="footer-card-mat-card-avatar">
+                    <div class="footer-card-mat-card-comment">
+                        <div class="mat-card-comment-display" *ngFor="let comment of post.comments">
+                            <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
+                                alt="Zayneb Hamila">
+                            <section class="mat-card-comment-text">
+                                <p class="comment-text-user">{{comment.user.firstName}}
+                                    {{comment.user.lastName}}&nbsp;
+                                    <span class="comment-text">{{comment.message}} </span></p>
+                            </section>
+                        </div>
+                    </div>
+
+                    <div class="footer-card-mat-card-avatar" [hidden]="isHiddenComment[i]">
                         <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
                             alt="Zayneb Hamila">
                         <div class="mat-card-comment">
                             <textarea [value]="state[i] && state[i].text ? state[i].text : ''" cols="60"
-                                class="mat-card-comment-input" matInput type="text"
-                                placeholder="your comment..."></textarea>
+                                [(ngModel)]="defaultValue" class="mat-card-comment-input" matInput type="text"
+                                (keyup.enter)="saveComment($event,post, i)" placeholder="your comment..."></textarea>
                             <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"
                                 (emojiClick)="addEmoji($event, i)" [hidden]="!(show[i] && show[i]===true)"></emoji-mart>
                             <mat-icon class="mat-card-comment-emoj" (click)="show[i]=!show[i]">sentiment_satisfied_alt
@@ -170,6 +185,7 @@
                 <mat-card-content>All publications have been loaded </mat-card-content>
             </mat-card>
         </div>
+        <!--End Display Post Bloc-->
     </div>
 
     <div fxFlex="28" class="right-column-container">xxx</div>
