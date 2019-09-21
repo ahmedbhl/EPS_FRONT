@@ -272,7 +272,8 @@
 }
 
 .footer-card-comment-icon {
-    height: 35px;
+    height: 33px;
+    width: 33px;
 }
 
 .home-content-card {
@@ -327,4 +328,16 @@
 
 .blue {
     color: dodgerblue;
+}
+
+.post-title-style {
+    float: left;
+    font: bold 14px/21px Georgia, serif;
+    margin: 0 5px 0 0;
+    color: #606770;
+}
+
+.card-post-footer {
+    text-align: center;
+    margin: 0  0 20px 0;
 }

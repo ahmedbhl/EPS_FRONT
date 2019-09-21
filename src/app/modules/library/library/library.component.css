@@ -134,4 +134,11 @@ td.mat-column-more, th.mat-column-more {
     color: #0061ff;
     font-size: xx-large;
     margin: 0 15px;
+    cursor: pointer;
+}
+
+.more {
+    height: 10px;
+    vertical-align: middle;
+    cursor: pointer;
 }

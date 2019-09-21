@@ -10,7 +10,7 @@
 
 .center-layer-content {
     padding: 10px;
-    overflow-y: overlay;
+    overflow-y: auto;
 }
 
 .center-layer-footer {

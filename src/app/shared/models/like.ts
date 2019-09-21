@@ -9,6 +9,6 @@ export class Like {
 
     post: Post;
 
-    constructor() { }
+    constructor(id?, user?, post?) { }
 
 }
