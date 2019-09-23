@@ -17,7 +17,7 @@ export class UserComponent implements OnInit {
   users: User[] = [];
 
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['select', 'id', 'profilePicture', 'email', 'firstName', 'lastName', 'phoneNumber', 'roles', 'enabled', 'more'];
+  displayedColumns: string[] = ['select', 'profilePicture', 'email', 'firstName', 'lastName', 'phoneNumber', 'roles', 'enabled', 'more'];
   dataSource: MatTableDataSource<User>;
   selection = new SelectionModel<User>(true, []);
 
@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  selectAction: String = 'delete';
+  selectAction: String = '';
 
   constructor(private readonly helper: Helper,
     private readonly _userService: UserService,

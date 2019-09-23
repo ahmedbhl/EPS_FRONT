@@ -17,11 +17,17 @@
         <div class="navigation-list-container">
             <div class="navigation-list-header">
                 <span class="navigation-list-title">My Classes</span>
-                <mat-select #select class="mat-select-container" style="visibility:hidden">
-                    <mat-option (click)="openDialog('create')" *ngIf="isProfessor">Create a class</mat-option>
-                    <mat-option (click)="openDialog('joind')">Join a class</mat-option>
+                <mat-select #select class="select" style="visibility:hidden">
+                    <mat-option (click)="openDialog('createClass')" *ngIf="isProfessor">
+                        <mat-icon style="vertical-align: text-top;">add </mat-icon>&nbsp;Create a class
+                    </mat-option>
+                    <mat-option (click)="openDialog('joinClass')">
+                        <mat-icon style="vertical-align: text-top;">class </mat-icon>&nbsp;Join a class
+                    </mat-option>
                     <mat-divider class="divider-container"></mat-divider>
-                    <mat-option (click)="openDialog('all')">All groups</mat-option>
+                    <mat-option (click)="openDialog('all')">
+                        <mat-icon style="vertical-align: text-top;">select_all </mat-icon>&nbsp;All Classes
+                    </mat-option>
                 </mat-select>
                 <mat-icon (click)=select.open() class="pointer">more_horiz</mat-icon>
             </div>
@@ -41,7 +47,8 @@
                 <mat-icon *ngIf="isProfessor">add</mat-icon>
                 <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="isProfessor" (click)="openDialog()">Add
                     New Class</span>
-                <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="!isProfessor" (click)="openDialog()">Join
+                <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="!isProfessor"
+                    (click)="openDialog('joinClass')">Join
                     Class</span>
             </div>
         </div>
@@ -49,11 +56,17 @@
         <div class="navigation-list-container">
             <div class="navigation-list-header">
                 <span class="navigation-list-title">My Groups</span>
-                <mat-select #selectGroups class="mat-select-container" style="visibility:hidden">
-                    <mat-option (click)="openDialog('create')" *ngIf="isProfessor">Create a group</mat-option>
-                    <mat-option (click)="openDialog('join')">Join a group</mat-option>
+                <mat-select #selectGroups class="select" style="visibility:hidden">
+                    <mat-option (click)="openDialog('createGroup')" *ngIf="isProfessor">
+                        <mat-icon style="vertical-align: text-top;">add </mat-icon>&nbsp;Create a group
+                    </mat-option>
+                    <mat-option (click)="openDialog('joinGroup')">
+                        <mat-icon style="vertical-align: text-top;">group_add </mat-icon>&nbsp;Join a group
+                    </mat-option>
                     <mat-divider class="divider-container"></mat-divider>
-                    <mat-option (click)="openDialog('all')">All groups</mat-option>
+                    <mat-option (click)="openDialog('all')">
+                        <mat-icon style="vertical-align: text-top;">select_all </mat-icon>&nbsp;All groups
+                    </mat-option>
                 </mat-select>
                 <mat-icon (click)=selectGroups.open() class="pointer">more_horiz</mat-icon>
             </div>
@@ -73,8 +86,10 @@
                 <mat-icon *ngIf="isProfessor">add</mat-icon>
                 <span style="margin: 0px 0.5rem; vertical-align: top;" (click)="openDialog()" *ngIf="isProfessor">Add
                     New Group</span>
-                <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="!isProfessor" (click)="openDialog()">Join
-                    Group</span>
+                <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="!isProfessor"
+                    (click)="openDialog('joinGroup')">
+                    <mat-icon style="vertical-align: text-top;">group_add </mat-icon>&nbsp; Join Group
+                </span>
             </div>
         </div>
     </div>
@@ -84,7 +99,7 @@
 
         <!-- Add New Post Bloc-->
         <div class="unified-composer-container mb-3">
-            <form (ngSubmit)="savePoste()" [formGroup]="formPost">
+            <form (ngSubmit)="checkAndSavePost()" [formGroup]="formPost">
                 <div class="input-text">
                     <img mat-card-avatar class="message-avatar rounded footer-card-comment-icon"
                         src="{{profilePictureLink}}" alt="cedro">
@@ -102,8 +117,7 @@
                             (change)="upload($event,'post')" data-original-title="upload photos">
                     </div>
                     <div fxFlex="50">
-                        <button mat-stroked-button color="primary" [disabled]="!formPost.valid"
-                            class="btn-post">Post</button>
+                        <button mat-stroked-button color="primary" class="btn-post">Post</button>
                     </div>
                 </div>
             </form>
@@ -128,7 +142,11 @@
                     </mat-card-subtitle>
 
                     <div>
-                        <mat-icon>more_horiz</mat-icon>
+                        <mat-icon (click)=select.open() class="pointer">more_horiz</mat-icon>
+                        <mat-select #select class="post-select" style="visibility:hidden">
+                            <mat-option (click)="openDialog('editPost')">Edit the publication</mat-option>
+                            <mat-option (click)="openDialog('deletePost')">Delete</mat-option>
+                        </mat-select>
                     </div>
                 </mat-card-header>
                 <mat-card-content>
@@ -155,7 +173,8 @@
                         <div class="mat-card-comment-display" *ngFor="let comment of post.comments">
                             <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
                                 alt="Zayneb Hamila">
-                            <section class="mat-card-comment-text">
+                            <section class="mat-card-comment-text"
+                                matTooltip=" {{comment.commentDate|date:'dd-MM-yyyy hh:mm'}}">
                                 <p class="comment-text-user">{{comment.user.firstName}}
                                     {{comment.user.lastName}}&nbsp;
                                     <span class="comment-text">{{comment.message}} </span></p>
@@ -168,7 +187,7 @@
                             alt="Zayneb Hamila">
                         <div class="mat-card-comment">
                             <textarea [value]="state[i] && state[i].text ? state[i].text : ''" cols="60"
-                                [(ngModel)]="defaultValue" class="mat-card-comment-input" matInput type="text"
+                                [(ngModel)]="defaultValue[i]" class="mat-card-comment-input" matInput type="text"
                                 (keyup.enter)="saveComment($event,post, i)" placeholder="your comment..."></textarea>
                             <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"
                                 (emojiClick)="addEmoji($event, i)" [hidden]="!(show[i] && show[i]===true)"></emoji-mart>

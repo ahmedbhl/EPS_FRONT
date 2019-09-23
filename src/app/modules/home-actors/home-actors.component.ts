@@ -13,10 +13,10 @@ import { LikeService } from 'src/app/shared/services/like.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { Classe } from '../classe/model/Classe';
 import { ClasseService } from '../classe/services/classe.service';
-import { GroupModalComponent } from '../group/group-modal/group-modal.component';
 import { Group } from '../group/model/group';
 import { GroupService } from '../group/services/group.service';
 import { LibraryService } from '../library/services/library.service';
+import { HomeActorsModalComponent } from './home-actors-modal/home-actors-modal.component';
 
 @Component({
   selector: 'app-home-actors',
@@ -42,7 +42,7 @@ export class HomeActorsComponent implements OnInit {
   currentFileUpload: File;
   path: String;
   isHiddenComment: Boolean[] = [];
-  defaultValue = '';
+  defaultValue: string[] = [];
 
   constructor(private authenticationService: AuthenticationService,
     private _formBuilder: FormBuilder,
@@ -111,35 +111,6 @@ export class HomeActorsComponent implements OnInit {
       postDate: [new Date()],
       user: [this.currentUser],
     });
-  }
-
-
-  savePoste() {
-    // stop here if form is invalid
-    if (this.formPost.invalid) {
-      return;
-    }
-    const post: Post = Object.assign(new Post(), this.formPost.value);
-    post.postDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
-    // check if the user add picture with the post or no
-    if (this.path) {
-      this._LibraryService.uploadFile(this.currentFileUpload[0], this.path).subscribe(
-        (data) => {
-          this.helper.trace('the shared link  : ' + data['sharedlink']);
-          post.postPicture = data['sharedlink'];
-          this.postService.save(post).subscribe(p => {
-            console.log('add post done' + p);
-            this.posts.unshift(...[post]);
-            this.getPictureLink();
-            this.initForm();
-          });
-        },
-        (error) => this.helper.trace('Error ' + error)
-
-      );
-    }
-
-
   }
 
   getPictureLink() {
@@ -232,6 +203,43 @@ export class HomeActorsComponent implements OnInit {
     }
   }
 
+
+  checkAndSavePost() {
+    // stop here if form is invalid
+    if (this.formPost.invalid) {
+      return;
+    }
+    const post: Post = Object.assign(new Post(), this.formPost.value);
+    post.postDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    // check if the user add picture with the post or no
+    if (this.path) {
+      this._LibraryService.uploadFile(this.currentFileUpload[0], this.path).subscribe(
+        (data) => {
+          this.helper.trace('the shared link  : ' + data['sharedlink']);
+          post.postPicture = data['sharedlink'];
+        },
+        (error) => this.helper.trace('Error ' + error)
+
+      );
+    } else {
+      this.savePost(post);
+    }
+  }
+
+  /**
+   * 
+   * @param post Save Post
+   */
+  savePost(post: Post) {
+    this.postService.save(post).subscribe(p => {
+      console.log('add post done' + p);
+      this.posts.unshift(...[p]);
+      this.defaultValue[0] = '';
+      this.getPictureLink();
+      this.initForm();
+    });
+  }
+
   addLike(post: Post) {
     this.isLiked(post) ? this.removeLike(this.currentUser, post) : this.saveLike(post);
   }
@@ -245,9 +253,11 @@ export class HomeActorsComponent implements OnInit {
       comment.post = post;
       comment.user = this.currentUser;
       this.commentService.save(comment).subscribe((result: Comment) => {
-        const index = this.posts.indexOf(post);
-        this.posts[index].comments.unshift(...[result]);
-        this.defaultValue = '';
+        if (this.posts && this.posts[postIndex] && !this.posts[postIndex].comments) {
+          this.posts[postIndex].comments = [];
+        }
+        this.posts[postIndex].comments.unshift(...[result]);
+        this.defaultValue[postIndex] = '';
       });
     }
   }
@@ -315,9 +325,9 @@ export class HomeActorsComponent implements OnInit {
     return this.isHiddenComment[index] = !this.isHiddenComment[index];
   }
   openDialog(action?: string): void {
-    const dialogRef = this.dialog.open(GroupModalComponent, {
-      width: '600px',
-      data: { name: 'Guest', animal: 'Guest' }
+    const dialogRef = this.dialog.open(HomeActorsModalComponent, {
+      // width: '600px',
+      data: { currentUser: this.currentUser, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {

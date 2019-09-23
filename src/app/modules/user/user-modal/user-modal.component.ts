@@ -64,7 +64,9 @@ export class UserModalComponent implements OnInit {
         this.selectedTabIndex = 0;
       } if (this.user.roles[0].name === 'STUDENT') {
         this.studentForm.patchValue(this.user);
-        this.studentForm.get('establishment').setValue(this.user.establishment.id);
+        if (this.user && this.user.establishment && this.user.establishment.id) {
+          this.studentForm.get('establishment').setValue(this.user.establishment.id);
+        }
         this.selectedTabIndex = 2;
       }
     }
