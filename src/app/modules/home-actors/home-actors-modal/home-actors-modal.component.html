@@ -1,0 +1,55 @@
+<div id="forms" class="page-layout" fxLayout="column" [ngSwitch]="true">
+
+  <ng-template [ngSwitchCase]="action === 'joinClass'|| action ==='joinGroup'">
+    <!-- HEADER -->
+    <span class="header-left" *ngIf="action ==='joinClass'">Join a Class </span>
+    <span class="header-left" *ngIf="action ==='joinGroup'">Join a Group </span>
+
+    <mat-divider class="header-divider"></mat-divider>
+
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+      <!-- REACTIVE FORM EXAMPLE -->
+
+      <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+        [formGroup]="form">
+
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Code</mat-label>
+            <input matInput formControlName="invitationCode" required>
+            <mat-error>Code is required!</mat-error>
+            <mat-error *ngIf="errorMessage" > <strong>Warning!</strong> {{errorMessage}}</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <button mat-raised-button [disabled]="!form.valid" color="primary" class="btn-save">
+            <mat-icon>save</mat-icon> Join
+          </button>
+          <button mat-raised-button class="btn btn-success" (click)="onNoClick()">
+            <mat-icon>cancel</mat-icon> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- / CONTENT -->
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="action === 'delete'">
+    <div class="modal-header">
+      <strong>
+        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+      </strong>
+    </div>
+    <div class="modal-body">
+      Do you want to delete this Post ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onNoClick()">Cancel </button>
+      <button type="button" class="btn btn-danger" (click)="delete()" cdkFocusInitial>Confirm</button>
+    </div>
+  </ng-template>
+</div>

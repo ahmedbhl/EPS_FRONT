@@ -15,15 +15,15 @@
 
       <mat-tab-group dynamicHeight (selectedTabChange)="changeTab($event)" [(selectedIndex)]="selectedTabIndex">
 
-        <mat-tab label="Administration" [disabled]="selectedTabIndex!==0 && action ==='update'">
+        <mat-tab label="Administration" *ngIf="!(selectedTabIndex!==0 && action ==='update')">
           <ng-container *ngTemplateOutlet="administrationTabForm"></ng-container>
         </mat-tab>
 
-        <mat-tab label="Professor" [disabled]="selectedTabIndex!==1 && action ==='update'">
+        <mat-tab label="Professor" *ngIf="!(selectedTabIndex!==1 && action ==='update')">
           <ng-container *ngTemplateOutlet="professorTabForm"></ng-container>
         </mat-tab>
 
-        <mat-tab label="Student" [disabled]="selectedTabIndex!==2 && action ==='update'">
+        <mat-tab label="Student" *ngIf="!(selectedTabIndex!==2 && action ==='update')">
           <ng-container *ngTemplateOutlet="studentTabForm"></ng-container>
         </mat-tab>
       </mat-tab-group>

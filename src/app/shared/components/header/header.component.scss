@@ -108,7 +108,14 @@
     
      ::ng-deep .mat-select-panel {
         max-height: 60vh !important;
-        position: relative;
+    /*    position: relative;
         top: 5vh;
-        right: 26vh;
+        right: 26vh;*/
+    }
+
+    .select{
+        position: relative !important;
+        top: 40px;
+        right: 187px;
+	    max-height: 61vh !important;
     }

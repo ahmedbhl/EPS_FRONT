@@ -81,4 +81,15 @@ export class GroupService {
     this.helper.trace(`deleting : ${group.id}`);
     return this.http.delete<Group>(`${this.groupUrl}/${group.id}`, { headers: this.headers });
   }
+
+  /**
+  * update the Group
+  */
+  public joinStudent(userId: number, hashCode: string): Observable<Group> {
+    this.helper.trace(`join Student : ${userId}`);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('hashCode', hashCode);
+    requestParams = requestParams.append('userId', userId.toString());
+    return this.http.put<Group>(`${this.groupUrl}/join/student`, new Group(), { headers: this.headers, params: requestParams });
+  }
 }
