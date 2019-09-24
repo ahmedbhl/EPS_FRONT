@@ -298,7 +298,6 @@ export class HomeActorsComponent implements OnInit {
      * Upload file csv with list of pairings
      */
   upload(event, type: string) {
-    // this.inProgressBar = true;
     this.currentFileUpload = event.target.files;
     this.path = `/${this.currentUser.id}/${this.currentFileUpload[0].name}`;
   }
@@ -324,13 +323,16 @@ export class HomeActorsComponent implements OnInit {
     }
     return this.isHiddenComment[index] = !this.isHiddenComment[index];
   }
-  openDialog(action?: string): void {
+  openDialog(action?: string, post?: Post, index?: number): void {
+
     const dialogRef = this.dialog.open(HomeActorsModalComponent, {
-      // width: '600px',
-      data: { currentUser: this.currentUser, action: action }
+      data: { currentUser: this.currentUser, post: post, action: action }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (action === 'deletePost') {
+        this.posts.splice(index, 1);
+      }
     });
   }
 

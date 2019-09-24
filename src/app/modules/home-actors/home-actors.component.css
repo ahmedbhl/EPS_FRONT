@@ -1,5 +1,5 @@
 .profile-card {
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     background-color: rgb(255, 255, 255);
     padding: 1rem!important;
     margin-bottom: 1rem!important;
@@ -81,6 +81,15 @@
     font-weight: 500;
     text-transform: uppercase;
     width: 150px;
+}
+
+.educationa-box-title {
+    float: left;
+    color: #4f5468;
+    font-size: .75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    width: 200px;
 }
 
 .navigation-list {
@@ -200,7 +209,7 @@
 }
 
 .rounded {
-    border-radius: .25rem!important;
+    border-radius: 1.25rem!important;
 }
 
 .footer {
@@ -321,7 +330,7 @@
     background: white;
     border: 1px solid gray;
     border-radius: 22px;
-    width: 100%;
+    width: 90%;
     margin: 0 10px;
     padding: 2px;
     height: 35px;
@@ -343,7 +352,7 @@
 }
 
 .navigation-empty-list-item {
-    margin: 0 20px;
+    margin: 0 10px;
     height: 30px;
     width: 170px;
     cursor: pointer;
@@ -352,12 +361,6 @@
 .pointer {
     cursor: pointer;
 }
-
-/*::ng-deep .mat-select-panel {
-    position: relative !important;
-    top: 32px !important;
-    right: 0 !important;
-}*/
 
 .select {
     position: relative !important;

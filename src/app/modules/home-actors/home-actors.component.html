@@ -14,6 +14,24 @@
             </div>
         </div>
 
+        <!--Educationnal Institution-->
+        <div class="navigation-list-container">
+            <div class="navigation-list-header">
+                <span class="educationa-box-title">My Educationnal Institution</span>
+            </div>
+            <div class="navigation-list list-group">
+                <li class="list-group-item" class="nav-link">
+                    <mat-icon style="vertical-align: text-top;">school</mat-icon>
+                    <span style="margin: 0px 0.5rem;">Iset Sousse</span>
+                </li>
+            </div>
+            <div class="spiner" *ngIf="!isHiddenSpinner">
+                <mat-spinner diameter="20" color="accent"></mat-spinner>
+            </div>
+        </div>
+
+
+
         <div class="navigation-list-container">
             <div class="navigation-list-header">
                 <span class="navigation-list-title">My Classes</span>
@@ -22,7 +40,7 @@
                         <mat-icon style="vertical-align: text-top;">add </mat-icon>&nbsp;Create a class
                     </mat-option>
                     <mat-option (click)="openDialog('joinClass')">
-                        <mat-icon style="vertical-align: text-top;">class </mat-icon>&nbsp;Join a class
+                        <mat-icon style="vertical-align: text-top;">class</mat-icon>&nbsp;Join a class
                     </mat-option>
                     <mat-divider class="divider-container"></mat-divider>
                     <mat-option (click)="openDialog('all')">
@@ -48,8 +66,9 @@
                 <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="isProfessor" (click)="openDialog()">Add
                     New Class</span>
                 <span style="margin: 0px 0.5rem; vertical-align: top;" *ngIf="!isProfessor"
-                    (click)="openDialog('joinClass')">Join
-                    Class</span>
+                    (click)="openDialog('joinClass')">
+                    <mat-icon style="vertical-align: text-top;">class</mat-icon>&nbsp;Join Class
+                </span>
             </div>
         </div>
 
@@ -109,10 +128,10 @@
                 <mat-divider></mat-divider>
                 <div class="footer" fxLayout="row" fxFlexFill fxLayoutAlign="space-between stretch">
                     <div fxFlex="50">
-                        <mat-icon (click)="postImgUpload.click()">insert_photo</mat-icon>
+                        <mat-icon (click)="postImgUpload.click()" style="cursor: pointer;">insert_photo</mat-icon>
                         <input type="file" #postImgUpload style="display: none" accept="image/jpg" multiple=""
                             (change)="upload($event,'post')" data-original-title="upload photos">
-                        <mat-icon (click)="fileUpload.click()">attach_file</mat-icon>
+                        <mat-icon (click)="fileUpload.click()" style="cursor: pointer;">attach_file</mat-icon>
                         <input type="file" #fileUpload style="display: none" accept="image/jpg" multiple=""
                             (change)="upload($event,'post')" data-original-title="upload photos">
                     </div>
@@ -144,8 +163,8 @@
                     <div>
                         <mat-icon (click)=select.open() class="pointer">more_horiz</mat-icon>
                         <mat-select #select class="post-select" style="visibility:hidden">
-                            <mat-option (click)="openDialog('editPost')">Edit the publication</mat-option>
-                            <mat-option (click)="openDialog('deletePost')">Delete</mat-option>
+                            <mat-option (click)="openDialog('editPost',post)">Edit the publication</mat-option>
+                            <mat-option (click)="openDialog('deletePost',post,i)">Delete</mat-option>
                         </mat-select>
                     </div>
                 </mat-card-header>

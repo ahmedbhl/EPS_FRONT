@@ -21,7 +21,7 @@
             <mat-label>Code</mat-label>
             <input matInput formControlName="invitationCode" required>
             <mat-error>Code is required!</mat-error>
-            <mat-error *ngIf="errorMessage" > <strong>Warning!</strong> {{errorMessage}}</mat-error>
+            <mat-error *ngIf="errorMessage"> <strong>Warning!</strong> {{errorMessage}}</mat-error>
           </mat-form-field>
         </div>
 
@@ -38,7 +38,30 @@
     <!-- / CONTENT -->
   </ng-template>
 
-  <ng-template [ngSwitchCase]="action === 'delete'">
+  <ng-template [ngSwitchCase]="action === 'editPost'">
+    <div class="edit-header">
+      <span class="header-left">Edit the publication</span>
+      <span style="float: right; cursor: pointer;" (click)="onNoClick()">X</span>
+    </div>
+    <mat-divider class="header-divider"></mat-divider>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="formPost">
+      <div class="edit-textarea-bloc">
+        <img class="message-avatar rounded edit-post-icon" src="{{profilePictureLink}}" />
+        <textarea matInput formControlName="description" mat-maxlength="250" max-rows="4"
+          class="postbox-textarea "></textarea>
+      </div>
+      <img class="edit-img" src="{{post.postPicture}}" />
+      <mat-divider class="header-divider"></mat-divider>
+      <div class="edit-post-footer">
+        <button mat-raised-button [disabled]="!formPost.valid" color="primary" class="btn-edit-save">
+          <mat-icon>save</mat-icon> save
+        </button>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="action === 'deletePost'">
     <div class="modal-header">
       <strong>
         <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
