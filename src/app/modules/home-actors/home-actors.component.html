@@ -83,7 +83,7 @@
                         <mat-icon style="vertical-align: text-top;">group_add </mat-icon>&nbsp;Join a group
                     </mat-option>
                     <mat-divider class="divider-container"></mat-divider>
-                    <mat-option (click)="openDialog('all')">
+                    <mat-option routerLink="/group">
                         <mat-icon style="vertical-align: text-top;">select_all </mat-icon>&nbsp;All groups
                     </mat-option>
                 </mat-select>
@@ -220,11 +220,11 @@
                 </mat-card-footer>
             </mat-card>
             <mat-card class="card-post-footer">
-                <mat-card-content>All publications have been loaded </mat-card-content>
+                <mat-card-content>All posts loaded </mat-card-content>
             </mat-card>
         </div>
         <!--End Display Post Bloc-->
     </div>
 
-    <div fxFlex="28" class="right-column-container">xxx</div>
+    <div fxFlex="28" class="right-column-container"></div>
 </div>

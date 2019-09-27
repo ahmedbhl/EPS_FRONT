@@ -15,7 +15,7 @@ export class LevelComponent implements OnInit {
 
   levels: Level[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'levelName', 'description', 'establishment', 'more'];
+  displayedColumns: string[] = ['select', 'levelName', 'description', 'establishment', 'more'];
   dataSource: MatTableDataSource<Level>;
   selection = new SelectionModel<Level>(true, []);
 

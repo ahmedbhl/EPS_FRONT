@@ -16,7 +16,7 @@ export class CourseComponent implements OnInit {
 
   Courses: Course[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'courseName', 'description', 'classe', 'professor', 'more'];
+  displayedColumns: string[] = ['select', 'courseName', 'description', 'classe', 'professor', 'more'];
   dataSource: MatTableDataSource<Course>;
   selection = new SelectionModel<Course>(true, []);
 

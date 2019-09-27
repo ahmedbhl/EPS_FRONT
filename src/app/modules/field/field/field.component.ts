@@ -15,7 +15,7 @@ export class FieldComponent implements OnInit {
 
   fields: Field[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'fieldName', 'description', 'level', 'more'];
+  displayedColumns: string[] = ['select', 'fieldName', 'description', 'level', 'more'];
   dataSource: MatTableDataSource<Field>;
   selection = new SelectionModel<Field>(true, []);
 
