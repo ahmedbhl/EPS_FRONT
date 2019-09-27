@@ -15,7 +15,7 @@ export class ClasseComponent implements OnInit {
 
   classes: Classe[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'className', 'description', 'field', 'more'];
+  displayedColumns: string[] = ['select', 'className', 'description', 'field', 'more'];
   dataSource: MatTableDataSource<Classe>;
   selection = new SelectionModel<Classe>(true, []);
 
