@@ -1,10 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
 import { LevelModalComponent } from '../level-modal/level-modal.component';
 import { Level } from '../model/level';
 import { LevelService } from '../services/level.service';
+import { EducationalInstitution } from '../../educational-institution/model/educational-institution';
 
 @Component({
   selector: 'app-level',
@@ -22,16 +25,27 @@ export class LevelComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  currentUser: User;
   selectAction: String = 'delete';
 
   constructor(private readonly helper: Helper,
     private readonly _LevelService: LevelService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.getAllLevel();
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('ADMINISTRATION') > -1) {
+        if (this.currentUser && this.currentUser.id) {
+          this.getLevelByEstablishement(this.currentUser.id);
+        }
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.getAllLevel();
+      }
+    });
     this.initDataSource();
 
   }
@@ -55,6 +69,18 @@ export class LevelComponent implements OnInit {
   */
   getAllLevel() {
     this._LevelService.getAllLevels().subscribe(
+      (data: Level[]) => {
+        this.levels = data;
+        // Assign the data to the data source for the table to render
+        this.dataSource = new MatTableDataSource(this.levels);
+      }
+      ,
+      error => this.helper.handleError,
+      () => this.helper.trace('Get all Levels complete ' + this.levels.length));
+  }
+
+  getLevelByEstablishement(administrationId: number) {
+    this._LevelService.getLevelByAdministration(administrationId).subscribe(
       (data: Level[]) => {
         this.levels = data;
         // Assign the data to the data source for the table to render

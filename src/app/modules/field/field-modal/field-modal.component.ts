@@ -87,6 +87,7 @@ export class FieldModalComponent implements OnInit {
    */
   save() {
     this.field = Object.assign(new Field(), this.form.value);
+    this.field.level = this.levels.find(item => item.id === this.form.value.level);
     this.fieldService.save(this.field).subscribe((item: Field) => {
       if (item) {
         this.snackBar.openSuccessSnackBar('The New Field has been added successfully');

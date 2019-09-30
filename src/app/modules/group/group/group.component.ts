@@ -28,7 +28,6 @@ export class GroupComponent implements OnInit {
   ngOnInit() {
     this.selectMenu('posts');
     this.type = 'group';
-    this.actionForm = 'professorOrStudentUI';
     this.initCurrentUser();
     this.initForm();
     this.getPictureLink();
@@ -37,6 +36,13 @@ export class GroupComponent implements OnInit {
   initCurrentUser() {
     this.authenticationService.currentUser.subscribe(data => {
       this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('PROFESSOR') > -1 || roles.indexOf('STUDENT') > -1) {
+        this.actionForm = 'professorOrStudentUI';
+
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.actionForm = 'SuperAdminOrAdministrationUI';
+      }
     });
   }
 

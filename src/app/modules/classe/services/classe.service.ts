@@ -56,6 +56,12 @@ export class ClasseService {
     return this.http.get<Classe[]>(`${this.classeUrl}/student`, { headers: this.headers, params: requestParams });
   }
 
+  public getClassByEstablishement(administrationId: number): Observable<Classe[]> {
+    console.log('get the list of all Classe By administrationId ' + this.classeUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('administrationId', administrationId.toString());
+    return this.http.get<Classe[]>(`${this.classeUrl}/administration`, { headers: this.headers, params: requestParams });
+  }
 
   /**
      * Save a new Classe

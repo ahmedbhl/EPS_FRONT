@@ -1,8 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, startWith } from 'rxjs/operators';
+import { UserService } from 'src/app/core/authentication/user.service';
 import { SnackBarService } from 'src/app/core/snack-bar.service';
+import { User } from 'src/app/shared/models/user.class';
 import { Level } from '../../level/model/level';
 import { LevelService } from '../../level/services/level.service';
 import { Group } from '../model/group';
@@ -11,7 +15,8 @@ import { GroupService } from '../services/group.service';
 @Component({
   selector: 'app-group-modal',
   templateUrl: './group-modal.component.html',
-  styleUrls: ['./group-modal.component.css']
+  styleUrls: ['./group-modal.component.css'],
+  providers: [DatePipe]
 })
 export class GroupModalComponent implements OnInit {
 
@@ -22,12 +27,18 @@ export class GroupModalComponent implements OnInit {
   public levels: Level[];
   private group: Group;
   public action: string;
+  public users: User[] = [];
+  usersForm = new FormControl('');
+  filtredUsers: Observable<User[]>;
+
 
   constructor(public dialogRef: MatDialogRef<GroupModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
     private levelService: LevelService,
     private groupService: GroupService,
+    public userService: UserService,
+    private datePipe: DatePipe,
     private snackBar: SnackBarService) {
 
     // Set the private defaults
@@ -38,16 +49,20 @@ export class GroupModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllUsers();
     this.initForm();
-    this.getAllLevels();
     this.checkAndInitFormBeforeDisplay();
+    this.usersForm.valueChanges.pipe(startWith(''), debounceTime(300)).subscribe(value => {
+      this.filtredUsers = value ?
+        this.users.filter(option => option.firstName.toLowerCase().indexOf(value.toLocaleLowerCase()) === 0)
+        : this.users as any;
+    });
   }
 
   checkAndInitFormBeforeDisplay() {
     if (this.action && this.action === 'create') {
     } else if (this.group && this.action && this.action === 'update') {
       this.form.setValue(this.group);
-     // this.form.get('level').setValue(this.group.level.id);
     }
   }
 
@@ -78,7 +93,7 @@ export class GroupModalComponent implements OnInit {
       id: [{ value: null, disabled: true }],
       groupName: ['', Validators.required],
       description: ['', Validators.required],
-      level: [null, Validators.required],
+      hashCode: ['', Validators.required],
     });
   }
 
@@ -98,13 +113,44 @@ export class GroupModalComponent implements OnInit {
 
   update() {
     this.group = Object.assign(this.group, this.form.value);
-   // this.group.level = this.levels.find(item => item.id === this.form.value.level);
-    // tslint:disable-next-line: max-line-length
     this.groupService.update(this.group).subscribe((item: Group) => {
       if (item) {
         this.snackBar.openSuccessSnackBar('The Group has been updated successfully');
         this.dialogRef.close({ course: item });
         console.log('update Group');
+      }
+    });
+  }
+
+  joinUser(user) {
+    if (user.roles[0].name === 'PROFESSOR') {
+      user.dateOfRegistration = this.datePipe.transform(user.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
+      this.group.professors.push(user);
+      this.joinProfessor(user);
+    } else if (user.roles[0].name === 'STUDENT') {
+      user.dateOfRegistration = this.datePipe.transform(user.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
+      this.group.students.push(user);
+      this.joinStudent(user);
+      this.dialogRef.close({ group: this.group });
+    }
+  }
+
+  joinStudent(user) {
+    this.groupService.joinStudent(user.id, this.group.hashCode).subscribe((item: Group) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar(`The Student was added to this group`);
+        this.dialogRef.close({ group: item });
+        console.log('join Student to Group');
+      }
+    });
+  }
+
+  joinProfessor(user) {
+    this.groupService.joinProfessor(user.id, this.group.hashCode).subscribe((item: Group) => {
+      if (item) {
+        this.snackBar.openSuccessSnackBar(`The Professor was added to this group`);
+        this.dialogRef.close({ group: item });
+        console.log('join Professor to Group');
       }
     });
   }
@@ -119,13 +165,12 @@ export class GroupModalComponent implements OnInit {
     });
   }
 
-
-  /**
-   * Used for getAll the Levels
-   */
-  getAllLevels() {
-    this.levelService.getAllLevels().subscribe(data => {
-      this.levels = data;
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe((users: User[]) => {
+      if (users.length > 0) {
+        this.users = users;
+        this.users = this.users.filter(user => (user.roles[0].name !== 'SUPER_ADMIN' && user.roles[0].name !== 'ADMINISTRATION'));
+      }
     });
   }
 

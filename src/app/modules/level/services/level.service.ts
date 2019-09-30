@@ -5,6 +5,7 @@ import { Helper } from 'src/app/core/helper.service';
 import { HttpHeader } from 'src/app/shared/helpers/http-header';
 import { environment } from 'src/environments/environment';
 import { Level } from '../model/level';
+import { EducationalInstitution } from '../../educational-institution/model/educational-institution';
 
 @Injectable()
 export class LevelService {
@@ -35,11 +36,19 @@ export class LevelService {
   }
 
   /**
-  * Get all the educationnal institutions
+  * Get all level
   */
+  public getLevelByAdministration(administrationId: number): Observable<Level[]> {
+    console.log('get the list of all levels By establishement ' + this.LevelUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('administrationId', administrationId.toString());
+    return this.http.get<Level[]>(`${this.LevelUrl}/administration`, { headers: this.headers, params: requestParams });
+  }
+
+  /**
+ *  Get all level by establishement
+ */
   public getAllLevels(): Observable<Level[]> {
-
-
     console.log('get the list of all levels ' + this.LevelUrl);
     return this.http.get<Level[]>(`${this.LevelUrl}`, { headers: this.headers });
   }

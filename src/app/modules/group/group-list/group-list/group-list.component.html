@@ -1,0 +1,45 @@
+<div class="custom-container">
+  <div class="header">
+    <span class="header-left">Groups Management</span>
+    <button mat-raised-button class="btn-create primary" (click)="openDialog(null,'create')">
+      <mat-icon>add</mat-icon>
+      <span class="btn-create-text">Add New Group</span>
+    </button>
+  </div>
+  <mat-divider class="header-divider"></mat-divider>
+
+  <div class="filter-header">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Search" (keyup)="getAllGroupByGroupName($event.target.value)">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="groups-box ">
+    <div class="cardContainer inactive group-box" *ngFor="let group of groups">
+      <div class="card">
+        <div class="side front">
+          <div class="img img3">
+            <mat-icon class="group-icon" (click)=select.open()>more_vert</mat-icon>
+            <mat-select #select class="select" style="visibility:hidden">
+              <mat-option (click)="openDialog(group,'update')">Update Group</mat-option>
+              <mat-divider class="divider-container"></mat-divider>
+              <mat-option (click)="openDialog(group,'joinUser')">Join User</mat-option>
+              <mat-divider class="divider-container"></mat-divider>
+              <mat-option (click)="openDialog(group,'delete')">Delete Group</mat-option>
+            </mat-select>
+          </div>
+          <div class="info">
+            <h2>{{group.groupName}}</h2>
+            <p>{{group.description}}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="empty-data-source" *ngIf="groups.length == 0">
+    <span>Your Data Base Of Groups Is Empty </span>
+  </div>
+</div>
