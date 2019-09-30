@@ -183,12 +183,14 @@
                     </button>
                     <button mat-button class="footer-card-btn">
                         <mat-icon class="footer-card-icon">insert_comment</mat-icon>
-                        <span class="footer-card-btn-like" (click)="showHiddenComment(i)">Comment</span>
+                        <span class="footer-card-btn-like" (click)="showHiddenComment(i)">
+                            {{getCommentsLabel(post)}}
+                        </span>
                     </button>
                 </mat-card-actions>
                 <mat-divider></mat-divider>
                 <mat-card-footer class="mat-card-footer">
-                    <div class="footer-card-mat-card-comment">
+                    <div class="footer-card-mat-card-comment" [hidden]="!isHiddenComment[i]">
                         <div class="mat-card-comment-display" *ngFor="let comment of post.comments">
                             <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
                                 alt="Zayneb Hamila">
@@ -201,7 +203,7 @@
                         </div>
                     </div>
 
-                    <div class="footer-card-mat-card-avatar" [hidden]="isHiddenComment[i]">
+                    <div class="footer-card-mat-card-avatar">
                         <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
                             alt="Zayneb Hamila">
                         <div class="mat-card-comment">

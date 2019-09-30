@@ -57,6 +57,14 @@ export class GroupService {
   }
 
   /**
+  * Get all the groups by group Name
+  */
+  public getAllGroupByGoupName(groupName: string): Observable<Group[]> {
+    console.log('get the list of all Groups by group Name ' + this.groupUrl);
+    return this.http.get<Group[]>(`${this.groupUrl}/name/${groupName}`, { headers: this.headers });
+  }
+
+  /**
      * Save a new Group
      */
   public save(group: Group): Observable<Group> {
@@ -83,7 +91,7 @@ export class GroupService {
   }
 
   /**
-  * update the Group
+  * join student the Group
   */
   public joinStudent(userId: number, hashCode: string): Observable<Group> {
     this.helper.trace(`join Student : ${userId}`);
@@ -92,4 +100,15 @@ export class GroupService {
     requestParams = requestParams.append('userId', userId.toString());
     return this.http.put<Group>(`${this.groupUrl}/join/student`, new Group(), { headers: this.headers, params: requestParams });
   }
+
+  /**
+  * join professor to the Group
+  */
+ public joinProfessor(userId: number, hashCode: string): Observable<Group> {
+  this.helper.trace(`join Professor : ${userId}`);
+  let requestParams: HttpParams = new HttpParams();
+  requestParams = requestParams.append('hashCode', hashCode);
+  requestParams = requestParams.append('userId', userId.toString());
+  return this.http.put<Group>(`${this.groupUrl}/join/professor`, new Group(), { headers: this.headers, params: requestParams });
+}
 }

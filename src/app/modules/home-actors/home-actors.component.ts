@@ -183,6 +183,10 @@ export class HomeActorsComponent implements OnInit {
     return post && post.likes && post.likes.length > 0 ? `${post.likes.length} Likes` : 'Like';
   }
 
+  getCommentsLabel(post: Post) {
+    return post && post.comments && post.comments.length > 0 ? `${post.comments.length} Comments` : 'Comment';
+  }
+
   getAllLikesbyPost(post: Post) {
     if (post && post.id) {
       this.likeService.getAllLikesByPost(post.id).subscribe(likes => {
@@ -278,7 +282,7 @@ export class HomeActorsComponent implements OnInit {
   }
 
   isLiked(post: Post) {
-    if (post && post.likes) {
+    if (post && post.likes && this.currentUser && this.currentUser.id) {
       return post.likes.map((like: Like) => like.user && like.user.id === this.currentUser.id).length > 0 ? true : false;
     }
   }
@@ -323,6 +327,7 @@ export class HomeActorsComponent implements OnInit {
     }
     return this.isHiddenComment[index] = !this.isHiddenComment[index];
   }
+
   openDialog(action?: string, post?: Post, index?: number): void {
 
     const dialogRef = this.dialog.open(HomeActorsModalComponent, {

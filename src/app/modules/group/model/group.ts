@@ -4,15 +4,15 @@ import { Post } from 'src/app/shared/models/post';
 export class Group {
     id: number;
 
-    groupName: String;
+    groupName: string;
 
-    description: String;
+    description: string;
 
-    hashCode: String;
+    hashCode: string;
 
     posts: Post[];
 
-    professors: User;
+    professors: User[];
 
-    students: User;
+    students: User[];
 }

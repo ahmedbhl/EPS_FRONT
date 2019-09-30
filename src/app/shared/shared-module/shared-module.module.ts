@@ -4,6 +4,7 @@ import { ModuleWithProviders } from '@angular/compiler/src/core';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { MaterialModule } from '../material-module/material-module.module';
 import { FileNamePipePipe } from '../pipe/file-name-pipe.pipe';
@@ -17,9 +18,10 @@ import { FileNamePipePipe } from '../pipe/file-name-pipe.pipe';
     FlexLayoutModule,
     PickerModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule
   ],
-  exports: [CommonModule, MaterialModule,
+  exports: [CommonModule, MaterialModule, MatFormFieldModule,
     HttpClientModule, FlexLayoutModule, PickerModule, ReactiveFormsModule, FormsModule, FileNamePipePipe]
 })
 export class SharedModuleModule {
