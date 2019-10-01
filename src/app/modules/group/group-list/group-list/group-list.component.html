@@ -1,12 +1,12 @@
 <div class="custom-container">
-  <div class="header">
+  <div class="header" *ngIf="!iProfessor">
     <span class="header-left">Groups Management</span>
     <button mat-raised-button class="btn-create primary" (click)="openDialog(null,'create')">
       <mat-icon>add</mat-icon>
       <span class="btn-create-text">Add New Group</span>
     </button>
   </div>
-  <mat-divider class="header-divider"></mat-divider>
+  <mat-divider *ngIf="!iProfessor" class="header-divider"></mat-divider>
 
   <div class="filter-header">
 

@@ -77,6 +77,8 @@ export class HomeActorsModalComponent implements OnInit {
       }
       this.groupService.joinStudent(this.currentUser.id, this.form.get('invitationCode').value).subscribe(group => {
         console.log('done add new usr to Groupe');
+        this.dialogRef.close({ group: group, action: this.action });
+        this.snackBar.openSuccessSnackBar('join in the group {{group.groupName}}');
       },
         (error) => {
           switch (error.status) {

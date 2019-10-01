@@ -10,22 +10,23 @@
         </button>
       </div>
       <mat-divider class="header-divider"></mat-divider>
-    
+
       <div class="data-table" *ngIf="groups.length > 0">
         <div class="mat-elevation-z8">
-    
+
           <div class="filter-header">
             <mat-form-field>
               <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
               <mat-icon class="filter-icon">search</mat-icon>
             </mat-form-field>
           </div>
-    
+
           <table mat-table [dataSource]="dataSource" matSort>
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
               <th mat-header-cell *matHeaderCellDef>
-                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
                   [indeterminate]="selection.hasValue() && !isAllSelected()">
                 </mat-checkbox>
               </th>
@@ -35,19 +36,19 @@
                 </mat-checkbox>
               </td>
             </ng-container>
-    
+
             <!-- Name Column -->
             <ng-container matColumnDef="groupName">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
               <td mat-cell *matCellDef="let row"> {{row.groupName}} </td>
             </ng-container>
-    
+
             <!-- Description Column -->
             <ng-container matColumnDef="description">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
               <td mat-cell *matCellDef="let row"> {{row.description}} </td>
             </ng-container>
-    
+
             <!-- Star Column -->
             <ng-container matColumnDef="more" stickyEnd>
               <th mat-header-cell *matHeaderCellDef></th>
@@ -68,7 +69,8 @@
           </table>
           <div class="footer-left">
             <div class="footer-checkbox">
-              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()">
               </mat-checkbox> All the elements
             </div>
@@ -94,8 +96,8 @@
         <mat-icon style="vertical-align: text-top;">reorder</mat-icon>&nbsp;Your Groups
       </button>
       <div class="select">
-        <mat-select #selectGroups style="visibility:hidden">
-          <mat-option>group 1 </mat-option>
+        <mat-select #selectGroups style="visibility:hidden" >
+          <mat-option *ngFor="let group of groups" [routerLink]="['/group',group.id]">{{group.groupName}} </mat-option>
         </mat-select>
       </div>
 
@@ -155,7 +157,9 @@
       </div>
     </div>
   </ng-template>
-
+  <ng-template [ngSwitchCase]="'all'">
+    <app-group-list></app-group-list>
+  </ng-template>
 </div>
 
 <ng-template #postsTemplate>
@@ -213,7 +217,7 @@
       <mat-card-content>
         <p style="font-size: 1.5em;"> {{post.description}} </p>
       </mat-card-content>
-      <div class="spiner" *ngIf="post.postPicture && !isHiddenSpinner">
+      <div class="spiner" *ngIf="post.postPicture">
         <mat-spinner diameter="20" color="accent"></mat-spinner>
       </div>
       <img mat-card-image src="{{post.postPicture}}" alt="Photo" *ngIf="post.postPicture">
@@ -242,7 +246,7 @@
           </div>
         </div>
 
-        <div class="footer-card-mat-card-avatar" [hidden]="isHiddenComment[i]">
+        <div class="footer-card-mat-card-avatar">
           <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}" alt="Zayneb Hamila">
           <div class="mat-card-comment">
             <textarea [value]="state[i] && state[i].text ? state[i].text : ''" cols="60" [(ngModel)]="defaultValue[i]"
@@ -310,3 +314,4 @@
   </div>
 
 </ng-template>
+
