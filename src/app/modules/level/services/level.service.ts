@@ -56,26 +56,26 @@ export class LevelService {
   /**
      * Save a new level
      */
-  public save(Level: Level): Observable<Level> {
-    this.helper.trace(`adding new level : ${Level.id}`);
-    return this.http.post<Level>(`${this.LevelUrl}`, Level, { headers: this.headers });
+  public save(level: Level): Observable<Level> {
+    this.helper.trace(`adding new level : ${level.id}`);
+    return this.http.post<Level>(`${this.LevelUrl}`, level, { headers: this.headers });
   }
 
   /**
    * update the level
    */
-  public update(Level: Level): Observable<Level> {
-    this.helper.trace(`updating : ${Level.id}`);
+  public update(level: Level): Observable<Level> {
+    this.helper.trace(`updating : ${level.id}`);
     let RequestParams: HttpParams = new HttpParams();
-    RequestParams = RequestParams.append('id', Level.id.toString());
-    return this.http.put<Level>(`${this.LevelUrl}/${Level.id}`, Level, { headers: this.headers });
+    RequestParams = RequestParams.append('id', level.id.toString());
+    return this.http.put<Level>(`${this.LevelUrl}/${level.id}`, Level, { headers: this.headers });
   }
 
   /**
   * delete an level
   */
-  public delete(Level: Level): Observable<Level> {
-    this.helper.trace(`deleting : ${Level.id}`);
-    return this.http.delete<Level>(`${this.LevelUrl}/${Level.id}`, { headers: this.headers });
+  public delete(level: Level): Observable<Level> {
+    this.helper.trace(`deleting : ${level.id}`);
+    return this.http.delete<Level>(`${this.LevelUrl}/${level.id}`, { headers: this.headers });
   }
 }

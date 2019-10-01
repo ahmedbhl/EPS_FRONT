@@ -125,21 +125,20 @@ export class GroupModalComponent implements OnInit {
   joinUser(user) {
     if (user.roles[0].name === 'PROFESSOR') {
       user.dateOfRegistration = this.datePipe.transform(user.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
-      this.group.professors.push(user);
       this.joinProfessor(user);
     } else if (user.roles[0].name === 'STUDENT') {
       user.dateOfRegistration = this.datePipe.transform(user.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
-      this.group.students.push(user);
       this.joinStudent(user);
-      this.dialogRef.close({ group: this.group });
     }
+    this.usersForm.reset();
   }
 
   joinStudent(user) {
     this.groupService.joinStudent(user.id, this.group.hashCode).subscribe((item: Group) => {
       if (item) {
+        //   this.group.professors.push(user);
+        this.group = item;
         this.snackBar.openSuccessSnackBar(`The Student was added to this group`);
-        this.dialogRef.close({ group: item });
         console.log('join Student to Group');
       }
     });
@@ -148,8 +147,8 @@ export class GroupModalComponent implements OnInit {
   joinProfessor(user) {
     this.groupService.joinProfessor(user.id, this.group.hashCode).subscribe((item: Group) => {
       if (item) {
+        this.group = item;
         this.snackBar.openSuccessSnackBar(`The Professor was added to this group`);
-        this.dialogRef.close({ group: item });
         console.log('join Professor to Group');
       }
     });
@@ -174,5 +173,14 @@ export class GroupModalComponent implements OnInit {
     });
   }
 
+  removeUser(user: User, group: Group, type: string) {
+    if (type === 'professor') {
+      this.groupService.removeProfessor(user.id, group.id).subscribe(data => {
+        this.group = data;
+      });
+    } else {
+      this.groupService.removeStudent(user.id, group.id).subscribe(data => { this.group = data; });
+    }
+  }
 }
 

@@ -74,7 +74,7 @@
   <ng-template [ngSwitchCase]="action === 'joinUser'">
     <div class="modal-header">
       <strong>
-        <h5 class="modal-title" id="exampleModalLabel">Join User</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Join members</h5>
       </strong>
     </div>
     <div class="modal-body">
@@ -82,17 +82,24 @@
         <input matInput placeholder="Search" [formControl]="usersForm" class="left-layer-message-input"
           [matAutocomplete]="autoCompleteUsers" />
         <mat-autocomplete #autoCompleteUsers="matAutocomplete">
-          <mat-option *ngFor="let user of filtredUsers" [value]="user.firstName"
-            (click)="joinUser(user)">
+          <mat-option *ngFor="let user of filtredUsers" [value]="user.firstName" (click)="joinUser(user)">
             <img src="{{user.profilePicture}}" class="img-profil" /> {{user.firstName}}</mat-option>
         </mat-autocomplete>
 
         <div class="group-user-list" *ngFor="let professor of group.professors">
-          <img src="{{professor.profilePicture}}" class="img-profil" /> <span>{{professor.firstName}} {{professor.lastName}}</span>
+          <img src="{{professor.profilePicture}}" class="img-profil" /> <span>{{professor.firstName}}
+            {{professor.lastName}}</span>
+          <mat-icon style="color: red;float: right; margin: 13px 0; cursor: pointer;"
+            (click)="removeUser(professor,group,'professor')">
+            remove_circle_outline</mat-icon>
         </div>
         <mat-divider></mat-divider>
         <div class="group-user-list" *ngFor="let student of group.students">
-          <img src="{{student.profilePicture}}" class="img-profil" /> <span>{{student.firstName}} {{student.lastName}}</span>
+          <img src="{{student.profilePicture}}" class="img-profil" /> <span>{{student.firstName}}
+            {{student.lastName}}</span>
+          <mat-icon style="color: red;float: right; margin: 13px 0; cursor: pointer;"
+            (click)="removeUser(student,group,'student')">remove_circle_outline
+          </mat-icon>
         </div>
       </div>
     </div>

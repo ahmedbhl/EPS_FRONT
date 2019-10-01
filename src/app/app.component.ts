@@ -49,11 +49,11 @@ export class AppComponent {
   private redirectUserAfterAuthentification() {
     const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
     if (roles.indexOf('ADMINISTRATION') > -1) {
-      this.router.navigate(['homeAdministration']);
-      this.helper.trace('ADMINISTRATION Conected')
+      this.router.navigate(['educationalinstitution']);
+      this.helper.trace('ADMINISTRATION Conected');
     } else if (roles.indexOf('SUPER_ADMIN') > -1) {
       this.router.navigate(['homeSuperAdmin']);
-      this.helper.trace('SUPER ADMIN Conected')
+      this.helper.trace('SUPER ADMIN Conected');
     } else if (roles.indexOf('PROFESSOR') > -1 || roles.indexOf('STUDENT') > -1) {
       this.router.navigate(['homeActors']);
     }

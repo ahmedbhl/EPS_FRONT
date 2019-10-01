@@ -20,7 +20,7 @@ import { CourseService } from '../services/course.service';
 export class CourseModalComponent implements OnInit {
 
   form: FormGroup;
-
+  public currentUser: User;
   // Private
   private _unsubscribeAll: Subject<any>;
   public classes: Classe[];
@@ -42,6 +42,7 @@ export class CourseModalComponent implements OnInit {
 
     this.course = data.course;
     this.action = data.action;
+    this.currentUser = data.currentUser;
   }
 
   ngOnInit() {
@@ -138,8 +139,12 @@ export class CourseModalComponent implements OnInit {
    * Used for getAll the Classes
    */
   getAllClasses() {
+    const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
     this.classeService.getAllClasses().subscribe(data => {
       this.classes = data;
+      if ((roles.indexOf('ADMINISTRATION') > -1) && this.currentUser) {
+        this.classes = this.classes.filter(classe => classe.field.level.establishment.administration.id === this.currentUser.id);
+      }
     });
   }
 

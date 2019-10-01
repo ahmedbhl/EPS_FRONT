@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, startWith } from 'rxjs/operators';
 import { UserService } from 'src/app/core/authentication/user.service';
 import { SnackBarService } from 'src/app/core/snack-bar.service';
 import { Administration } from 'src/app/shared/models/administration';
+import { User } from 'src/app/shared/models/user.class';
 import { EducationalInstitution } from '../model/educational-institution';
 import { EducationalInstitutionService } from '../services/educational-institution.service';
 
@@ -26,6 +28,9 @@ export class EducationalInstitutionModalComponent implements OnInit {
   public administrations: Administration[];
   private establishement: EducationalInstitution;
   public action: string;
+  usersForm = new FormControl('');
+  filtredUsers: Observable<User[]>;
+  public users: User[] = [];
 
   constructor(public dialogRef: MatDialogRef<EducationalInstitutionModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,9 +47,15 @@ export class EducationalInstitutionModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllUsers();
     this.initForm();
     this.getAllAdministrationUser();
     this.checkAndInitFormBeforeDisplay();
+    this.usersForm.valueChanges.pipe(startWith(''), debounceTime(300)).subscribe(value => {
+      this.filtredUsers = value ?
+        this.users.filter(option => option.firstName.toLowerCase().indexOf(value.toLocaleLowerCase()) === 0)
+        : this.users as any;
+    });
   }
 
   checkAndInitFormBeforeDisplay() {
@@ -140,4 +151,28 @@ export class EducationalInstitutionModalComponent implements OnInit {
       this.administrations = administration;
     });
   }
+
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe((users: User[]) => {
+      if (users.length > 0) {
+        this.users = users;
+        this.users = this.users.filter(user => (user.roles[0].name !== 'SUPER_ADMIN' && user.roles[0].name !== 'ADMINISTRATION'));
+      }
+    });
+  }
+
+  joinUser(user) {
+    if (user.roles[0].name === 'PROFESSOR') {
+      user.dateOfRegistration = this.datePipe.transform(user.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
+      this.establishement.professors.push(user);
+      // this.joinProfessor(user);
+    } else if (user.roles[0].name === 'STUDENT') {
+      user.dateOfRegistration = this.datePipe.transform(user.dateOfRegistration, 'yyyy-MM-dd HH:mm:ss');
+      this.establishement.students.push(user);
+      // this.joinStudent(user);
+      //  this.dialogRef.close({ group: this.group });
+    }
+    this.educationalInstitutionService.update(this.establishement).subscribe();
+  }
+
 }

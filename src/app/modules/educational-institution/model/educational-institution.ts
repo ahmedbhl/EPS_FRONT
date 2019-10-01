@@ -1,4 +1,6 @@
 import { Administration } from 'src/app/shared/models/administration';
+import { Professor } from 'src/app/shared/models/professor';
+import { Student } from 'src/app/shared/models/student';
 
 export class EducationalInstitution {
 
@@ -15,6 +17,10 @@ export class EducationalInstitution {
     photos: String;
 
     administration: Administration;
+
+    professors: Professor[];
+
+    students: Student[];
 
     constructor() {
 

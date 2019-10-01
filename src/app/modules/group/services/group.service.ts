@@ -104,11 +104,34 @@ export class GroupService {
   /**
   * join professor to the Group
   */
- public joinProfessor(userId: number, hashCode: string): Observable<Group> {
-  this.helper.trace(`join Professor : ${userId}`);
-  let requestParams: HttpParams = new HttpParams();
-  requestParams = requestParams.append('hashCode', hashCode);
-  requestParams = requestParams.append('userId', userId.toString());
-  return this.http.put<Group>(`${this.groupUrl}/join/professor`, new Group(), { headers: this.headers, params: requestParams });
-}
+  public joinProfessor(userId: number, hashCode: string): Observable<Group> {
+    this.helper.trace(`join Professor : ${userId}`);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('hashCode', hashCode);
+    requestParams = requestParams.append('userId', userId.toString());
+    return this.http.put<Group>(`${this.groupUrl}/join/professor`, new Group(), { headers: this.headers, params: requestParams });
+  }
+
+  /**
+   * remove student from Group
+   */
+  public removeStudent(userId: number, id: number): Observable<Group> {
+    this.helper.trace(`remove Student from group : ${userId}`);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('id', id.toString());
+    requestParams = requestParams.append('userId', userId.toString());
+    return this.http.put<Group>(`${this.groupUrl}/remove/student`, new Group(), { headers: this.headers, params: requestParams });
+  }
+
+  /**
+  * remove Professor from Group
+  */
+  public removeProfessor(userId: number, id: number): Observable<Group> {
+    this.helper.trace(`remove professor from group : ${userId}`);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('id', id.toString());
+    requestParams = requestParams.append('userId', userId.toString());
+    return this.http.put<Group>(`${this.groupUrl}/remove/professor`, new Group(), { headers: this.headers, params: requestParams });
+  }
+
 }
