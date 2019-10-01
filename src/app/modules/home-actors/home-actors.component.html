@@ -30,15 +30,10 @@
             </div>
         </div>
 
-
-
         <div class="navigation-list-container">
             <div class="navigation-list-header">
                 <span class="navigation-list-title">My Classes</span>
                 <mat-select #select class="select" style="visibility:hidden">
-                    <mat-option (click)="openDialog('createClass')" *ngIf="isProfessor">
-                        <mat-icon style="vertical-align: text-top;">add </mat-icon>&nbsp;Create a class
-                    </mat-option>
                     <mat-option (click)="openDialog('joinClass')">
                         <mat-icon style="vertical-align: text-top;">class</mat-icon>&nbsp;Join a class
                     </mat-option>
@@ -83,7 +78,7 @@
                         <mat-icon style="vertical-align: text-top;">group_add </mat-icon>&nbsp;Join a group
                     </mat-option>
                     <mat-divider class="divider-container"></mat-divider>
-                    <mat-option routerLink="/group">
+                    <mat-option [routerLink]="['/group', 'all']">
                         <mat-icon style="vertical-align: text-top;">select_all </mat-icon>&nbsp;All groups
                     </mat-option>
                 </mat-select>
@@ -92,7 +87,7 @@
 
             <div class="navigation-list list-group" *ngIf="groups.length > 0">
                 <li class="list-group-item" class="nav-link" *ngFor="let group of groups">
-                    <a class="navigation-list-item" href="#">
+                    <a class="navigation-list-item" href="#" [routerLink]="['/group',group.id]">
                         <span class="circle"></span>
                         <span style="margin: 0px 0.5rem;">{{group.groupName}}</span>
                     </a>

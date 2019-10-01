@@ -19,6 +19,7 @@ export const routes: Routes = [
     { path: 'reset', loadChildren: './modules/forgot-password/forgot-password.module#ForgotPasswordModule' },
     { path: 'user', loadChildren: './modules/user/user.module#UserModule' },
     { path: 'group', loadChildren: './modules/group/group.module#GroupModule' },
+    { path: 'group/:id', loadChildren: './modules/group/group.module#GroupModule' },
     { path: 'library', loadChildren: './modules/library/library.module#LibraryModule' },
     { path: 'messenger', loadChildren: './modules/messenger/messenger.module#MessengerModule' },
 

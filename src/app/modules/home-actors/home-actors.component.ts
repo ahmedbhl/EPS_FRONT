@@ -57,8 +57,6 @@ export class HomeActorsComponent implements OnInit {
     private datePipe: DatePipe) { }
 
   ngOnInit() {
-    //   this.state[0] = { text: '' };
-    //  this.show[0] = true;
     this.initCurrentUser();
   }
 
@@ -66,28 +64,24 @@ export class HomeActorsComponent implements OnInit {
     if (!this.state[index]) {
       this.state[index] = { text: '' };
     }
-    /*  if (index === this.selectedImoj) {
-        this.selectedImoj = null;
-      } else {*/
     this.show[index] = !this.show[index];
     const emoji = e.emoji.native;
     this.state[index] = { text: this.state[index].text + emoji };
     this.selectedImoj = index;
-    // }
+
   }
 
   initCurrentUser() {
     this.authenticationService.currentUser.subscribe(data => {
       this.currentUser = data;
       const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      this.type = 'PROFILE';
       if (roles.indexOf('PROFESSOR') > -1) {
         this.isProfessor = true;
-        this.type = 'PROFESSOR';
         this.getAllGroupsByProfessor();
         this.getAllClassesByProfessor();
       } else if (roles.indexOf('STUDENT') > -1) {
         this.isProfessor = false;
-        this.type = 'STUDENT';
         this.getAllGroupsByStudent();
         this.getAllClassesByStudent();
       }
@@ -96,7 +90,7 @@ export class HomeActorsComponent implements OnInit {
       this.getPictureLink();
       setTimeout(() => {
         this.isHiddenSpinner = true;
-      }, 5000);
+      }, 3000);
       this.initForm();
     });
   }
@@ -171,7 +165,7 @@ export class HomeActorsComponent implements OnInit {
 
   getAllPostsbyTypeAndUser() {
     if (this.type && this.currentUser && this.currentUser.id) {
-      this.postService.getAllPostsByTypeAndUser(this.type, this.currentUser).subscribe(posts => {
+      this.postService.getAllPostsByType(this.type).subscribe(posts => {
         if (posts.length > 0) {
           this.posts = posts;
         }
@@ -221,6 +215,7 @@ export class HomeActorsComponent implements OnInit {
         (data) => {
           this.helper.trace('the shared link  : ' + data['sharedlink']);
           post.postPicture = data['sharedlink'];
+          this.savePost(post);
         },
         (error) => this.helper.trace('Error ' + error)
 

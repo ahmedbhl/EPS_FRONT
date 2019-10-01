@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { debounceTime } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
+import { GroupModalComponent } from '../../group-modal/group-modal.component';
 import { Group } from '../../model/group';
 import { GroupService } from '../../services/group.service';
-import { GroupModalComponent } from '../../group-modal/group-modal.component';
 
 @Component({
   selector: 'app-group-list',
@@ -14,24 +16,56 @@ import { GroupModalComponent } from '../../group-modal/group-modal.component';
 export class GroupListComponent implements OnInit {
 
   groups: Group[] = [];
+  currentUser: User;
+  iProfessor = false;
 
   constructor(private readonly helper: Helper,
     private readonly _groupService: GroupService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private readonly userService: AuthenticationService) {
   }
 
   ngOnInit() {
-    this.getAllGroup();
+    this.initCurrentUser();
   }
 
   /**
-    * Used for getAll the Group
+  * Init the Current User for specify wich UI should be display
+  */
+  initCurrentUser() {
+    this.userService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      if (data && this.currentUser !== null) {
+        const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+        if (roles.indexOf('PROFESSOR') > -1) {
+          this.iProfessor = false;
+          this.getAllGroupsByProfessor();
+        } else if (roles.indexOf('STUDENT') > -1) {
+          this.iProfessor = true;
+          this.getAllGroupsByStudent();
+        }
+      }
+    });
+  }
+
+  /**
+    * Used for getAllGroupsByStudent the Group
     */
-  getAllGroup() {
-    this._groupService.getAllGroups().subscribe(data => {
+  getAllGroupsByStudent() {
+    this._groupService.getAllGroupsByStudent(this.currentUser.id).subscribe(data => {
       this.groups = data;
     });
   }
+
+  /**
+    * Used for get All GroupsByProfessor the Group
+    */
+  getAllGroupsByProfessor() {
+    this._groupService.getAllGroupsByProfessor(this.currentUser.id).subscribe(data => {
+      this.groups = data;
+    });
+  }
+
 
   /**
     * Used for getAll the Group by groupName
@@ -50,7 +84,7 @@ export class GroupListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllGroup();
+      this.initCurrentUser();
       this.helper.trace('The dialog was closed' + result);
     });
   }
