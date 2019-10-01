@@ -36,17 +36,7 @@ export class ClasseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authenticationService.currentUser.subscribe(data => {
-      this.currentUser = data;
-      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
-      if (roles.indexOf('ADMINISTRATION') > -1) {
-        if (this.currentUser && this.currentUser.id) {
-          this.getClassByEstablishement(this.currentUser.id);
-        }
-      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
-        this.getAllClasse();
-      }
-    });
+    this.initClasses();
     this.initDataSource();
   }
 
@@ -63,6 +53,21 @@ export class ClasseComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+  initClasses() {
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('ADMINISTRATION') > -1) {
+        if (this.currentUser && this.currentUser.id) {
+          this.getClassByEstablishement(this.currentUser.id);
+        }
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.getAllClasse();
+      }
+    });
+  }
+
   /**
   * Get all Classes
   */
@@ -115,11 +120,11 @@ export class ClasseComponent implements OnInit {
   openDialog(classe: Classe, action: string): void {
     const dialogRef = this.dialog.open(ClasseModalComponent, {
       width: '600px',
-      data: { classe: classe, action: action }
+      data: { classe: classe, action: action, currentUser: this.currentUser }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllClasse();
+      this.initClasses();
       this.helper.trace('The dialog was closed' + result);
     });
   }

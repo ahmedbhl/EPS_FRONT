@@ -1,7 +1,89 @@
 <div [ngSwitch]="actionForm">
 
   <ng-template [ngSwitchCase]="'SuperAdminOrAdministrationUI'">
-    <app-group-list></app-group-list>
+    <div class="custom-container">
+      <div class="header">
+        <span class="header-left">Groups Management</span>
+        <button mat-raised-button class="btn-create primary" (click)="openDialog(null,'create')">
+          <mat-icon>add</mat-icon>
+          <span class="btn-create-text">Add New Group</span>
+        </button>
+      </div>
+      <mat-divider class="header-divider"></mat-divider>
+    
+      <div class="data-table" *ngIf="groups.length > 0">
+        <div class="mat-elevation-z8">
+    
+          <div class="filter-header">
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+              <mat-icon class="filter-icon">search</mat-icon>
+            </mat-form-field>
+          </div>
+    
+          <table mat-table [dataSource]="dataSource" matSort>
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(element) : null"
+                  [checked]="selection.isSelected(element)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+    
+            <!-- Name Column -->
+            <ng-container matColumnDef="groupName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+              <td mat-cell *matCellDef="let row"> {{row.groupName}} </td>
+            </ng-container>
+    
+            <!-- Description Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+              <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
+    
+            <!-- Star Column -->
+            <ng-container matColumnDef="more" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row" class="pointer">
+                <mat-icon (click)=select.open()>more_vert</mat-icon>
+                <mat-select #select class="mat-select-container" style="visibility:hidden">
+                  <mat-option (click)="openDialog(row,'update')">Update Group</mat-option>
+                  <mat-divider class="divider-container"></mat-divider>
+                  <mat-option (click)="openDialog(row,'joinUser')">Join User</mat-option>
+                  <mat-divider class="divider-container"></mat-divider>
+                  <mat-option (click)="openDialog(row,'delete')">Delete Group</mat-option>
+                </mat-select>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+            </tr>
+          </table>
+          <div class="footer-left">
+            <div class="footer-checkbox">
+              <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox> All the elements
+            </div>
+            <mat-select [(value)]="selectAction" class="footer-select">
+              <mat-option value="delete">Delete</mat-option>
+            </mat-select>
+            <button mat-raised-button class="btn-create footer-btn"> OK </button>
+          </div>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
+        </div>
+      </div>
+      <div class="empty-data-source" *ngIf="groups.length == 0">
+        <span>Your Data Base Of groups Is Empty </span>
+      </div>
+    </div>
   </ng-template>
 
 

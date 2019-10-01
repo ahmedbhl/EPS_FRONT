@@ -590,3 +590,8 @@ h3 a {
     padding: 10px;
     font-family: monospace;
 }
+
+.signup-error {
+    margin: 20px 0;
+    padding: 10px;
+}

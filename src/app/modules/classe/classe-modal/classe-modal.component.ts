@@ -7,6 +7,7 @@ import { Field } from '../../field/model/field';
 import { FieldService } from '../../field/services/field.service';
 import { Classe } from '../model/Classe';
 import { ClasseService } from '../services/classe.service';
+import { User } from 'src/app/shared/models/user.class';
 
 @Component({
   selector: 'app-classe-modal',
@@ -16,7 +17,7 @@ import { ClasseService } from '../services/classe.service';
 export class ClasseModalComponent implements OnInit {
 
   form: FormGroup;
-
+  public currentUser: User;
   // Private
   private _unsubscribeAll: Subject<any>;
   public fields: Field[];
@@ -35,6 +36,7 @@ export class ClasseModalComponent implements OnInit {
 
     this.classe = data.classe;
     this.action = data.action;
+    this.currentUser = data.currentUser;
   }
 
   ngOnInit() {
@@ -127,8 +129,12 @@ export class ClasseModalComponent implements OnInit {
    * Used for getAll the fields
    */
   getAllFields() {
+    const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
     this.fieldService.getAllFields().subscribe(data => {
       this.fields = data;
+      if ((roles.indexOf('ADMINISTRATION') > -1) && this.currentUser) {
+        this.fields = this.fields.filter(field => field.level.establishment.administration.id === this.currentUser.id);
+      }
     });
   }
 

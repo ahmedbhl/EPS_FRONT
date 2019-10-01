@@ -7,7 +7,6 @@ import { User } from 'src/app/shared/models/user.class';
 import { LevelModalComponent } from '../level-modal/level-modal.component';
 import { Level } from '../model/level';
 import { LevelService } from '../services/level.service';
-import { EducationalInstitution } from '../../educational-institution/model/educational-institution';
 
 @Component({
   selector: 'app-level',
@@ -21,8 +20,6 @@ export class LevelComponent implements OnInit {
   displayedColumns: string[] = ['select', 'levelName', 'description', 'establishment', 'more'];
   dataSource: MatTableDataSource<Level>;
   selection = new SelectionModel<Level>(true, []);
-
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   currentUser: User;
@@ -35,17 +32,7 @@ export class LevelComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authenticationService.currentUser.subscribe(data => {
-      this.currentUser = data;
-      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
-      if (roles.indexOf('ADMINISTRATION') > -1) {
-        if (this.currentUser && this.currentUser.id) {
-          this.getLevelByEstablishement(this.currentUser.id);
-        }
-      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
-        this.getAllLevel();
-      }
-    });
+    this.initLevels();
     this.initDataSource();
 
   }
@@ -64,6 +51,19 @@ export class LevelComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  initLevels() {
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('ADMINISTRATION') > -1) {
+        if (this.currentUser && this.currentUser.id) {
+          this.getLevelByEstablishement(this.currentUser.id);
+        }
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.getAllLevel();
+      }
+    });
+  }
   /**
   * Get all Levels
   */
@@ -116,11 +116,11 @@ export class LevelComponent implements OnInit {
   openDialog(level: Level, action: string): void {
     const dialogRef = this.dialog.open(LevelModalComponent, {
       width: '600px',
-      data: { level: level, action: action }
+      data: { level: level, action: action, currentUser: this.currentUser }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllLevel();
+      this.initLevels();
       this.helper.trace('The dialog was closed' + result);
     });
   }

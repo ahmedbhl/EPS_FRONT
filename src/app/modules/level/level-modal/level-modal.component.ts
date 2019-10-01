@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject } from 'rxjs';
 import { SnackBarService } from 'src/app/core/snack-bar.service';
+import { User } from 'src/app/shared/models/user.class';
 import { EducationalInstitution } from '../../educational-institution/model/educational-institution';
 import { EducationalInstitutionService } from '../../educational-institution/services/educational-institution.service';
 import { Level } from '../model/level';
@@ -24,7 +25,7 @@ export class LevelModalComponent implements OnInit {
   public educationalInstitutions: EducationalInstitution[];
   private level: Level;
   public action: string;
-
+  public currentUser: User;
   constructor(public dialogRef: MatDialogRef<LevelModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
@@ -38,6 +39,7 @@ export class LevelModalComponent implements OnInit {
 
     this.level = data.level;
     this.action = data.action;
+    this.currentUser = data.currentUser;
   }
 
   ngOnInit() {
@@ -130,8 +132,12 @@ export class LevelModalComponent implements OnInit {
    * Used for getAll the Educational Institutions
    */
   getAllEducationalInstitution() {
+    const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
     this.educationalInstitutionService.getAllEducationalInstitution().subscribe(data => {
       this.educationalInstitutions = data;
+      if ((roles.indexOf('ADMINISTRATION') > -1) && this.currentUser) {
+        this.educationalInstitutions = this.educationalInstitutions.filter(educ => educ.administration.id === this.currentUser.id);
+      }
     });
   }
 

@@ -91,4 +91,36 @@
       <button type="button" class="btn btn-danger" (click)="delete()" cdkFocusInitial>Confirm</button>
     </div>
   </ng-template>
+
+  <ng-template [ngSwitchCase]="action === 'members'">
+    <div class="modal-header">
+      <strong>
+        <h5 class="modal-title" id="exampleModalLabel">List Of Members</h5>
+      </strong>
+    </div>
+    <div class="modal-body">
+      <div fxFlex="100">
+        <input matInput placeholder="Search" [formControl]="usersForm" class="left-layer-message-input"
+          [matAutocomplete]="autoCompleteUsers" />
+        <mat-autocomplete #autoCompleteUsers="matAutocomplete">
+          <mat-option *ngFor="let user of filtredUsers" [value]="user.firstName" (click)="joinUser(user)">
+            <img src="{{user.profilePicture}}" class="img-profil" /> {{user.firstName}} - {{user.roles[0].name}}</mat-option>
+        </mat-autocomplete>
+
+        <div class="group-user-list" *ngFor="let professor of establishement.professors">
+          <img src="{{professor.profilePicture}}" class="img-profil" /> <span>{{professor.firstName}}
+            {{professor.lastName}}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="group-user-list" *ngFor="let student of establishement.students">
+          <img src="{{student.profilePicture}}" class="img-profil" /> <span>{{student.firstName}}
+            {{student.lastName}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onNoClick()">Cancel </button>
+      <button type="button" class="btn primary" color="primary" (click)="onNoClick()" cdkFocusInitial>Confirm</button>
+    </div>
+  </ng-template>
 </div>

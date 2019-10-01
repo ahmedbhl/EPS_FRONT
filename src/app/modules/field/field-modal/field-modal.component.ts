@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subject } from 'rxjs';
 import { SnackBarService } from 'src/app/core/snack-bar.service';
+import { User } from 'src/app/shared/models/user.class';
 import { Level } from '../../level/model/level';
 import { LevelService } from '../../level/services/level.service';
 import { Field } from '../model/field';
@@ -22,7 +23,7 @@ export class FieldModalComponent implements OnInit {
   public levels: Level[];
   private field: Field;
   public action: string;
-
+  public currentUser: User;
   constructor(public dialogRef: MatDialogRef<FieldModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
@@ -35,6 +36,7 @@ export class FieldModalComponent implements OnInit {
 
     this.field = data.field;
     this.action = data.action;
+    this.currentUser = data.currentUser;
   }
 
   ngOnInit() {
@@ -125,8 +127,12 @@ export class FieldModalComponent implements OnInit {
    * Used for getAll the Levels
    */
   getAllLevels() {
+    const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
     this.levelService.getAllLevels().subscribe(data => {
       this.levels = data;
+      if ((roles.indexOf('ADMINISTRATION') > -1) && this.currentUser) {
+        this.levels = this.levels.filter(level => level.establishment.administration.id === this.currentUser.id);
+      }
     });
   }
 

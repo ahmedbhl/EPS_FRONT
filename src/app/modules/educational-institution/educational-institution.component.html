@@ -49,7 +49,8 @@
                 <!-- Progress Column -->
                 <ng-container matColumnDef="photos">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-                    <td mat-cell *matCellDef="let row"> <img mat-card-avatar class=" rounded" src={{row.photos}} />
+                    <td mat-cell *matCellDef="let row" class="user-img">
+                        <img mat-card-avatar class="user-img" src={{row.photos}} />
                     </td>
                 </ng-container>
 
@@ -90,6 +91,8 @@
                         <mat-icon (click)=select.open()>more_vert</mat-icon>
                         <mat-select #select class="mat-select-container" style="visibility:hidden">
                             <mat-option (click)="openDialog(row,'update')">Update Educationnal Institution</mat-option>
+                            <mat-divider class="divider-container"></mat-divider>
+                            <mat-option (click)="openDialog(row,'members')">List of Members</mat-option>
                             <mat-divider class="divider-container"></mat-divider>
                             <mat-option (click)="openDialog(row,'delete')">Delete Educationnal Institution</mat-option>
                         </mat-select>

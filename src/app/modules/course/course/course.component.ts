@@ -1,7 +1,9 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
 import { CourseModalComponent } from '../course-modal/course-modal.component';
 import { Course } from '../model/course';
 import { CourseService } from '../services/course.service';
@@ -15,7 +17,7 @@ import { CourseService } from '../services/course.service';
 export class CourseComponent implements OnInit {
 
   Courses: Course[] = [];
-
+  currentUser: User;
   displayedColumns: string[] = ['select', 'courseName', 'description', 'classe', 'professor', 'more'];
   dataSource: MatTableDataSource<Course>;
   selection = new SelectionModel<Course>(true, []);
@@ -28,11 +30,12 @@ export class CourseComponent implements OnInit {
 
   constructor(private readonly helper: Helper,
     private readonly _CourseService: CourseService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.getAllCourse();
+    this.initCourses();
     this.initDataSource();
   }
 
@@ -50,6 +53,19 @@ export class CourseComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  initCourses() {
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('ADMINISTRATION') > -1) {
+        if (this.currentUser && this.currentUser.id) {
+          this.getLevelByEstablishement(this.currentUser.id);
+        }
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.getAllCourse();
+      }
+    });
+  }
   /**
   * Get all Courses
   */
@@ -64,6 +80,19 @@ export class CourseComponent implements OnInit {
       error => this.helper.handleError,
       () => this.helper.trace('Get all Courses complete ' + this.Courses.length));
   }
+
+  getLevelByEstablishement(administrationId: number) {
+    this._CourseService.getCourseByAdministration(administrationId).subscribe(
+      (data: Course[]) => {
+        this.Courses = data;
+        // Assign the data to the data source for the table to render
+        this.dataSource = new MatTableDataSource(this.Courses);
+      }
+      ,
+      error => this.helper.handleError,
+      () => this.helper.trace('Get all Courses complete ' + this.Courses.length));
+  }
+
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -90,11 +119,11 @@ export class CourseComponent implements OnInit {
   openDialog(course: Course, action: string): void {
     const dialogRef = this.dialog.open(CourseModalComponent, {
       width: '600px',
-      data: { course: course, action: action }
+      data: { course: course, action: action, currentUser: this.currentUser }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllCourse();
+      this.initCourses();
       this.helper.trace('The dialog was closed' + result);
     });
   }

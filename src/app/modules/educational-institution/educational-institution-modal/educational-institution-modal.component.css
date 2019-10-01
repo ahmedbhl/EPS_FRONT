@@ -84,3 +84,19 @@ mat-dialog-container{
 mat-card {
     box-shadow: none !important;
 }
+
+.left-layer-message-input {
+    outline: none;
+    padding: 0 10px;
+    background-color: rgba(0, 0, 0, .04);
+    border: none;
+    font-size: 15px;
+    height: 45px;
+}
+
+.img-profil {
+    border-radius: 37px;
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+}
