@@ -1,4 +1,4 @@
-## SFE_FRONT
+## EPS_FRONT
 
 Plateforme ouverte à l'enseignement à distance
 
@@ -38,7 +38,7 @@ Install latest version of nodeJs you can download from this link 10.13.0 not 11
 
 `https://vscode-update.azurewebsites.net/1.28.2/win32-x64-user/stable`
 
-3 - Create new forlder with the name of your new project (SFE) 
+3 - Create new forlder with the name of your new project (EPS) 
 
 4 – Open vsCode and tap the keys (ctrl + shift + ù) and select powershell or gitbash, Else you can tap keys (ctrl + shift + P) and write « terminal » and select « Terminal : select Default Shell ».
 
@@ -90,11 +90,11 @@ Step 2 : Animations
 
 12 - To connect for the first time from local to the remot repository you need to run this commande line : 
 
-`git remote add origin https://ZaynabHAMILA@bitbucket.org/ZaynabHAMILA/sfe_front.git`
+`git remote add origin https://github.com/ahmedbhl/EPS_FRONT`
 
 13 – Clone the project from bitbuket remote repository 
 
-`git clone https://ZaynabHAMILA@bitbucket.org/ZaynabHAMILA/sfe_front.git`
+`git clone https://github.com/ahmedbhl/EPS_FRONT`
 
 cd sfr_front
 
