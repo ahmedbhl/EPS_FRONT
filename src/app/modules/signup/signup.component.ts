@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,7 +41,8 @@ export class SignupComponent implements OnInit {
       password: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      role: ['', Validators.required]
+      role: ['', Validators.required],
+      profilePicture: ['assets/images/avatars/profile.jpg', Validators.required]
     });
   }
 
@@ -62,14 +64,21 @@ export class SignupComponent implements OnInit {
     user.roles.push(role);
     this.userService.save(user).subscribe(
       (data: User) => {
+        this.error = '';
         this.helper.trace('the User Added with success');
         this.isSignup = true;
         setTimeout(() => {
           this.isSignup = false;
           this.signupForm.reset();
-        }, 50000);
-      }
-    );
+        }, 3000);
+      }, error => {
+        if (error instanceof HttpErrorResponse) {
+          if (error.status === 409) {
+            this.error = 'This user already exists. ';
+          }
+        }
+      });
+
   }
 
   /**

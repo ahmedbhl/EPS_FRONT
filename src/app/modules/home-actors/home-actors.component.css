@@ -1,5 +1,5 @@
 .profile-card {
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     background-color: rgb(255, 255, 255);
     padding: 1rem!important;
     margin-bottom: 1rem!important;
@@ -10,6 +10,12 @@
     font-size: 14px;
     font-weight: 500;
     color: rgb(51, 51, 51);
+}
+
+.profile-header-text-email {
+    display: block;
+    font-size: 14px;
+    color: darkgray;
 }
 
 .profile-progress-text {
@@ -74,6 +80,16 @@
     font-size: .75rem;
     font-weight: 500;
     text-transform: uppercase;
+    width: 150px;
+}
+
+.educationa-box-title {
+    float: left;
+    color: #4f5468;
+    font-size: .75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    width: 200px;
 }
 
 .navigation-list {
@@ -193,7 +209,7 @@
 }
 
 .rounded {
-    border-radius: .25rem!important;
+    border-radius: 1.25rem!important;
 }
 
 .footer {
@@ -205,8 +221,9 @@
     float: right;
 }
 
-.mat-card-header-text {
-    margin: 0 16px 10px 16px;
+::ng-deep .mat-card-header-text {
+    width: 80% !important;
+    cursor: pointer;
 }
 
 .footer-card-btn-like {
@@ -229,21 +246,57 @@
 
 .footer-card-btn {
     line-height: 20px;
+    outline: none;
 }
 
 .mat-card-footer {
     padding: 4px 20px;
-    background-color: #f7f7f7;
+    background-color: #f2f3f5;
 }
 
 .mat-card-action {
     margin: 0;
 }
 
+.footer-card-mat-card-comment {
+    width: 100%;
+    margin: 10px 0;
+}
+
 .footer-card-mat-card-avatar {
     width: 100%;
     margin: 10px 0;
     display: flex;
+}
+
+.mat-card-comment-display {
+    display: flex;
+    margin: 7px 0;
+}
+
+.mat-card-comment-text {
+    background: white;
+    border-radius: 22px;
+    margin: 0 10px;
+    padding: 6px 10px;
+    height: auto;
+    font-size: 0.8em;
+    /* background-color: #f2f3f5;*/
+}
+
+.comment-text-user {
+    display: block;
+    font-weight: bold;
+    color: #385898;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0;
+}
+
+.comment-text {
+    font-family: sans-serif;
+    font-weight: 100;
+    color: rgb(51, 51, 51);
 }
 
 .mat-card-comment-input {
@@ -264,7 +317,8 @@
 }
 
 .footer-card-comment-icon {
-    height: 35px;
+    height: 33px;
+    width: 33px;
 }
 
 .home-content-card {
@@ -276,7 +330,7 @@
     background: white;
     border: 1px solid gray;
     border-radius: 22px;
-    width: 100%;
+    width: 90%;
     margin: 0 10px;
     padding: 2px;
     height: 35px;
@@ -285,4 +339,62 @@
 .mat-card-comment-emoj {
     vertical-align: middle;
     margin: 3px;
+    cursor: pointer;
+}
+
+.spiner {
+    width: 20px;
+    height: 20px;
+    display: block;
+    position: relative;
+    top: 57%;
+    left: 40%;
+}
+
+.navigation-empty-list-item {
+    margin: 0 10px;
+    height: 30px;
+    width: 170px;
+    cursor: pointer;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.select {
+    position: relative !important;
+    top: 32px;
+    right: 40px;
+    max-height: 61vh !important;
+}
+
+.post-select {
+    position: relative !important;
+    top: 10px;
+    right: 160px;
+    max-height: 61vh !important;
+}
+
+.example-card {
+    margin: 20px 0;
+}
+
+.blue {
+    color: dodgerblue;
+}
+
+.post-title-style {
+    float: left;
+    font: bold 14px/21px Georgia, serif;
+    margin: 0 5px 0 0;
+    color: #606770;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.card-post-footer {
+    text-align: center;
+    margin: 0 0 20px 0;
 }

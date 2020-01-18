@@ -1,0 +1,119 @@
+.page-layout {
+    width: 100%;
+    /* height: 100vh;*/
+}
+
+.content {
+    height: 100%;
+}
+
+.pr-4 {
+    padding-right: 4px!important;
+    margin-top: 10px;
+}
+
+form {
+    width: 100%;
+    max-width: 800px !important;
+    height: auto;
+    box-shadow: none;
+}
+
+.header {
+    width: 100%;
+    padding: 10px;
+    height: 70px;
+}
+
+.header-left {
+    float: left;
+    font-family: sans-serif;
+    font-size: 1.1em;
+}
+
+.header-divider {
+    max-width: 800px;
+}
+
+.btn-save {
+    background-color: #007bff;
+    color: white;
+    width: 100px;
+    margin-right: 10px;
+    font-size: large;
+}
+
+.btn-success {
+    width: 100px;
+    font-size: medium;
+}
+
+::ng-deep .mat-dialog-container {
+    padding: 10px 21px;
+}
+
+mat-card {
+    box-shadow: none !important;
+}
+
+.edit-header {
+    display: block;
+}
+
+.edit-textarea-bloc {
+    display: block;
+    height: 102px;
+    padding: 10px 0;
+}
+
+.edit-img {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.rounded {
+    border-radius: 1.25rem!important;
+}
+
+.edit-post-icon {
+    height: 33px;
+    width: 33px;
+    float: left;
+    margin: 10px 10px 0 0;
+}
+
+.postbox-textarea {
+    overflow-y: scroll;
+    color: #5c6178;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 100%;
+    min-height: 30px;
+    outline: none;
+    box-sizing: border-box;
+    display: block;
+    max-width: 100%;
+    line-height: 1.5;
+    border-radius: 3px;
+    font: 13px Tahoma, cursive;
+    transition: box-shadow 0.5s ease;
+    resize: none;
+    overflow: hidden;
+}
+
+.edit-post-footer {
+    margin: 10px 0 0 0;
+}
+
+.btn-edit-save {
+    background-color: #007bff;
+    color: white;
+    width: 100px;
+    margin-right: 10px;
+    font-size: large;
+    float: right;
+}

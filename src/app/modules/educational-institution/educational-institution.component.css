@@ -28,6 +28,12 @@
     margin: 11px 0;
 }
 
+.rounded {
+    border-radius: 1.25rem!important;
+    width: 33px;
+    height: 33px;
+}
+
 .btn-create-text {
     margin-left: 10p;
 }
@@ -114,10 +120,9 @@ td.mat-column-more, th.mat-column-more {
 
 .empty-data-source {
     width: 526px;
-    height: 90px;
     font-size: 1.7em;
     text-align: center;
-    border: 2px solid #007bff;
+    border: 2px solid darkgray;
     margin: 0;
     position: absolute;
     top: 50%;
@@ -139,4 +144,11 @@ mat-grid-tile {
 
 .pointer {
     cursor: pointer;
+}
+
+.user-img {
+    width: 33px;
+    height: 33px;
+    margin: 0 20px 0 20px;
+    border-radius: 1.25em;
 }

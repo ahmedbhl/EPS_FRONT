@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { UserService } from 'src/app/core/authentication/user.service';
 import { Helper } from 'src/app/core/helper.service';
 import { SnackBarService } from 'src/app/core/snack-bar.service';
@@ -15,9 +16,9 @@ import { UserModalComponent } from '../user-modal/user-modal.component';
 export class UserComponent implements OnInit {
 
   users: User[] = [];
-
+  currentUser: User;
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['select', 'id', 'profilePicture', 'email', 'firstName', 'lastName', 'phoneNumber', 'roles', 'enabled', 'more'];
+  displayedColumns: string[] = ['select', 'profilePicture', 'email', 'firstName', 'lastName', 'phoneNumber', 'roles', 'enabled', 'more'];
   dataSource: MatTableDataSource<User>;
   selection = new SelectionModel<User>(true, []);
 
@@ -25,12 +26,16 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  selectAction: String = 'delete';
+  selectAction: String = '';
 
   constructor(private readonly helper: Helper,
     private readonly _userService: UserService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog,
     private snackBar: SnackBarService) {
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+    });
   }
 
   ngOnInit() {
@@ -56,9 +61,13 @@ export class UserComponent implements OnInit {
   * Get all Users
   */
   getAllUser() {
+    const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
     this._userService.getAllUsers().subscribe(
       (data: User[]) => {
         this.users = data.filter((user: User) => user.roles[0].name !== 'SUPER_ADMIN');
+        if ((roles.indexOf('ADMINISTRATION') > -1) && this.currentUser) {
+          this.users = data.filter((user: User) => user.roles[0].name !== 'SUPER_ADMIN' && user.roles[0].name !== 'ADMINISTRATION');
+        }
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.users);
       }
@@ -118,7 +127,7 @@ export class UserComponent implements OnInit {
   openDialog(user: User, action: string): void {
     const dialogRef = this.dialog.open(UserModalComponent, {
       width: '600px',
-      data: { user: user, action: action }
+      data: { user: user, action: action, currentUser: this.currentUser }
     });
 
     dialogRef.afterClosed().subscribe(result => {

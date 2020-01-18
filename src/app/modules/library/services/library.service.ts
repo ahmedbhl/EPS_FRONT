@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Helper } from 'src/app/core/helper.service';
@@ -37,35 +37,42 @@ export class LibraryService {
   /**
   * Get all the educationnal institutions
   */
-  public getAlllibrarys(): Observable<Library[]> {
-
+  public getAlllibrarys(path): Observable<Library[]> {
     console.log('get the list of all files and foldrs ' + this.libraryUrl);
-    return this.http.get<Library[]>(`${this.libraryUrl}/list`, { headers: this.headers });
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('target', `/${path}`);
+    return this.http.get<Library[]>(`${this.libraryUrl}/list`, { headers: this.headers, params: requestParams });
   }
 
   /**
-     * Save a new library
-     */
-  /*public save(library: Library): Observable<Library> {
-    this.helper.trace(`adding new library : ${library.id}`);
-    return this.http.post<Library>(`${this.libraryUrl}`, library, { headers: this.headers });
-  }
-
-  /**
-   * update the library
-   */
-  /*public update(library: Library): Observable<Library> {
-    this.helper.trace(`updating : ${library.id}`);
-    let RequestParams: HttpParams = new HttpParams();
-    RequestParams = RequestParams.append('id', library.id.toString());
-    return this.http.put<Library>(`${this.libraryUrl}/${library.id}`, library, { headers: this.headers });
-  }
-
-  /**
-  * delete an library
+  * Get all the educationnal institutions
   */
-  /*public delete(library: Library): Observable<Library> {
-    this.helper.trace(`deleting : ${library.id}`);
-    return this.http.delete<Library>(`${this.libraryUrl}/${library.id}`, { headers: this.headers });
-  }*/
+  public getSharedLink(path): Observable<string> {
+    console.log('get the shared link ' + path);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('path', `${path}`);
+    return this.http.get<string>(`${this.libraryUrl}/share`, { headers: this.headers, params: requestParams });
+  }
+
+  /**
+     * upload a file
+     */
+  uploadFile(file: File, filePath): Observable<string> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('filePath', filePath);
+    return this.http.post<string>(`${this.libraryUrl}/upload`, formdata, { headers: this.headers, params: requestParams });
+  }
+
+  /**
+  * Get all the educationnal institutions
+  */
+  public createFolder(folderName) {
+    console.log('Create new foldr ' + folderName);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('folderName', folderName.toString());
+    return this.http.get<Library[]>(`${this.libraryUrl}/folder`, { headers: this.headers, params: requestParams });
+  }
+
 }

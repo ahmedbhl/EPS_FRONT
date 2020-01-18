@@ -22,13 +22,14 @@ export class UserModalComponent implements OnInit {
   administrationForm: FormGroup;
   studentForm: FormGroup;
   selectedTabIndex: number;
-
+  public currentUser: User;
   // Private
   private _unsubscribeAll: Subject<any>;
   private user: User;
   private selectedTab = 0;
   private educationalInstitutions: EducationalInstitution[];
   public action: string;
+  private isAdmnistration = false;
 
   constructor(public dialogRef: MatDialogRef<UserModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,6 +44,8 @@ export class UserModalComponent implements OnInit {
 
     this.user = data.user;
     this.action = data.action;
+    this.currentUser = data.currentUser;
+    this.isAdmnistration = false;
   }
 
   ngOnInit() {
@@ -64,7 +67,9 @@ export class UserModalComponent implements OnInit {
         this.selectedTabIndex = 0;
       } if (this.user.roles[0].name === 'STUDENT') {
         this.studentForm.patchValue(this.user);
-        this.studentForm.get('establishment').setValue(this.user.establishment.id);
+        if (this.user && this.user.establishment && this.user.establishment.id) {
+          this.studentForm.get('establishment').setValue(this.user.establishment.id);
+        }
         this.selectedTabIndex = 2;
       }
     }
@@ -222,8 +227,14 @@ export class UserModalComponent implements OnInit {
   * Used for getAll the Educational Institutions
   */
   getAllEducationalInstitution() {
+    const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
     this.educationalInstitutionService.getAllEducationalInstitution().subscribe(data => {
       this.educationalInstitutions = data;
+      if ((roles.indexOf('ADMINISTRATION') > -1) && this.currentUser) {
+        // tslint:disable-next-line: max-line-length
+        this.educationalInstitutions = this.educationalInstitutions.filter(educationalInstitution => educationalInstitution.administration.id === this.currentUser.id);
+        this.isAdmnistration = true;
+      }
     });
   }
 

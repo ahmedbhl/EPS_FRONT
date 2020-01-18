@@ -1,7 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
+import { LibraryModalComponent } from '../library-modal/library-modal.component';
 import { Library } from '../model/library';
 import { LibraryService } from '../services/library.service';
 
@@ -14,22 +17,31 @@ export class LibraryComponent implements OnInit {
 
   librarys: Library[] = [];
 
-  displayedColumns: string[] = ['select', 'name', 'client_modified', 'size'];
+  displayedColumns: string[] = ['select', 'name', 'client_modified', 'size', 'more'];
   dataSource: MatTableDataSource<Library>;
   selection = new SelectionModel<Library>(true, []);
+  currentFileUpload: File;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   selectAction: String = 'delete';
+  currentUser: User;
+
 
   constructor(private readonly helper: Helper,
-    private readonly _LibraryService: LibraryService) {
+    private readonly _LibraryService: LibraryService,
+    private readonly _authenticationService: AuthenticationService,
+    public dialog: MatDialog) {
+    this._authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+    });
   }
 
   ngOnInit() {
     this.getAllLibrary();
+    this.initDataSource();
   }
 
   applyFilter(filterValue: string) {
@@ -39,17 +51,22 @@ export class LibraryComponent implements OnInit {
     }
   }
 
+  initDataSource() {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.librarys);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   /**
   * Get all Librarys
   */
   getAllLibrary() {
-    this._LibraryService.getAlllibrarys().subscribe(
+    this._LibraryService.getAlllibrarys(this.currentUser.id).subscribe(
       (data: Library[]) => {
         this.librarys = data;
         // Assign the data to the data source for the table to render
         this.dataSource = new MatTableDataSource(this.librarys);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       }
       ,
       error => this.helper.handleError,
@@ -76,6 +93,38 @@ export class LibraryComponent implements OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
+  }
+
+  openDialog(action: string, library?: Library): void {
+    const dialogRef = this.dialog.open(LibraryModalComponent, {
+      // width: '600px',
+      data: { library: library, action: action }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.getAllLibrary();
+      }, 2000);
+
+      this.helper.trace('The dialog was closed' + result);
+    });
+  }
+
+  /**
+     * Upload file csv with list of pairings
+     */
+  upload(event) {
+    // this.inProgressBar = true;
+    this.currentFileUpload = event.target.files;
+    const path = `/${this.currentUser.id}/${this.currentFileUpload[0].name}`;
+    this._LibraryService.uploadFile(this.currentFileUpload[0], path).subscribe(
+      response => {
+        setTimeout(() => {
+          this.getAllLibrary();
+          this.helper.trace('upload file done');
+        }, 2000);
+      },
+    );
   }
 
 }

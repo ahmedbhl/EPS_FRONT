@@ -10,7 +10,7 @@ import { LibraryComponent } from './library/library.component';
       {
         path: '', component: LibraryComponent, canActivate: [NgxPermissionsGuard], data: {
           permissions: {
-            only: ['ADMINISTRATION', 'PROFESSOR'],
+            only: ['ADMINISTRATION', 'PROFESSOR', 'STUDENT'],
             redirectTo: userAddRedirectTo
           },
           breadcrumb: 'LibraryComponent Component '

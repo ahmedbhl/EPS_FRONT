@@ -38,10 +38,19 @@ export class CourseService {
   * Get all the educationnal institutions
   */
   public getAllCourses(): Observable<Course[]> {
-
-
     console.log('get the list of all Courses ' + this.courseUrl);
     return this.http.get<Course[]>(`${this.courseUrl}`, { headers: this.headers });
+  }
+
+
+  /**
+ * Get all Course By Administration
+ */
+  public getCourseByAdministration(administrationId: number): Observable<Course[]> {
+    console.log('get the list of all Courses By establishement ' + this.courseUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('administrationId', administrationId.toString());
+    return this.http.get<Course[]>(`${this.courseUrl}/administration`, { headers: this.headers, params: requestParams });
   }
 
   /**

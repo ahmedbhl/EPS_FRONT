@@ -10,7 +10,7 @@ import { UserComponent } from './user/user.component';
       {
         path: '', component: UserComponent, canActivate: [NgxPermissionsGuard], data: {
           permissions: {
-            only: ['SUPER_ADMIN'],
+            only: ['SUPER_ADMIN', 'ADMINISTRATION'],
             redirectTo: userAddRedirectTo
           },
           breadcrumb: 'UserComponent Component '

@@ -24,16 +24,17 @@
             height: 60px;
             animation: spin 2s linear infinite;
         }
-        
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
         }
-        
+
         .loading::before,
         .loading::after {
             position: fixed;
@@ -46,7 +47,7 @@
             width: 100%;
             height: 100%;
         }
-        
+
         .logo {
             width: 128px;
             position: fixed;
@@ -59,11 +60,11 @@
             width: 100%;
             height: 80%;
         }
-        
+
         .loading::before {
             content: '';
         }
-        
+
         .loading::after {
             font-family: "Helvetica Neue", Helvetica, sans-serif;
             content: 'Loading...';
@@ -77,14 +78,13 @@
             animation: animation 1s alternate infinite;
             margin-top: 10px;
         }
-        
+
         @keyframes animation {
             to {
                 opacity: 0.2;
             }
         }
     </style>
-<script src="node_modules/chart.js/src/chart.js"></script>
 
 </head>
 

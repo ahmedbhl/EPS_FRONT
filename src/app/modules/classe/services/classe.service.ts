@@ -38,10 +38,29 @@ export class ClasseService {
   * Get all the educationnal institutions
   */
   public getAllClasses(): Observable<Classe[]> {
-
-
     console.log('get the list of all Classes ' + this.classeUrl);
     return this.http.get<Classe[]>(`${this.classeUrl}`, { headers: this.headers });
+  }
+
+  public getAllClassesByProfessor(professorId: number): Observable<Classe[]> {
+    console.log('get the list of all Classe By User ' + this.classeUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('professorId', professorId.toString());
+    return this.http.get<Classe[]>(`${this.classeUrl}/professor`, { headers: this.headers, params: requestParams });
+  }
+
+  public getAllClassesByStudent(studentId: number): Observable<Classe[]> {
+    console.log('get the list of all Classe By User ' + this.classeUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('studentId', studentId.toString());
+    return this.http.get<Classe[]>(`${this.classeUrl}/student`, { headers: this.headers, params: requestParams });
+  }
+
+  public getClassByEstablishement(administrationId: number): Observable<Classe[]> {
+    console.log('get the list of all Classe By administrationId ' + this.classeUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('administrationId', administrationId.toString());
+    return this.http.get<Classe[]>(`${this.classeUrl}/administration`, { headers: this.headers, params: requestParams });
   }
 
   /**

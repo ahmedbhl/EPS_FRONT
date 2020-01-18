@@ -1,7 +1,9 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
 import { ClasseModalComponent } from '../classe-modal/classe-modal.component';
 import { Classe } from '../model/Classe';
 import { ClasseService } from '../services/classe.service';
@@ -14,8 +16,8 @@ import { ClasseService } from '../services/classe.service';
 export class ClasseComponent implements OnInit {
 
   classes: Classe[] = [];
-
-  displayedColumns: string[] = ['select', 'id', 'className', 'description', 'field', 'more'];
+  currentUser: User;
+  displayedColumns: string[] = ['select', 'className', 'description', 'field', 'more'];
   dataSource: MatTableDataSource<Classe>;
   selection = new SelectionModel<Classe>(true, []);
 
@@ -27,11 +29,14 @@ export class ClasseComponent implements OnInit {
 
   constructor(private readonly helper: Helper,
     private readonly _classeService: ClasseService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog) {
+
+
   }
 
   ngOnInit() {
-    this.getAllClasse();
+    this.initClasses();
     this.initDataSource();
   }
 
@@ -48,6 +53,21 @@ export class ClasseComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+  initClasses() {
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('ADMINISTRATION') > -1) {
+        if (this.currentUser && this.currentUser.id) {
+          this.getClassByEstablishement(this.currentUser.id);
+        }
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.getAllClasse();
+      }
+    });
+  }
+
   /**
   * Get all Classes
   */
@@ -58,6 +78,19 @@ export class ClasseComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.classes);
       }
       ,
+      error => this.helper.handleError,
+      () => this.helper.trace('Get all classes complete ' + this.classes.length));
+  }
+
+  /**
+ * Get all Classes
+ */
+  getClassByEstablishement(id: number) {
+    this._classeService.getClassByEstablishement(id).subscribe(
+      (data: Classe[]) => {
+        this.classes = data;
+        this.dataSource = new MatTableDataSource(this.classes);
+      },
       error => this.helper.handleError,
       () => this.helper.trace('Get all classes complete ' + this.classes.length));
   }
@@ -87,11 +120,11 @@ export class ClasseComponent implements OnInit {
   openDialog(classe: Classe, action: string): void {
     const dialogRef = this.dialog.open(ClasseModalComponent, {
       width: '600px',
-      data: { classe: classe, action: action }
+      data: { classe: classe, action: action, currentUser: this.currentUser }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllClasse();
+      this.initClasses();
       this.helper.trace('The dialog was closed' + result);
     });
   }

@@ -1,0 +1,317 @@
+<div [ngSwitch]="actionForm">
+
+  <ng-template [ngSwitchCase]="'SuperAdminOrAdministrationUI'">
+    <div class="custom-container">
+      <div class="header">
+        <span class="header-left">Groups Management</span>
+        <button mat-raised-button class="btn-create primary" (click)="openDialog(null,'create')">
+          <mat-icon>add</mat-icon>
+          <span class="btn-create-text">Add New Group</span>
+        </button>
+      </div>
+      <mat-divider class="header-divider"></mat-divider>
+
+      <div class="data-table" *ngIf="groups.length > 0">
+        <div class="mat-elevation-z8">
+
+          <div class="filter-header">
+            <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+              <mat-icon class="filter-icon">search</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <table mat-table [dataSource]="dataSource" matSort>
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(element) : null"
+                  [checked]="selection.isSelected(element)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="groupName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+              <td mat-cell *matCellDef="let row"> {{row.groupName}} </td>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+              <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
+
+            <!-- Star Column -->
+            <ng-container matColumnDef="more" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row" class="pointer">
+                <mat-icon (click)=select.open()>more_vert</mat-icon>
+                <mat-select #select class="mat-select-container" style="visibility:hidden">
+                  <mat-option (click)="openDialog(row,'update')">Update Group</mat-option>
+                  <mat-divider class="divider-container"></mat-divider>
+                  <mat-option (click)="openDialog(row,'joinUser')">Join User</mat-option>
+                  <mat-divider class="divider-container"></mat-divider>
+                  <mat-option (click)="openDialog(row,'delete')">Delete Group</mat-option>
+                </mat-select>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+            </tr>
+          </table>
+          <div class="footer-left">
+            <div class="footer-checkbox">
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox> All the elements
+            </div>
+            <mat-select [(value)]="selectAction" class="footer-select">
+              <mat-option value="delete">Delete</mat-option>
+            </mat-select>
+            <button mat-raised-button class="btn-create footer-btn"> OK </button>
+          </div>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"> </mat-paginator>
+        </div>
+      </div>
+      <div class="empty-data-source" *ngIf="groups.length == 0">
+        <span>Your Data Base Of groups Is Empty </span>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template [ngSwitchCase]="'professorOrStudentUI'">
+
+    <div fxFlex="22" class="left-column-container">
+      <button class="group-btn-left" (click)=selectGroups.open()>
+        <mat-icon style="vertical-align: text-top;">reorder</mat-icon>&nbsp;Your Groups
+      </button>
+      <div class="select">
+        <mat-select #selectGroups style="visibility:hidden" >
+          <mat-option *ngFor="let group of groups" [routerLink]="['/group',group.id]">{{group.groupName}} </mat-option>
+        </mat-select>
+      </div>
+
+      <div class="group-left-menu">
+        <li class="list-group-item" class="nav-link" (click)="selectMenu('posts')"
+          [class.group-left-menu-selected]="selectedMenu==='posts'">
+          <a class="navigation-list-item">
+            <span style="margin: 0px 0.5rem;">Posts</span>
+          </a>
+        </li>
+        <li class="list-group-item" class="nav-link" (click)="selectMenu('folders')"
+          [class.group-left-menu-selected]="selectedMenu==='folders'">
+          <a class="navigation-list-item">
+            <span style="margin: 0px 0.5rem;">Folders</span>
+          </a>
+        </li>
+        <li class="list-group-item" class="nav-link" (click)="selectMenu('members')"
+          [class.group-left-menu-selected]="selectedMenu==='members'">
+          <a class="navigation-list-item">
+            <span style="margin: 0px 0.5rem;">Members</span>
+          </a>
+        </li>
+      </div>
+
+    </div>
+
+    <div fxFlex="76">
+      <div fxLayout="row" class="header-group"><img style="width: 100%;" src="assets/images/avatars/empty.jpg" /> </div>
+
+      <div fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutAlign="space-between stretch">
+
+        <div fxFlex="65" class="stream-container" [ngSwitch]="selectedMenu">
+          <ng-template [ngSwitchCase]="'posts'">
+            <ng-container *ngTemplateOutlet="postsTemplate"></ng-container>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'members'">
+            <ng-container *ngTemplateOutlet="membersTemplate"></ng-container>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'folders'">
+            <ng-container *ngTemplateOutlet="foldersTemplate"></ng-container>
+          </ng-template>
+        </div>
+
+        <div fxFlex="33" class="right-column-container">
+          <div class="student-planner-widget-wrapper">
+            <span class="student-text">Upcoming</span>
+            <mat-divider></mat-divider>
+            <span class="student-text">
+              <mat-icon style="vertical-align: middle;">loyalty</mat-icon>&nbsp;No classwork currently due.
+            </span>
+            <mat-divider></mat-divider>
+          </div>
+          <div class="invit-widget-wrapper">
+            <button class="invit-btn btn-light-blue btn-light-blue-gray">Invite People</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'all'">
+    <app-group-list></app-group-list>
+  </ng-template>
+</div>
+
+<ng-template #postsTemplate>
+  <!-- Add New Post Bloc-->
+  <div class="unified-composer-container mb-3">
+    <form (ngSubmit)="checkAndSavePost()" [formGroup]="formPost">
+      <div class="input-text">
+        <img mat-card-avatar class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
+          alt="cedro">
+        <textarea cols="60" placeholder="Share an idea or resources" class="postbox-textarea"
+          formControlName="description"></textarea>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="footer" fxLayout="row" fxFlexFill fxLayoutAlign="space-between stretch">
+        <div fxFlex="50">
+          <mat-icon (click)="postImgUpload.click()" style="cursor: pointer;">insert_photo</mat-icon>
+          <input type="file" #postImgUpload style="display: none" accept="image/jpg" multiple=""
+            (change)="upload($event,'post')" data-original-title="upload photos">
+          <mat-icon (click)="fileUpload.click()" style="cursor: pointer;">attach_file</mat-icon>
+          <input type="file" #fileUpload style="display: none" accept="image/jpg" multiple=""
+            (change)="upload($event,'post')" data-original-title="upload photos">
+        </div>
+        <div fxFlex="50">
+          <button mat-stroked-button color="primary" class="btn-post">Post</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- End Add New Post Bloc -->
+
+  <!--Display Post Bloc-->
+  <div>
+    <mat-card class="example-card" *ngFor="let post of posts; let i = index;">
+      <mat-card-header class="mat-card-header">
+        <div mat-card-avatar>
+          <img mat-card-avatar class="message-avatar rounded" src="{{post.user.profilePicture}}" alt="Zayneb Hamila">
+        </div>
+        <mat-card-title style="font-size: medium;margin: 0 0 3px 0;">
+          {{post.user.firstName}} {{post.user.lastName}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          <span class="post-title-style" *ngIf="isProfessor">Professor</span>
+          <span class="post-title-style" *ngIf="!isProfessor">Student</span>
+          <span style="font-size: small;"> - {{post.postDate |date:'dd-MM-yyyy hh:mm'}}</span>
+        </mat-card-subtitle>
+
+        <div>
+          <mat-icon (click)=select.open() class="pointer">more_horiz</mat-icon>
+          <mat-select #select class="post-select" style="visibility:hidden">
+            <mat-option (click)="openDialog('editPost',post)">Edit the publication</mat-option>
+            <mat-option (click)="openDialog('deletePost',post,i)">Delete</mat-option>
+          </mat-select>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="font-size: 1.5em;"> {{post.description}} </p>
+      </mat-card-content>
+      <div class="spiner" *ngIf="post.postPicture">
+        <mat-spinner diameter="20" color="accent"></mat-spinner>
+      </div>
+      <img mat-card-image src="{{post.postPicture}}" alt="Photo" *ngIf="post.postPicture">
+      <mat-divider></mat-divider>
+      <mat-card-actions class="mat-card-action">
+        <button mat-button class="footer-card-btn" (click)="addLike(post)">
+          <mat-icon [class.blue]="isLiked(post)" class="footer-card-icon">thumb_up</mat-icon>
+          <span class="footer-card-btn-like" [class.blue]="isLiked(post)">{{getLikesLabel(post)}}</span>
+        </button>
+        <button mat-button class="footer-card-btn">
+          <mat-icon class="footer-card-icon">insert_comment</mat-icon>
+          <span class="footer-card-btn-like" (click)="showHiddenComment(i)">Comment</span>
+        </button>
+      </mat-card-actions>
+      <mat-divider></mat-divider>
+      <mat-card-footer class="mat-card-footer">
+        <div class="footer-card-mat-card-comment">
+          <div class="mat-card-comment-display" *ngFor="let comment of post.comments">
+            <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}"
+              alt="Zayneb Hamila">
+            <section class="mat-card-comment-text" matTooltip=" {{comment.commentDate|date:'dd-MM-yyyy hh:mm'}}">
+              <p class="comment-text-user">{{comment.user.firstName}}
+                {{comment.user.lastName}}&nbsp;
+                <span class="comment-text">{{comment.message}} </span></p>
+            </section>
+          </div>
+        </div>
+
+        <div class="footer-card-mat-card-avatar">
+          <img class="message-avatar rounded footer-card-comment-icon" src="{{profilePictureLink}}" alt="Zayneb Hamila">
+          <div class="mat-card-comment">
+            <textarea [value]="state[i] && state[i].text ? state[i].text : ''" cols="60" [(ngModel)]="defaultValue[i]"
+              class="mat-card-comment-input" matInput type="text" (keyup.enter)="saveComment($event,post, i)"
+              placeholder="your comment..."></textarea>
+            <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"
+              (emojiClick)="addEmoji($event, i)" [hidden]="!(show[i] && show[i]===true)"></emoji-mart>
+            <mat-icon class="mat-card-comment-emoj" (click)="show[i]=!show[i]">sentiment_satisfied_alt
+            </mat-icon>
+            <mat-icon class="mat-card-comment-emoj" (click)="imgUpload.click()">photo_camera</mat-icon>
+            <input type="file" #imgUpload style="display: none" accept="image/jpg" multiple=""
+              (change)="upload($event,'commnet')" data-original-title="upload photos">
+          </div>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+    <mat-card class="card-post-footer">
+      <mat-card-content>All posts loaded </mat-card-content>
+    </mat-card>
+  </div>
+  <!--End Display Post Bloc-->
+</ng-template>
+
+<ng-template #membersTemplate>
+  <div class="members-template">
+    <mat-card class="example-card" class="mat-card-member">
+      <mat-card-header class="mat-card-header">
+        <mat-card-title style="font-size: large;margin: 0 0 3px 0;color: dimgray;"> Members </mat-card-title>
+        <input matInput type="text" required appearance="outline" placeholder="Search Members" class="search-member">
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="card-content">
+        <div>
+          <div>
+            <img mat-card-avatar class="member-message-avatar" src="{{profilePictureLink}}" alt="Zayneb Hamila"
+              style="float: left;">
+            <div fxLayout="column" fxLayoutAlign="center center" style="float: left;height: 60px;">
+              <span style="font-size: medium;margin: 0 10px;">xxxxxxx</span>
+              <span style="margin: 0 10px;" class="post-title-style">xxxxxxx</span> </div>
+            <mat-icon (click)=select.open() class="pointer" style="float: right;padding: 18px 0;">more_horiz</mat-icon>
+          </div>
+          <mat-select #select class="post-select" style="visibility:hidden">
+            <mat-option (click)="openDialog('editPost',post)">Edit the publication</mat-option>
+            <mat-option (click)="openDialog('deletePost',post,i)">Delete</mat-option>
+          </mat-select>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>
+
+<ng-template #foldersTemplate>
+  <div class="members-template">
+    <mat-card class="example-card" class="mat-card-member">
+      <mat-card-header class="mat-card-header">
+        <mat-card-title style="font-size: large;margin: 0 0 3px 0;color: dimgray;"> Folders </mat-card-title>
+        <input matInput type="text" required appearance="outline" placeholder="Search Members" class="search-member">
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="card-content">
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</ng-template>
+

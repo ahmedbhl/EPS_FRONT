@@ -5,6 +5,7 @@ import { Helper } from 'src/app/core/helper.service';
 import { HttpHeader } from 'src/app/shared/helpers/http-header';
 import { environment } from 'src/environments/environment';
 import { Level } from '../model/level';
+import { EducationalInstitution } from '../../educational-institution/model/educational-institution';
 
 @Injectable()
 export class LevelService {
@@ -35,11 +36,19 @@ export class LevelService {
   }
 
   /**
-  * Get all the educationnal institutions
+  * Get all level
   */
+  public getLevelByAdministration(administrationId: number): Observable<Level[]> {
+    console.log('get the list of all levels By establishement ' + this.LevelUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('administrationId', administrationId.toString());
+    return this.http.get<Level[]>(`${this.LevelUrl}/administration`, { headers: this.headers, params: requestParams });
+  }
+
+  /**
+ *  Get all level by establishement
+ */
   public getAllLevels(): Observable<Level[]> {
-
-
     console.log('get the list of all levels ' + this.LevelUrl);
     return this.http.get<Level[]>(`${this.LevelUrl}`, { headers: this.headers });
   }
@@ -47,26 +56,26 @@ export class LevelService {
   /**
      * Save a new level
      */
-  public save(Level: Level): Observable<Level> {
-    this.helper.trace(`adding new level : ${Level.id}`);
-    return this.http.post<Level>(`${this.LevelUrl}`, Level, { headers: this.headers });
+  public save(level: Level): Observable<Level> {
+    this.helper.trace(`adding new level : ${level.id}`);
+    return this.http.post<Level>(`${this.LevelUrl}`, level, { headers: this.headers });
   }
 
   /**
    * update the level
    */
-  public update(Level: Level): Observable<Level> {
-    this.helper.trace(`updating : ${Level.id}`);
+  public update(level: Level): Observable<Level> {
+    this.helper.trace(`updating : ${level.id}`);
     let RequestParams: HttpParams = new HttpParams();
-    RequestParams = RequestParams.append('id', Level.id.toString());
-    return this.http.put<Level>(`${this.LevelUrl}/${Level.id}`, Level, { headers: this.headers });
+    RequestParams = RequestParams.append('id', level.id.toString());
+    return this.http.put<Level>(`${this.LevelUrl}/${level.id}`, Level, { headers: this.headers });
   }
 
   /**
   * delete an level
   */
-  public delete(Level: Level): Observable<Level> {
-    this.helper.trace(`deleting : ${Level.id}`);
-    return this.http.delete<Level>(`${this.LevelUrl}/${Level.id}`, { headers: this.headers });
+  public delete(level: Level): Observable<Level> {
+    this.helper.trace(`deleting : ${level.id}`);
+    return this.http.delete<Level>(`${this.LevelUrl}/${level.id}`, { headers: this.headers });
   }
 }
