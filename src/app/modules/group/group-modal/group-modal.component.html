@@ -1,0 +1,111 @@
+<div id="forms" class="page-layout" fxLayout="column" [ngSwitch]="true">
+
+  <ng-template [ngSwitchCase]="action === 'create'|| action ==='update'">
+    <!-- HEADER -->
+    <span class="header-left" *ngIf="action ==='create'">Add New Group</span>
+    <span class="header-left" *ngIf="action ==='update'">Update Group</span>
+    <mat-divider class="header-divider"></mat-divider>
+
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+      <!-- REACTIVE FORM EXAMPLE -->
+
+      <form (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="space-between" fxFlex="1 0 auto" name="form"
+        [formGroup]="form">
+
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Group Name</mat-label>
+            <input matInput formControlName="groupName" required>
+            <mat-icon matSuffix class="secondary-text">assignment_ind</mat-icon>
+            <mat-error>Group Name is required!</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" required>
+            <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+            <mat-error>Description is required!</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Invitation Code</mat-label>
+            <input matInput type="password" formControlName="hashCode" required>
+            <mat-icon matSuffix class="secondary-text">toc</mat-icon>
+            <mat-error>Invitation Code is required!</mat-error>
+          </mat-form-field>
+        </div>
+
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <button mat-raised-button [disabled]="!form.valid" color="primary" class="btn-save">
+            <mat-icon>save</mat-icon> save
+          </button>
+          <button mat-raised-button class="btn btn-success" (click)="onNoClick()">
+            <mat-icon>cancel</mat-icon> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- / CONTENT -->
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="action === 'delete'">
+    <div class="modal-header">
+      <strong>
+        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+      </strong>
+    </div>
+    <div class="modal-body">
+      Do you want to delete this Group ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onNoClick()">Cancel </button>
+      <button type="button" class="btn btn-danger" (click)="delete()" cdkFocusInitial>Confirm</button>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="action === 'joinUser'">
+    <div class="modal-header">
+      <strong>
+        <h5 class="modal-title" id="exampleModalLabel">Join members</h5>
+      </strong>
+    </div>
+    <div class="modal-body">
+      <div fxFlex="100">
+        <input matInput placeholder="Search" [formControl]="usersForm" class="left-layer-message-input"
+          [matAutocomplete]="autoCompleteUsers" />
+        <mat-autocomplete #autoCompleteUsers="matAutocomplete">
+          <mat-option *ngFor="let user of filtredUsers" [value]="user.firstName" (click)="joinUser(user)">
+            <img src="{{user.profilePicture}}" class="img-profil" /> {{user.firstName}}</mat-option>
+        </mat-autocomplete>
+
+        <div class="group-user-list" *ngFor="let professor of group.professors">
+          <img src="{{professor.profilePicture}}" class="img-profil" /> <span>{{professor.firstName}}
+            {{professor.lastName}}</span>
+          <mat-icon style="color: red;float: right; margin: 13px 0; cursor: pointer;"
+            (click)="removeUser(professor,group,'professor')">
+            remove_circle_outline</mat-icon>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="group-user-list" *ngFor="let student of group.students">
+          <img src="{{student.profilePicture}}" class="img-profil" /> <span>{{student.firstName}}
+            {{student.lastName}}</span>
+          <mat-icon style="color: red;float: right; margin: 13px 0; cursor: pointer;"
+            (click)="removeUser(student,group,'student')">remove_circle_outline
+          </mat-icon>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)="onNoClick()">Cancel </button>
+      <button type="button" class="btn primary" color="primary" (click)="onNoClick()" cdkFocusInitial>Confirm</button>
+    </div>
+  </ng-template>
+</div>

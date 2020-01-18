@@ -19,7 +19,7 @@ export class EducationalInstitutionComponent implements OnInit {
   singleEducationalInstitution: EducationalInstitution;
 
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['select', 'id', 'photos', 'establishmentName', 'description', 'location', 'administration', 'yearOfFoundation', 'more'];
+  displayedColumns: string[] = ['select', 'photos', 'establishmentName', 'description', 'location', 'administration', 'yearOfFoundation', 'more'];
   dataSource: MatTableDataSource<EducationalInstitution>;
   selection = new SelectionModel<EducationalInstitution>(true, []);
   selectAction: String = 'delete';

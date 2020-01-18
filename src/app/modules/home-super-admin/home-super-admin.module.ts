@@ -7,7 +7,7 @@ import { HomeSuperAdminComponent } from './home-super-admin.component';
     declarations: [HomeSuperAdminComponent],
     imports: [HomeSuperAdminRoutingModule, SharedModuleModule],
     exports: [HomeSuperAdminComponent],
-    // providers: [HomeSuperAdminService]
+    // providers: [MessengerSocketService]
 })
 
 export class HomeSuperAdminModule {

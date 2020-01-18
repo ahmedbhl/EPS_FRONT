@@ -1,7 +1,9 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
 import { FieldModalComponent } from '../field-modal/field-modal.component';
 import { Field } from '../model/field';
 import { FieldService } from '../services/field.service';
@@ -14,8 +16,8 @@ import { FieldService } from '../services/field.service';
 export class FieldComponent implements OnInit {
 
   fields: Field[] = [];
-
-  displayedColumns: string[] = ['select', 'id', 'fieldName', 'description', 'level', 'more'];
+  currentUser: User;
+  displayedColumns: string[] = ['select', 'fieldName', 'description', 'level', 'more'];
   dataSource: MatTableDataSource<Field>;
   selection = new SelectionModel<Field>(true, []);
 
@@ -27,11 +29,12 @@ export class FieldComponent implements OnInit {
 
   constructor(private readonly helper: Helper,
     private readonly _FieldService: FieldService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.getAllField();
+    this.initFields();
     this.initDataSource();
   }
 
@@ -49,6 +52,20 @@ export class FieldComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  initFields() {
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('ADMINISTRATION') > -1) {
+        if (this.currentUser && this.currentUser.id) {
+          this.getLevelByEstablishement(this.currentUser.id);
+        }
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.getAllField();
+      }
+    });
+  }
+
   /**
   * Get all Fields
   */
@@ -62,6 +79,16 @@ export class FieldComponent implements OnInit {
       ,
       error => this.helper.handleError,
       () => this.helper.trace('Get all Fields complete ' + this.fields.length));
+  }
+
+  getLevelByEstablishement(administrationId: number) {
+    this._FieldService.getFieldsByAdministration(administrationId).subscribe(
+      (data: Field[]) => {
+        this.fields = data;
+        // Assign the data to the data source for the table to render
+        this.dataSource = new MatTableDataSource(this.fields);
+      }, error => this.helper.handleError,
+      () => this.helper.trace('Get all fields complete ' + this.fields.length));
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -89,11 +116,11 @@ export class FieldComponent implements OnInit {
   openDialog(field: Field, action: string): void {
     const dialogRef = this.dialog.open(FieldModalComponent, {
       width: '600px',
-      data: { field: field, action: action }
+      data: { field: field, action: action, currentUser: this.currentUser }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllField();
+      this.initFields();
       this.helper.trace('The dialog was closed' + result);
     });
   }

@@ -1,5 +1,5 @@
 <script>
-    addEventListener("load", function() {
+    addEventListener("load", function () {
         setTimeout(hideURLbar, 0);
     }, false);
 
@@ -20,21 +20,26 @@
             <form (ngSubmit)="onSubmit()" [formGroup]="signupForm">
                 <div class="main-icon" [class.activation-main-icon]="activatedKeyStat">
                     <span class="fa fa-graduation-cap" aria-hidden="true"></span><br>
-                    <span [class.activation-msg]="activatedKeyStat" *ngIf="activatedKeyStat">Congratulations, your account has been activated!</span>
+                    <span [class.activation-msg]="activatedKeyStat" *ngIf="activatedKeyStat">Congratulations, your
+                        account has been activated!</span>
                 </div>
                 <div *ngIf="error" class="alert alert-danger signup-error">{{error}}</div>
                 <div *ngIf="isSignup" class="alert alert-success signup-success">You Are Successfully Registered</div>
                 <div class="header-left-bottom" *ngIf="!activatedKeyStat">
-                    <mat-button-toggle-group name="fontStyle" formControlName="role" color="accent" aria-label="Font Style" class="mat-button-toggle-groupe" [ngClass]="{ 'is-invalid': submitted && form.role.errors }">
-                        <mat-button-toggle value="professor" class="mat-button-toggle-small">Professor</mat-button-toggle>
+                    <mat-button-toggle-group name="fontStyle" formControlName="role" color="accent"
+                        aria-label="Font Style" class="mat-button-toggle-groupe"
+                        [ngClass]="{ 'is-invalid': submitted && form.role.errors }">
+                        <mat-button-toggle value="professor" class="mat-button-toggle-small">Professor
+                        </mat-button-toggle>
                         <mat-button-toggle value="administration" class="mat-button-toggle-large">Administration
                         </mat-button-toggle>
                         <mat-button-toggle value="student" class="mat-button-toggle-small">Student</mat-button-toggle>
                     </mat-button-toggle-group>
-                    
+
                     <div class="icon1">
                         <span class="fa fa-id-card"></span>
-                        <input type="text" placeholder="First Name" required="" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && form.firstName.errors }" />
+                        <input type="text" placeholder="First Name" required="" formControlName="firstName"
+                            [ngClass]="{ 'is-invalid': submitted && form.firstName.errors }" />
                     </div>
                     <div *ngIf="submitted && form.firstName.errors" class="invalid-feedback">
                         <div *ngIf="form.firstName.errors.required">fisrtName is required</div>
@@ -42,7 +47,8 @@
 
                     <div class="icon1">
                         <span class="fa fa-address-card"></span>
-                        <input type="text" placeholder="Last Name" required="" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && form.lastName.errors }" />
+                        <input type="text" placeholder="Last Name" required="" formControlName="lastName"
+                            [ngClass]="{ 'is-invalid': submitted && form.lastName.errors }" />
                     </div>
                     <div *ngIf="submitted && form.lastName.errors" class="invalid-feedback">
                         <div *ngIf="form.lastName.errors.required">lastName is required</div>
@@ -50,14 +56,16 @@
 
                     <div class="icon1">
                         <span class="fa fa-user"></span>
-                        <input type="email" placeholder="Email Address" required="" formControlName="email" [ngClass]="{ 'is-invalid': submitted && form.email.errors }" />
+                        <input type="email" placeholder="Email Address" required="" formControlName="email"
+                            [ngClass]="{ 'is-invalid': submitted && form.email.errors }" />
                     </div>
                     <div *ngIf="submitted && form.email.errors" class="invalid-feedback">
                         <div *ngIf="form.email.errors.required">email is required</div>
                     </div>
                     <div class="icon1">
                         <span class="fa fa-lock"></span>
-                        <input type="password" placeholder="Password" formControlName="password" required="" [ngClass]="{ 'is-invalid': submitted && form.password.errors }" />
+                        <input type="password" placeholder="Password" formControlName="password" required=""
+                            [ngClass]="{ 'is-invalid': submitted && form.password.errors }" />
                     </div>
                     <div *ngIf="submitted && form.password.errors" class="invalid-feedback">
                         <div *ngIf="form.password.errors.required">Password is required</div>
@@ -69,13 +77,10 @@
                     <div class="bottom">
                         <button class="btn" [disabled]="!signupForm.valid">SIGN UP</button>
                     </div>
-                    <div class="links">
-                        <p><a href="#" routerLink="/reset">Forgot Password?</a></p>
-                        <div class="clear"></div>
-                    </div>
+
                 </div>
                 <div class="activation" *ngIf="activatedKeyStat">
-                        <button class="bottom-activation"  routerLink="/login">Done</button>
+                    <button class="bottom-activation" routerLink="/login">Done</button>
                 </div>
             </form>
         </div>

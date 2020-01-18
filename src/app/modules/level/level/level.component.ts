@@ -1,7 +1,9 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { AuthenticationService } from 'src/app/core/authentication/authentication.service';
 import { Helper } from 'src/app/core/helper.service';
+import { User } from 'src/app/shared/models/user.class';
 import { LevelModalComponent } from '../level-modal/level-modal.component';
 import { Level } from '../model/level';
 import { LevelService } from '../services/level.service';
@@ -15,23 +17,22 @@ export class LevelComponent implements OnInit {
 
   levels: Level[] = [];
 
-  displayedColumns: string[] = ['select', 'id', 'levelName', 'description', 'establishment', 'more'];
+  displayedColumns: string[] = ['select', 'levelName', 'description', 'establishment', 'more'];
   dataSource: MatTableDataSource<Level>;
   selection = new SelectionModel<Level>(true, []);
-
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  currentUser: User;
   selectAction: String = 'delete';
 
   constructor(private readonly helper: Helper,
     private readonly _LevelService: LevelService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.getAllLevel();
+    this.initLevels();
     this.initDataSource();
 
   }
@@ -50,11 +51,36 @@ export class LevelComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  initLevels() {
+    this.authenticationService.currentUser.subscribe(data => {
+      this.currentUser = data;
+      const roles = this.currentUser ? this.currentUser.roles.map(item => item.name) : [];
+      if (roles.indexOf('ADMINISTRATION') > -1) {
+        if (this.currentUser && this.currentUser.id) {
+          this.getLevelByEstablishement(this.currentUser.id);
+        }
+      } else if (roles.indexOf('SUPER_ADMIN') > -1) {
+        this.getAllLevel();
+      }
+    });
+  }
   /**
   * Get all Levels
   */
   getAllLevel() {
     this._LevelService.getAllLevels().subscribe(
+      (data: Level[]) => {
+        this.levels = data;
+        // Assign the data to the data source for the table to render
+        this.dataSource = new MatTableDataSource(this.levels);
+      }
+      ,
+      error => this.helper.handleError,
+      () => this.helper.trace('Get all Levels complete ' + this.levels.length));
+  }
+
+  getLevelByEstablishement(administrationId: number) {
+    this._LevelService.getLevelByAdministration(administrationId).subscribe(
       (data: Level[]) => {
         this.levels = data;
         // Assign the data to the data source for the table to render
@@ -87,14 +113,14 @@ export class LevelComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 
-  openDialog(): void {
+  openDialog(level: Level, action: string): void {
     const dialogRef = this.dialog.open(LevelModalComponent, {
       width: '600px',
-      data: { name: 'Guest', animal: 'Guest' }
+      data: { level: level, action: action, currentUser: this.currentUser }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getAllLevel();
+      this.initLevels();
       this.helper.trace('The dialog was closed' + result);
     });
   }

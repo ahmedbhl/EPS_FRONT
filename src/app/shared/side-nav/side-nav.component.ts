@@ -46,7 +46,7 @@ export class SideNavComponent {
 
   getPictureLink() {
     if (this.currentUser && this.currentUser.profilePicture) {
-      this.profilePictureLink = 'https://www.dropbox.com/s/y43l8fs6gf01xmx/pic.jpg?raw=1';
+      this.profilePictureLink = this.currentUser.profilePicture;
     } else {
       this.profilePictureLink = 'assets/images/avatars/profile.jpg';
     }

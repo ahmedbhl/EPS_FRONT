@@ -38,6 +38,8 @@
                 <mat-icon>class</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Class</span></a>
             <a mat-list-item href="#" routerLink="/course">
                 <mat-icon>cast_for_education </mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Course</span></a>
+                <a mat-list-item href="#" routerLink="/group">
+                    <mat-icon>assignment_ind</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Groups</span></a>
             <a mat-list-item href="#" routerLink="/user">
                 <mat-icon>group</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Manage Users</span></a>
             <a mat-list-item (click)="logout()">
@@ -45,8 +47,6 @@
         </mat-nav-list>
 
         <mat-nav-list *ngIf="isSuperAdmin">
-                <a mat-list-item href="#" routerLink="/homeAdministration">
-                    <mat-icon>dashboard</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Home</span></a>
                 <a mat-list-item href="#" routerLink="/educationalinstitution">
                     <mat-icon>account_balance</mat-icon>&nbsp;&nbsp;<span *ngIf="!isHandset">Educational Institution</span></a>
                 <a mat-list-item href="#" routerLink="/level">

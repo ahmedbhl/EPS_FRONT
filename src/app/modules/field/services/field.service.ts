@@ -38,11 +38,20 @@ export class FieldService {
   * Get all the educationnal institutions
   */
   public getAllFields(): Observable<Field[]> {
-
-
     console.log('get the list of all Fields ' + this.fieldUrl);
     return this.http.get<Field[]>(`${this.fieldUrl}`, { headers: this.headers });
   }
+
+  /**
+* Get all Field By Administration
+*/
+  public getFieldsByAdministration(administrationId: number): Observable<Field[]> {
+    console.log('get the list of all Fields By establishement ' + this.fieldUrl);
+    let requestParams: HttpParams = new HttpParams();
+    requestParams = requestParams.append('administrationId', administrationId.toString());
+    return this.http.get<Field[]>(`${this.fieldUrl}/administration`, { headers: this.headers, params: requestParams });
+  }
+
 
   /**
      * Save a new Field
