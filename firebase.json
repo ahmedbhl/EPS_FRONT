@@ -1,6 +1,6 @@
 {
     "hosting": {
-      "public": "dist/SFEFRONT",
+      "public": "dist/EPSFRONT",
       "rewrites": [
         {
           "source": "**",
